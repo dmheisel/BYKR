@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route} from 'react-router-dom'
 import {connect} from 'react-redux';
-import LoginPage from '../LoginPage/LoginPage';
+import LoginPage from '../LoginPage/LoginPage.jsx';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 // A Custom Wrapper Component -- This will keep our code DRY.
@@ -64,5 +64,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(ProtectedRoute)
-
-

@@ -25,27 +25,28 @@ const styles = theme => ({
 		marginRight: theme.spacing(1)
 	}
 });
-class RegisterPage extends Component {
+
+class LoginPage extends Component {
 	state = {
 		username: '',
 		password: ''
 	};
 
-	registerUser = event => {
+	login = event => {
 		event.preventDefault();
 
 		if (this.state.username && this.state.password) {
 			this.props.dispatch({
-				type: 'REGISTER',
+				type: 'LOGIN',
 				payload: {
 					username: this.state.username,
 					password: this.state.password
 				}
 			});
 		} else {
-			this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
+			this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
 		}
-	}; // end registerUser
+	}; // end login
 
 	handleInputChangeFor = propertyName => event => {
 		this.setState({
@@ -58,8 +59,8 @@ class RegisterPage extends Component {
 		return (
 			<Container className={classes.root}>
 				<Container className={classes.formContainer}>
-					<form onSubmit={this.registerUser}>
-						<h1>Register User</h1>
+					<form onSubmit={this.login}>
+						<h1>Login</h1>
 						<TextField
 							className={classes.textField}
 							label='Username'
@@ -75,16 +76,18 @@ class RegisterPage extends Component {
 							value={this.state.password}
 							onChange={this.handleInputChangeFor('password')}
 						/>
-						<Button type='submit'>Register</Button>
+						<Button type='submit'>Log In</Button>
 						<Button
+							type='button'
+							className='link-button'
 							onClick={() => {
-								this.props.dispatch({ type: 'SET_TO_LOGIN_MODE' });
+								this.props.dispatch({ type: 'SET_TO_REGISTER_MODE' });
 							}}>
-							Login
+							Register
 						</Button>
-						{this.props.errors.registrationMessage && (
+						{this.props.errors.loginMessage && (
 							<h5 className='alert' role='alert'>
-								{this.props.errors.registrationMessage}
+								{this.props.errors.loginMessage}
 							</h5>
 						)}
 					</form>
@@ -101,4 +104,4 @@ const mapStateToProps = state => ({
 	errors: state.errors
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(RegisterPage));
+export default connect(mapStateToProps)(withStyles(styles)(LoginPage));
