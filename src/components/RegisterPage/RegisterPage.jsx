@@ -28,7 +28,8 @@ const styles = theme => ({
 class RegisterPage extends Component {
 	state = {
 		username: '',
-		password: ''
+		password: '',
+		city: ''
 	};
 
 	registerUser = event => {
@@ -39,7 +40,8 @@ class RegisterPage extends Component {
 				type: 'REGISTER',
 				payload: {
 					username: this.state.username,
-					password: this.state.password
+					password: this.state.password,
+					city: this.state.city
 				}
 			});
 		} else {
@@ -75,6 +77,13 @@ class RegisterPage extends Component {
 							value={this.state.password}
 							onChange={this.handleInputChangeFor('password')}
 						/>
+						<TextField
+							className={classes.textField}
+							label="Your City"
+							variant="filled"
+							value={this.state.city}
+							onChange={this.handleInputChangeFor('city')}
+							/>
 						<Button type='submit'>Register</Button>
 						<Button
 							onClick={() => {
