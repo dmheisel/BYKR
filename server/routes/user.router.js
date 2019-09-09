@@ -12,8 +12,16 @@ const router = express.Router();
 
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
+  let sqlText = 'SELECT "lat", "lng" FROM "user_settings" WHERE "user_id" = $1'
+  pool.query(sqlText, [req.user.id])
+    .then(response => {
+      let user = { ...req.user, lat: response.rows[0].lat, lng: response.rows[0].lng };
+      res.send(user)
+    })
+    .catch(error => {
+      console.log('error on retrieving info from settings db: ', error)
+    })
 	// Send back user object from the session (previously queried from the database)
-	res.send(req.user);
 });
 
 // Handles POST request with new user data
