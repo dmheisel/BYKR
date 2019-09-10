@@ -5,11 +5,10 @@ const {
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
-const api_key = process.env.api_key;
+const api_key = process.env.REACT_APP_API_KEY
 const axios = require('axios');
 
 const router = express.Router();
-
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
   let sqlText = 'SELECT "lat", "lng" FROM "user_settings" WHERE "user_id" = $1'
