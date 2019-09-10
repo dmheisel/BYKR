@@ -41,7 +41,7 @@ class RegisterPage extends Component {
 				payload: {
 					username: this.state.username,
 					password: this.state.password,
-					city: this.state.city
+					location: this.state.city
 				}
 			});
 		} else {
