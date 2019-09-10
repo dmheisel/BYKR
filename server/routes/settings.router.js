@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
 //put route to change user's default location stored in settings
 router.put('/:id', (req, res) => {
 	const id = req.params.id;
-	const newLocation = req.body.location;
+	const newLocation = req.body.newLocation;
 	const newCoords = req.body.coords
 	const values = [newLocation, newCoords.lat, newCoords.lng, id]
 	const sqlText =
@@ -34,7 +34,7 @@ router.put('/:id', (req, res) => {
 					SET
 						default_location = $1,
 						lat = $2,
-						lng = $3,
+						lng = $3
 					WHERE
 						user_id = $4;`
 	pool

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
@@ -13,13 +14,14 @@ const styles = theme => ({
 		marginLeft: '10%',
 		marginTop: '30px',
 		zIndex: '1',
-    width: '80%',
-    display: 'flex',
-    justifyContent: 'space-between'
+		width: '80%',
+		display: 'flex',
+		justifyContent: 'space-between'
 	},
-  icon: {
+	icon: {
 		width: theme.spacing(7),
 		height: '100%',
+		zIndex: '2',
 		position: 'relative',
 		pointerEvents: 'none',
 		display: 'inline-flex',
@@ -27,8 +29,8 @@ const styles = theme => ({
 		justifyContent: 'center'
 	},
 	inputRoot: {
-    color: 'inherit',
-    width: 'inherit'
+		color: 'inherit',
+		width: 'inherit'
 	},
 	inputInput: {
 		width: '100%'
@@ -36,6 +38,9 @@ const styles = theme => ({
 });
 
 class SearchBar extends Component {
+	state = {
+		newLocation: ''
+	};
 	render() {
 		const { classes } = this.props;
 		return (
@@ -43,14 +48,30 @@ class SearchBar extends Component {
 				<div className={classes.icon}>
 					<Menu />
 				</div>
-				<InputBase
-					placeholder='Search…'
-					classes={{
-						root: classes.inputRoot,
-						input: classes.inputInput
-					}}
-					inputProps={{ 'aria-label': 'search' }}
-				/>
+				<form
+					onSubmit={event => {
+						event.preventDefault();
+						this.props.dispatch({
+							type: 'UPDATE_USER',
+							payload: {
+								id: this.props.user.id,
+								newLocation: this.state.newLocation
+							}
+						});
+					}}>
+					<InputBase
+						placeholder='Search…'
+						classes={{
+							root: classes.inputRoot,
+							input: classes.inputInput
+						}}
+						inputProps={{ 'aria-label': 'search', type: 'form' }}
+						onChange={event => {
+							this.setState({ newLocation: event.target.value });
+							console.log(this.state);
+						}}
+					/>
+				</form>
 				<div className={classes.icon}>
 					<SearchIcon />
 				</div>
@@ -58,5 +79,7 @@ class SearchBar extends Component {
 		);
 	}
 }
-
-export default withStyles(styles)(SearchBar);
+const mapStateToProps = reduxStore => ({
+	user: reduxStore.user
+});
+export default connect(mapStateToProps)(withStyles(styles)(SearchBar));
