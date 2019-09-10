@@ -1,5 +1,8 @@
 const express = require('express');
 const pool = require('../modules/pool');
+const {
+	rejectUnauthenticated
+} = require('../modules/authentication-middleware');
 const axios = require('axios');
 const router = express.Router();
 
@@ -24,35 +27,43 @@ router.get('/:id', (req, res) => {
 });
 
 //put route to change user's default location stored in settings
-router.put('/:id', (req, res) => {
-	const id = req.params.id;
-	const newLocation = req.body.newLocation;
-	const newCoords = req.body.coords
-	const values = [newLocation, newCoords.lat, newCoords.lng, id]
-	const sqlText =
-				`UPDATE user_settings
+router.put('/:id', rejectUnauthenticated, (req, res) => {
+	console.log(req.user);
+	if (req.params.id == req.user.id) {
+		const newLocation = req.body.newLocation;
+		const newCoords = req.body.coords;
+		const values = [newLocation, newCoords.lat, newCoords.lng, req.user.id];
+		const sqlText = `UPDATE user_settings
 					SET
 						default_location = $1,
 						lat = $2,
 						lng = $3
 					WHERE
-						user_id = $4;`
-	pool
-		.query(sqlText, values)
-		.then(result => {
-			console.log('Successful edit user settings');
-			res.sendStatus(204)
-		})
-		.catch(error => {
-			console.log('Error on edit user settings: ', error)
-		})
-})
+						user_id = $4;`;
+		pool
+			.query(sqlText, values)
+			.then(result => {
+				console.log('Successful edit user settings');
+				res.sendStatus(204);
+			})
+			.catch(error => {
+				console.log('Error on edit user settings: ', error);
+			});
+	} else {
+		res.sendStatus(403);
+	}
+});
 
 //post route to add settings with new user to database
 router.post('/', (req, res) => {
 	console.log('in settings post: ', req.body);
 
-	const values = [req.body.user_id, req.body.location, req.body.coords.lat, req.body.coords.lng];
+	const values = [
+		req.body.user_id,
+		req.body.location,
+		req.body.coords.lat,
+		req.body.coords.lng
+	];
 	const sqlText = `
 					INSERT
 						INTO user_settings
