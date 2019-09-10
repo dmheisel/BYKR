@@ -29,7 +29,7 @@ class RegisterPage extends Component {
 	state = {
 		username: '',
 		password: '',
-		city: ''
+		location: ''
 	};
 
 	registerUser = event => {
@@ -41,7 +41,7 @@ class RegisterPage extends Component {
 				payload: {
 					username: this.state.username,
 					password: this.state.password,
-					location: this.state.city
+					location: this.state.location
 				}
 			});
 		} else {
@@ -81,8 +81,8 @@ class RegisterPage extends Component {
 							className={classes.textField}
 							label="Your City"
 							variant="filled"
-							value={this.state.city}
-							onChange={this.handleInputChangeFor('city')}
+							value={this.state.location}
+							onChange={this.handleInputChangeFor('location')}
 							/>
 						<Button type='submit'>Register</Button>
 						<Button

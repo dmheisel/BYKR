@@ -11,10 +11,16 @@ function* registerUser(action) {
 		let response = yield axios.post('/api/user/register', action.payload);
 
 		//gets coords from google geocode api
-		let coordsResponse = yield axios.get(`api/geocode/${action.payload.location}`)
+		let coordsResponse = yield axios.get(
+			`api/geocode/${action.payload.location}`
+		);
 
 		//sends user id and coords to settings table
-		yield axios.post('/api/settings', { user_id: response.data.id, coords: coordsResponse.data })
+		yield axios.post('/api/settings', {
+			user_id: response.data.id,
+			location: action.payload.location,
+			coords: coordsResponse.data
+		});
 
 		// automatically log a user in after registration
 		yield put({ type: 'LOGIN', payload: action.payload });
