@@ -6,9 +6,9 @@ class Map extends Component {
 	render() {
 		return (
 			<GoogleMap
-				id='mainPageMap'
+				// id='mainPageMap'
 				mapContainerStyle={{
-					height: '100vh',
+					height: '90vh',
 					width: '100vw'
 				}}
 				zoom={15}
