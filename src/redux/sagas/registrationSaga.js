@@ -6,10 +6,16 @@ function* registerUser(action) {
 	try {
 		// clear any existing error on the registration page
 		yield put({ type: 'CLEAR_REGISTRATION_ERROR' });
-		// passes the username and password from the payload to the server
+
+		//adds user to db user table, retrieves back user_id
 		let response = yield axios.post('/api/user/register', action.payload);
-		yield axios.post('/api/settings', {...action.payload, user_id: response.data.id})
-		// yield axios.post('/api/settings', {...action.payload, response})
+
+		//gets coords from google geocode api
+		let coordsResponse = yield axios.get(`api/geocode/${action.payload.location}`)
+
+		//sends user id and coords to settings table
+		yield axios.post('/api/settings', { user_id: response.data.id, coords: coordsResponse.data })
+
 		// automatically log a user in after registration
 		yield put({ type: 'LOGIN', payload: action.payload });
 		// set to 'login' mode so they see the login screen
