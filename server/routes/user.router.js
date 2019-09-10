@@ -5,8 +5,9 @@ const {
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
-const api_key = process.env.REACT_APP_API_KEY
 const axios = require('axios');
+const api_key = process.env.REACT_APP_API_KEY;
+
 
 const router = express.Router();
 // Handles Ajax request for user information if user is authenticated

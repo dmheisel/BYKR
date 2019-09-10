@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GoogleMap } from '@react-google-maps/api';
+import { GoogleMap, BicyclingLayer } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 
 class Map extends Component {
@@ -11,12 +11,19 @@ class Map extends Component {
 					height: '100vh',
 					width: '100vw'
 				}}
-				zoom={11}
+				zoom={15}
 				center={{
 					lat: Number(this.props.user.lat),
 					lng: Number(this.props.user.lng)
 				}}
-			/>
+				options={{
+					scaleControl: true,
+					mapTypeControl: false,
+					streetViewControl: false,
+					fullscreenControl: false,
+					zoomControl: true,
+				}}
+			><BicyclingLayer /></GoogleMap>
 		);
 	}
 }
