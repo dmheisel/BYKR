@@ -40,6 +40,11 @@ class SearchBar extends Component {
 	state = {
 		newLocation: ''
 	};
+
+	searchLocation = () => {
+		
+	}
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -62,7 +67,7 @@ class SearchBar extends Component {
 						}}
 					/>
 				<div className={classes.icon}>
-					<IconButton>
+					<IconButton onClick={this.searchLocation}>
 						<SearchIcon />
 					</IconButton>
 				</div>

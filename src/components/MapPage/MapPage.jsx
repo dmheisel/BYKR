@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux';
 import Map from '../Map/Map';
 import { LoadScript } from '@react-google-maps/api';
 import SearchBar from '../SearchBar/SearchBar';
@@ -11,12 +11,12 @@ class MapPage extends Component {
 	};
 
 	toggleAddMode = () => {
-		console.log(!this.state.addMode)
+		console.log(!this.state.addMode);
 		this.setState({ addMode: !this.state.addMode });
 	};
 
 	addLocation = location => {
-		this.state.addMode &&
+		if (this.state.addMode) {
 			this.props.dispatch({
 				type: 'ADD_LOCATION',
 				payload: {
@@ -24,6 +24,8 @@ class MapPage extends Component {
 					type: 1
 				}
 			});
+			this.toggleAddMode();
+		}
 	};
 
 	render() {
@@ -31,8 +33,14 @@ class MapPage extends Component {
 			<div>
 				<LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY}>
 					<SearchBar />
-					<Map addLocation={this.addLocation} toggleAddMode={this.toggleAddMode}/>
-					<BottomBar toggleAddMode={this.toggleAddMode} addMode={this.state.addMode}/>
+					<Map
+						addLocation={this.addLocation}
+						toggleAddMode={this.toggleAddMode}
+					/>
+					<BottomBar
+						toggleAddMode={this.toggleAddMode}
+						addMode={this.state.addMode}
+					/>
 				</LoadScript>
 			</div>
 		);

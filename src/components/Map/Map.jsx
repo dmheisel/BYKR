@@ -58,7 +58,6 @@ class Map extends Component {
 				}}
 				onClick={event => {
 					this.props.addLocation(event);
-					this.props.toggleAddMode()
 				}}
 				onDragEnd={this.updateCenter}>
 				<BicyclingLayer />
