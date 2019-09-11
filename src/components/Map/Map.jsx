@@ -3,6 +3,11 @@ import { GoogleMap, BicyclingLayer } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 
 class Map extends Component {
+
+	componentDidMount() {
+		this.props.dispatch({type: 'FETCH_LOCATIONS'})
+	}
+
 	render() {
 		return (
 			<GoogleMap
