@@ -8,12 +8,18 @@ import BottomBar from '../BottomBar/BottomBar';
 class MapPage extends Component {
 	state = {
 		addMode: false,
-		locations: [],
+		typeSelected: null,
+		locations: []
 	};
 
 	toggleAddMode = () => {
 		console.log(!this.state.addMode);
 		this.setState({ addMode: !this.state.addMode });
+	};
+	selectType = value => {
+		console.log(value);
+		this.setState({ typeSelected: value });
+		this.toggleAddMode()
 	};
 
 	addLocation = location => {
@@ -22,7 +28,7 @@ class MapPage extends Component {
 				type: 'ADD_LOCATION',
 				payload: {
 					coords: { lat: location.latLng.lat(), lng: location.latLng.lng() },
-					type: 1
+					type: this.state.typeSelected
 				}
 			});
 			this.toggleAddMode();
@@ -36,11 +42,11 @@ class MapPage extends Component {
 					<SearchBar />
 					<Map
 						addLocation={this.addLocation}
-						toggleAddMode={this.toggleAddMode}
 					/>
 					<BottomBar
 						toggleAddMode={this.toggleAddMode}
 						addMode={this.state.addMode}
+						selectType={this.selectType}
 					/>
 				</LoadScript>
 			</div>

@@ -65,7 +65,6 @@ class SearchBar extends Component {
 						inputProps={{ 'aria-label': 'search' }}
 						onChange={event => {
 							this.setState({ newLocation: event.target.value });
-							console.log(this.state);
 						}}
 					/>
 				<div className={classes.icon}>

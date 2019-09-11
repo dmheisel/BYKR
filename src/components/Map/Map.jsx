@@ -34,7 +34,6 @@ class Map extends Component {
 		));
 		return (
 			<GoogleMap
-				// id='mainPageMap'
 				mapContainerStyle={{
 					height: '90vh',
 					width: '100vw'
@@ -62,7 +61,7 @@ class Map extends Component {
 				}}
 				onDragEnd={this.updateCenter}>
 				<BicyclingLayer />
-				{this.props.locations ? markersHtml : null}
+				{this.props.locations && markersHtml}
 			</GoogleMap>
 		);
 	}
