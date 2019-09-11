@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { InputBase } from '@material-ui/core';
+import { InputBase, IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Menu from '@material-ui/icons/Menu';
 
@@ -23,7 +23,6 @@ const styles = theme => ({
 		height: '100%',
 		zIndex: '2',
 		position: 'relative',
-		pointerEvents: 'none',
 		display: 'inline-flex',
 		alignSelf: 'center',
 		justifyContent: 'center'
@@ -46,34 +45,26 @@ class SearchBar extends Component {
 		return (
 			<div className={classes.search}>
 				<div className={classes.icon}>
-					<Menu />
+					<IconButton>
+						<Menu />
+					</IconButton>
 				</div>
-				<form
-					onSubmit={event => {
-						event.preventDefault();
-						this.props.dispatch({
-							type: 'UPDATE_USER',
-							payload: {
-								id: this.props.user.id,
-								newLocation: this.state.newLocation
-							}
-						});
-					}}>
 					<InputBase
 						placeholder='Search…'
 						classes={{
 							root: classes.inputRoot,
 							input: classes.inputInput
 						}}
-						inputProps={{ 'aria-label': 'search', type: 'form' }}
+						inputProps={{ 'aria-label': 'search' }}
 						onChange={event => {
 							this.setState({ newLocation: event.target.value });
 							// console.log(this.state);
 						}}
 					/>
-				</form>
 				<div className={classes.icon}>
-					<SearchIcon />
+					<IconButton>
+						<SearchIcon />
+					</IconButton>
 				</div>
 			</div>
 		);
