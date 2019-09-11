@@ -68,7 +68,7 @@ class SearchBar extends Component {
 						inputProps={{ 'aria-label': 'search', type: 'form' }}
 						onChange={event => {
 							this.setState({ newLocation: event.target.value });
-							console.log(this.state);
+							// console.log(this.state);
 						}}
 					/>
 				</form>
