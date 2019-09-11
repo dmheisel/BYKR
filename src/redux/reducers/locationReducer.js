@@ -1,4 +1,4 @@
-const location = (state = [], action) => {
+const locations = (state = [], action) => {
   switch (action.type) {
     case 'SET_LOCATIONS':
       return action.payload
@@ -7,4 +7,4 @@ const location = (state = [], action) => {
   }
 }
 //will be on redux state at state.location
-export default location;
+export default locations;

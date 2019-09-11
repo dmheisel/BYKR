@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { GoogleMap, BicyclingLayer } from '@react-google-maps/api';
+import { GoogleMap, BicyclingLayer, Marker } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 
 class Map extends Component {
-
 	componentDidMount() {
-		this.props.dispatch({type: 'FETCH_LOCATIONS'})
+		this.props.dispatch({ type: 'FETCH_LOCATIONS' });
 	}
 
 	render() {
+		let markersHtml = this.props.locations.map(location => (
+			<Marker
+				key={location.id}
+				position={{ lat: Number(location.lat), lng: Number(location.lng) }}
+			/>
+		));
 		return (
 			<GoogleMap
 				// id='mainPageMap'
@@ -26,14 +31,19 @@ class Map extends Component {
 					mapTypeControl: false,
 					streetViewControl: false,
 					fullscreenControl: false,
-					zoomControl: true,
+					zoomControl: true
 				}}
-				onClick={event => {this.props.addLocation(event)}}
-			><BicyclingLayer /></GoogleMap>
+				onClick={event => {
+					this.props.addLocation(event);
+				}}>
+				<BicyclingLayer />
+				{this.props.locations ? markersHtml : null}
+			</GoogleMap>
 		);
 	}
 }
 const mapStateToProps = reduxStore => ({
-	user: reduxStore.user
+	user: reduxStore.user,
+	locations: reduxStore.locations
 });
 export default connect(mapStateToProps)(Map);
