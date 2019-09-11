@@ -3,9 +3,26 @@ import { GoogleMap, BicyclingLayer, Marker } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 
 class Map extends Component {
+	state = {
+		map: {},
+		center: {
+			lat: Number(this.props.user.lat),
+			lng: Number(this.props.user.lng)
+		}
+	};
+
 	componentDidMount() {
 		this.props.dispatch({ type: 'FETCH_LOCATIONS' });
 	}
+	updateCenter = () => {
+		let newCenter = this.state.map.getCenter();
+		this.setState({
+			center: {
+				lat: newCenter.lat(),
+				lng: newCenter.lng()
+			}
+		});
+	};
 
 	render() {
 		let markersHtml = this.props.locations.map(location => (
@@ -21,10 +38,16 @@ class Map extends Component {
 					height: '90vh',
 					width: '100vw'
 				}}
+				onLoad={map =>
+					this.setState({
+						map: map,
+						center: { lat: map.getCenter().lat(), lng: map.getCenter().lng() }
+					})
+				}
 				zoom={15}
 				center={{
-					lat: Number(this.props.user.lat),
-					lng: Number(this.props.user.lng)
+					lat: this.state.center.lat,
+					lng: this.state.center.lng
 				}}
 				options={{
 					scaleControl: true,
@@ -35,7 +58,8 @@ class Map extends Component {
 				}}
 				onClick={event => {
 					this.props.addLocation(event);
-				}}>
+				}}
+				onDragEnd={this.updateCenter}>
 				<BicyclingLayer />
 				{this.props.locations ? markersHtml : null}
 			</GoogleMap>
