@@ -7,7 +7,8 @@ import BottomBar from '../BottomBar/BottomBar';
 
 class MapPage extends Component {
 	state = {
-		addMode: false
+		addMode: false,
+		locations: [],
 	};
 
 	toggleAddMode = () => {

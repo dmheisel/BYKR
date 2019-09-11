@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import {
-	BottomNavigation,
-	BottomNavigationAction,
-	Fab
-} from '@material-ui/core';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 
 const styles = theme => ({

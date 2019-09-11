@@ -4,24 +4,25 @@ import { connect } from 'react-redux';
 
 class Map extends Component {
 	state = {
-		map: {},
-		center: {
-			lat: Number(this.props.user.lat),
-			lng: Number(this.props.user.lng)
-		}
+		map: {}
 	};
 
 	componentDidMount() {
 		this.props.dispatch({ type: 'FETCH_LOCATIONS' });
-	}
-	updateCenter = () => {
-		let newCenter = this.state.map.getCenter();
-		this.setState({
-			center: {
-				lat: newCenter.lat(),
-				lng: newCenter.lng()
+		this.props.dispatch({
+			type: 'SET_CENTER',
+			payload: {
+				lat: Number(this.props.user.lat),
+				lng: Number(this.props.user.lng)
 			}
 		});
+	}
+	updateCenter = () => {
+		let newCenter = {
+			lat: this.state.map.getCenter().lat(),
+			lng: this.state.map.getCenter().lng()
+		};
+		this.props.dispatch({ type: 'SET_CENTER', payload: newCenter });
 	};
 
 	render() {
@@ -46,8 +47,8 @@ class Map extends Component {
 				}
 				zoom={15}
 				center={{
-					lat: this.state.center.lat,
-					lng: this.state.center.lng
+					lat: this.props.mapCenter.lat || Number(this.props.user.lat),
+					lng: this.props.mapCenter.lng || Number(this.props.user.lng)
 				}}
 				options={{
 					scaleControl: true,
@@ -68,6 +69,7 @@ class Map extends Component {
 }
 const mapStateToProps = reduxStore => ({
 	user: reduxStore.user,
-	locations: reduxStore.locations
+	locations: reduxStore.locations,
+	mapCenter: reduxStore.mapCenter
 });
 export default connect(mapStateToProps)(Map);

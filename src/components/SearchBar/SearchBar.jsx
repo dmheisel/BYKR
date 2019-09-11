@@ -42,7 +42,8 @@ class SearchBar extends Component {
 	};
 
 	searchLocation = () => {
-		
+		this.props.dispatch({ type: 'UPDATE_CENTER', payload: this.state.newLocation });
+		this.setState({newLocation: ''})
 	}
 
 	render() {
@@ -60,10 +61,11 @@ class SearchBar extends Component {
 							root: classes.inputRoot,
 							input: classes.inputInput
 						}}
+						value={this.state.newLocation}
 						inputProps={{ 'aria-label': 'search' }}
 						onChange={event => {
 							this.setState({ newLocation: event.target.value });
-							// console.log(this.state);
+							console.log(this.state);
 						}}
 					/>
 				<div className={classes.icon}>
