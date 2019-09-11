@@ -28,9 +28,7 @@ class Map extends Component {
 					fullscreenControl: false,
 					zoomControl: true,
 				}}
-				onClick={event => {
-					console.log(event.latLng.lat(), event.latLng.lng())
-				}}
+				onClick={event => {this.props.addLocation(event)}}
 			><BicyclingLayer /></GoogleMap>
 		);
 	}
