@@ -19,7 +19,7 @@ class BottomBar extends Component {
 			<BottomNavigation
 				showLabels
 				className={classes.root}>
-				<BottomNavigationAction label='Add Site' icon={<AddCircleOutline />} onClick={this.props.toggleAddMode} />
+				<BottomNavigationAction label={this.props.addMode ? 'Cancel Add': 'Add Site'} icon={<AddCircleOutline />} onClick={this.props.toggleAddMode} />
 			</BottomNavigation>
 		);
 	}

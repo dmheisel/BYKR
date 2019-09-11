@@ -31,8 +31,8 @@ class MapPage extends Component {
 			<div>
 				<LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY}>
 					<SearchBar />
-					<Map addLocation={this.addLocation}/>
-					<BottomBar toggleAddMode={this.toggleAddMode}/>
+					<Map addLocation={this.addLocation} toggleAddMode={this.toggleAddMode}/>
+					<BottomBar toggleAddMode={this.toggleAddMode} addMode={this.state.addMode}/>
 				</LoadScript>
 			</div>
 		);
