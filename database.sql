@@ -59,3 +59,8 @@ create table users_locations_comments (
     location_id int references locations,
     "comment" varchar(750) not null
 );
+
+SELECT "locations"."id", "lat", "lng", "created_by_user_id", "type_name"
+    FROM locations
+    JOIN location_types
+      ON locations.location_type_id = location_types.id;

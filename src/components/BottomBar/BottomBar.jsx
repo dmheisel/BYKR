@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import {
 	BottomNavigation,
@@ -35,6 +36,9 @@ class BottomBar extends Component {
 
 	render() {
 		const { classes } = this.props;
+		const menuOptions = this.props.locationTypes.map(type => (
+			<MenuItem key={type.id} value={type.id} onClick={this.handleSelect}>{type.type_name}</MenuItem>
+		))
 		return (
 			<div>
 				<BottomNavigation showLabels className={classes.root}>
@@ -50,17 +54,14 @@ class BottomBar extends Component {
 					keepMounted
 					open={Boolean(this.state.anchorEl)}
 					onClose={this.handleClose}>
-					<MenuItem value={1} onClick={this.handleSelect}>
-						Bike Rack
-					</MenuItem>
-					<MenuItem value={2} onClick={this.handleSelect}>
-						Fix Station
-					</MenuItem>
+					{menuOptions}
 					<MenuItem onClick={this.handleClose}>Cancel</MenuItem>
 				</Menu>
 			</div>
 		);
 	}
 }
-
-export default withStyles(styles)(BottomBar);
+const mapStateToProps = reduxStore => ({
+	locationTypes: reduxStore.locations.locationTypes
+})
+export default connect(mapStateToProps)(withStyles(styles)(BottomBar));
