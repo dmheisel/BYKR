@@ -40,7 +40,7 @@ class SearchBar extends Component {
 	state = {
 		newLocation: ''
 	};
-
+	//dispatches new request to geocode api -- will be set as center once received back
 	searchLocation = () => {
 		this.props.dispatch({ type: 'UPDATE_CENTER', payload: this.state.newLocation });
 		this.setState({newLocation: ''})
@@ -51,7 +51,7 @@ class SearchBar extends Component {
 		return (
 			<div className={classes.search}>
 				<div className={classes.icon}>
-					<IconButton>
+					<IconButton onClick={this.props.toggleDrawer}>
 						<Menu />
 					</IconButton>
 				</div>
