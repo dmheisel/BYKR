@@ -40,6 +40,48 @@ router.get('/types', (req, res) => {
 		});
 });
 
+//get route to get comments for specific location and save to state.
+router.get('/comments/:id', (req, res) => {
+	const id = req.params.id;
+	const sqlText =
+	`select array_agg(comment) as user_comments, array_agg(user_id) as user_ids
+	from
+		users_locations_comments
+	where
+		location_id = $1;`;
+	pool
+		.query(sqlText, id)
+		.then(result => {
+			console.log('successful GET of location comments')
+			res.send(result.rows)
+		})
+		.catch(error => {
+			console.log('error on GET request of location comments', error)
+			res.sendStatus(500)
+		})
+})
+
+//get route to get average ratings for specific location and save to state.
+router.get('/rating/:id', (req, res) => {
+	const id = req.params.id
+	const sqlText = `select round(avg(rating), 1) as avg_rating
+	from
+		users_locations_ratings
+	where
+		location_id = $1;`;
+
+	pool
+		.query(sqlText, id)
+		.then(result => {
+			console.log('successful GET of location rating');
+			res.send(result.rows);
+		})
+		.catch(error => {
+			console.log('error on GET request of location rating', error);
+			res.sendStatus(500);
+		});
+})
+
 // post route to add location into database locations table
 router.post('/', rejectUnauthenticated, (req, res) => {
 	const coords = req.body.coords;
