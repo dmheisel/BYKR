@@ -20,6 +20,21 @@ router.get('/', (req, res) => {
 		});
 });
 
+//get route to get all location types available and save to redux state
+router.get('/types', (req, res) => {
+	const sqlText = `SELECT * FROM location_types`
+	pool
+		.query(sqlText)
+		.then(result => {
+			console.log('successful GET of location types')
+			res.send(result.rows)
+		})
+		.catch(error => {
+			console.log(`error on GET of location types: ${error}`)
+			res.sendStatus(500)
+		})
+})
+
 // post route to add location into database locations table
 router.post('/', rejectUnauthenticated, (req, res) => {
 	const coords = req.body.coords;

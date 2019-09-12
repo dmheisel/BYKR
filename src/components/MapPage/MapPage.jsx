@@ -13,7 +13,9 @@ class MapPage extends Component {
 		locations: [],
 		drawerOpen: false
 	};
-
+	componentDidMount = () => {
+		this.props.dispatch({type: 'FETCH_LOCATION_TYPES'})
+	}
 	//toggles add mode on or off -- can only add locations if currentlyin add mode
 	toggleAddMode = () => {
 		console.log(!this.state.addMode);

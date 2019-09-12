@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { GoogleMap, BicyclingLayer, Marker } from '@react-google-maps/api';
+import { GoogleMap, BicyclingLayer } from '@react-google-maps/api';
 import { connect } from 'react-redux';
+import MapMarker from '../MapMarker/MapMarker'
 
 class Map extends Component {
 	state = {
@@ -26,10 +27,11 @@ class Map extends Component {
 	};
 
 	render() {
-		let markersHtml = this.props.locations.map(location => (
-			<Marker
-				key={location.id}
-				position={{ lat: Number(location.lat), lng: Number(location.lng) }}
+		let markersHtml = this.props.markers.map(marker => (
+			<MapMarker
+				key={marker.id}
+				marker={marker}
+				position={{ lat: Number(marker.lat), lng: Number(marker.lng) }}
 			/>
 		));
 		return (
@@ -61,14 +63,15 @@ class Map extends Component {
 				}}
 				onDragEnd={this.updateCenter}>
 				<BicyclingLayer />
-				{this.props.locations && markersHtml}
+				{this.props.markers && markersHtml}
+				{/* not sure if conditional rendering is needed here. */}
 			</GoogleMap>
 		);
 	}
 }
 const mapStateToProps = reduxStore => ({
 	user: reduxStore.user,
-	locations: reduxStore.locations,
+	markers: reduxStore.locations.markers,
 	mapCenter: reduxStore.mapCenter
 });
 export default connect(mapStateToProps)(Map);

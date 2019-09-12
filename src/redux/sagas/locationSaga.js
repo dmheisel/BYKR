@@ -11,6 +11,16 @@ function* fetchLocations() {
   }
 }
 
+function* fetchLocationTypes() {
+	//gets all types of locations from the database and stores in redux state
+	try {
+		let response = yield axios.get('/api/locations/types')
+		yield put({type: 'SET_LOCATION_TYPES', payload: response.data})
+	} catch (error) {
+		console.log('error on fetching list of location types')
+	}
+}
+
 function* addLocation(action) {
 	//add location to database
 	try {
@@ -24,6 +34,7 @@ function* addLocation(action) {
 function* locationSaga() {
 	yield takeLatest('FETCH_LOCATIONS', fetchLocations);
 	yield takeLatest('ADD_LOCATION', addLocation);
+	yield takeLatest('FETCH_LOCATION_TYPES', fetchLocationTypes)
 }
 
 export default locationSaga;
