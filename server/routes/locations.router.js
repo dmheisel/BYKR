@@ -107,14 +107,16 @@ router.get('/rating/:id', (req, res) => {
 
 // post route to add location into database locations table
 router.post('/', rejectUnauthenticated, (req, res) => {
+	console.log('posting to locations db: ', req.body)
 	const coords = req.body.coords;
 	const type = req.body.type;
+	const address = req.body.address
 	const sqlText = `INSERT
         INTO locations
-          (lat, lng, location_type_id, created_by_user_id)
+          (lat, lng, address, location_type_id, created_by_user_id)
         VALUES
-          ($1, $2, $3, $4);`;
-	const values = [coords.lat, coords.lng, type, req.user.id];
+          ($1, $2, $3, $4, $5);`;
+	const values = [coords.lat, coords.lng, address, type, req.user.id];
 	pool
 		.query(sqlText, values)
 		.then(result => {

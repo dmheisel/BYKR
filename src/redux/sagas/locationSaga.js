@@ -51,7 +51,11 @@ function* fetchLocationDetails(action) {
 function* addLocation(action) {
 	//add location to database
 	try {
-		yield axios.post('/api/locations', action.payload);
+		let response = yield axios.get(
+			`api/geocode/address/${action.payload.coords.lat},${action.payload.coords.lng}`
+		);
+		yield console.log(response)
+		yield axios.post('/api/locations', {...action.payload, address: response.data});
 		yield put({ type: 'FETCH_LOCATIONS' });
 	} catch (error) {
 		console.log('error on saga sending location to server');
