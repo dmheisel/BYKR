@@ -16,7 +16,7 @@ const styles = theme => ({
 	},
 	formContainer: {
 		width: '70%',
-		height: '275px',
+		height: '300px',
 		marginTop: '80%',
 		backgroundColor: 'white'
 	},
@@ -61,7 +61,7 @@ class RegisterPage extends Component {
 			<Container className={classes.root}>
 				<Container className={classes.formContainer}>
 					<form onSubmit={this.registerUser}>
-						<h1>Register User</h1>
+						<h1>Register</h1>
 						<TextField
 							className={classes.textField}
 							label='Username'

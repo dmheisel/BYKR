@@ -16,7 +16,7 @@ const styles = theme => ({
 	},
 	formContainer: {
 		width: '70%',
-		height: '275px',
+		height: '300px',
 		marginTop: '80%',
 		backgroundColor: 'white'
 	},
@@ -60,7 +60,7 @@ class LoginPage extends Component {
 			<Container className={classes.root}>
 				<Container className={classes.formContainer}>
 					<form onSubmit={this.login}>
-						<h1>Login</h1>
+						<h1>BYKR Login</h1>
 						<TextField
 							className={classes.textField}
 							label='Username'

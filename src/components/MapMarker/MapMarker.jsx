@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Marker, InfoWindow } from '@react-google-maps/api';
+import { Marker } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 import LocalParking from '../Views/LocalParking.png';
 import BuildIcon from '../Views/BuildIcon.png';

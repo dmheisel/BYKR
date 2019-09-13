@@ -5,8 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import {
 	BottomNavigation,
 	BottomNavigationAction,
-	Menu,
-	MenuItem
 } from '@material-ui/core';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 
