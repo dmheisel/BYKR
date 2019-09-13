@@ -48,7 +48,8 @@ router.get('/comments/:id', (req, res) => {
     locations.id,
     lat,
     lng,
-    location_type_id,
+		location_type_id,
+		created_by_user_id,
     array_agg(users_locations_comments.comment order by users_locations_comments.id DESC) as user_comments,
     array_agg(users_locations_comments.user_id order by users_locations_comments.id DESC) as user_ids
   FROM

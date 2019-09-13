@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { InfoWindow } from '@react-google-maps/api';
 import { connect } from 'react-redux';
-import TypeMenu from '../TypeMenu/TypeMenu'
+import TypeMenu from '../TypeMenu/TypeMenu';
 
 class LocationSmallPopup extends Component {
 	state = {
@@ -17,7 +17,13 @@ class LocationSmallPopup extends Component {
 	};
 
 	handleSelect = event => {
-		this.props.dispatch({type: 'UPDATE_MARKER_TYPE', payload: {id: this.props.displayedLocation.id, type_id: event.target.value}})
+		this.props.dispatch({
+			type: 'UPDATE_MARKER_TYPE',
+			payload: {
+				id: this.props.displayedLocation.id,
+				type_id: event.target.value
+			}
+		});
 		this.handleClose();
 		this.props.closeWindow();
 	};
@@ -40,8 +46,13 @@ class LocationSmallPopup extends Component {
 				<div>
 					<h1>{this.props.displayedLocation.rating}</h1>
 					{commentHtml}
-					<button onClick={this.props.deleteMarker}>Delete</button>
-					<button onClick={this.handleOpen}>Change Location Type</button>
+					{this.props.user.id ===
+						this.props.displayedLocation.created_by_user_id && (
+						<div>
+							<button onClick={this.props.deleteMarker}>Delete</button>
+							<button onClick={this.handleOpen}>Change Location Type</button>
+						</div>
+					)}
 					<TypeMenu
 						id='simple-menu'
 						anchorEl={this.state.anchorEl}
@@ -56,6 +67,7 @@ class LocationSmallPopup extends Component {
 	}
 }
 const mapStateToProps = reduxStore => ({
-	displayedLocation: reduxStore.locations.displayedLocation
+	displayedLocation: reduxStore.locations.displayedLocation,
+	user: reduxStore.user
 });
 export default connect(mapStateToProps)(LocationSmallPopup);
