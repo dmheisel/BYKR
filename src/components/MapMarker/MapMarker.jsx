@@ -3,22 +3,20 @@ import { Marker, InfoWindow } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 import LocalParking from '../Views/LocalParking.png';
 import BuildIcon from '../Views/BuildIcon.png';
+import LocationSmallPopup from '../LocationSmallPopup/LocationSmallPopup';
 
 class MapMarker extends Component {
-	state = {
-		infoWindowShown: false
-	};
 
+	//uses redux state to set displayed info window
 	openInfoWindow = () => {
-		this.setState({ infoWindowShown: true });
 		this.props.dispatch({
 			type: 'FETCH_LOCATION_DETAILS',
 			payload: this.props.marker.id
 		});
 	};
 
+	//clears displayed info window from redux state
 	closeWindow = () => {
-		this.setState({ infoWindowShown: false });
 		this.props.dispatch({ type: 'CLEAR_DISPLAYED_LOCATION' });
 	};
 
@@ -34,15 +32,15 @@ class MapMarker extends Component {
 	};
 	render() {
 		let icon = this.getIcon(this.props.marker.type_name);
-		let commentHtml = this.props.displayedLocation.comments ? (
-			<ul>
-				{this.props.displayedLocation.comments.comment.map((comment, index) => {
-					while (index < 3) {
-						return <li key={index}>{comment}</li>;
-					}
-				})}
-			</ul>
-		) : null;
+		// let commentHtml = this.props.displayedLocation.comments ? (
+		// 	<ul>
+		// 		{this.props.displayedLocation.comments.comment.map((comment, index) => {
+		// 			while (index < 3) {
+		// 				return <li key={index}>{comment}</li>;
+		// 			}
+		// 		})}
+		// 	</ul>
+		// ) : null;
 
 		return (
 			<Marker
@@ -51,15 +49,13 @@ class MapMarker extends Component {
 				icon={icon}
 				// animation={Animation.DROP}
 			>
+				{/* conditionally render infowindow only if this marker id is in redux as displayed */}
 				{this.props.marker.id === this.props.displayedLocation.id && (
-					<InfoWindow
-						onCloseClick={this.closeWindow}
-						position={this.props.position}>
-						<div>
-							<h1>{this.props.displayedLocation.rating}</h1>
-							{commentHtml}
-						</div>
-					</InfoWindow>
+
+					<LocationSmallPopup
+						closeWindow={this.closeWindow}
+						position={this.props.position}
+						/>
 				)}
 			</Marker>
 		);
