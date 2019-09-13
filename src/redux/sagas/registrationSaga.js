@@ -12,7 +12,7 @@ function* registerUser(action) {
 
 		//gets coords from google geocode api
 		let coordsResponse = yield axios.get(
-			`api/geocode/${action.payload.location}`
+			`api/geocode/coords/${action.payload.location}`
 		);
 
 		//sends user id and coords to settings table

@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
+import LogOutButton from '../LogOutButton/LogOutButton'
+import { connect } from 'react-redux';
+
 //material-ui imports
 import {
-	Avatar,
 	Drawer,
-	Button,
 	List,
 	Divider,
 	ListItem,
-	ListItemIcon,
 	ListItemAvatar,
 	ListItemText
 } from '@material-ui/core';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import { withStyles } from '@material-ui/core/styles';
 
+//styling for page
 const styles = theme => ({
 	root: {
 		width: '70vw'
@@ -38,8 +39,11 @@ class SideBar extends Component {
 							<ListItemAvatar>
 								<AccountCircleTwoToneIcon />
 							</ListItemAvatar>
-							<ListItemText>UserName</ListItemText>
-            </ListItem>
+							<ListItemText>{this.props.user.username}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<LogOutButton />
+						</ListItem>
           </List>
           <List>
 						<Divider />
@@ -61,5 +65,7 @@ class SideBar extends Component {
 		);
 	}
 }
-
-export default withStyles(styles)(SideBar);
+const mapStateToProps = reduxState => ({
+	user: reduxState.user
+})
+export default withStyles(styles)(connect(mapStateToProps)(SideBar));
