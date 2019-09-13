@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import TypeMenu from '../TypeMenu/TypeMenu'
 import { withStyles } from '@material-ui/core/styles';
 import {
 	BottomNavigation,
@@ -36,9 +37,6 @@ class BottomBar extends Component {
 
 	render() {
 		const { classes } = this.props;
-		const menuOptions = this.props.locationTypes.map(type => (
-			<MenuItem key={type.id} value={type.id} onClick={this.handleSelect}>{type.type_name}</MenuItem>
-		))
 		return (
 			<div>
 				<BottomNavigation showLabels className={classes.root}>
@@ -48,15 +46,13 @@ class BottomBar extends Component {
 						onClick={this.props.addMode ? this.props.toggleAddMode : this.handleOpen}
 					/>
 				</BottomNavigation>
-				<Menu
+				<TypeMenu
 					id='simple-menu'
 					anchorEl={this.state.anchorEl}
 					keepMounted
 					open={Boolean(this.state.anchorEl)}
-					onClose={this.handleClose}>
-					{menuOptions}
-					<MenuItem onClick={this.handleClose}>Cancel</MenuItem>
-				</Menu>
+					handleClose={this.handleClose}
+					handleSelect={this.handleSelect}/>
 			</div>
 		);
 	}
