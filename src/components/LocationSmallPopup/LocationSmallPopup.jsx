@@ -17,7 +17,7 @@ class LocationSmallPopup extends Component {
 	};
 
 	handleSelect = event => {
-		this.props.dispatch({type: 'UPDATE_LOCATION_TYPE', payload: {id: this.props.displayedLocation.id, type_id: event.target.value}})
+		this.props.dispatch({type: 'UPDATE_MARKER_TYPE', payload: {id: this.props.displayedLocation.id, type_id: event.target.value}})
 		this.handleClose();
 		this.props.closeWindow();
 	};

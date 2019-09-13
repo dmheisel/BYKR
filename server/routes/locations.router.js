@@ -158,4 +158,33 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
 	});
 });
 
+router.put(`/type/:id`, rejectUnauthenticated, (req, res) => {
+	const sqlText = `SELECT created_by_user_id FROM locations WHERE id = $1;`;
+	pool.query(sqlText, [req.params.id]).then(result => {
+		//checks if id is in database
+		if (result.rows.length > 0) {
+			//checks if user is same as user who created location
+			if (result.rows[0].created_by_user_id === req.user.id) {
+				const sqlText = `UPDATE locations SET location_type_id = $1 WHERE id = $2`;
+				pool
+					.query(sqlText, [req.body.type_id, req.params.id])
+					.then(result => {
+						console.log('successful type update from location database table');
+						res.sendStatus(204);
+					})
+					.catch(error => {
+						console.log('error updating type from location database table: ', error);
+						res.sendStatus(500);
+					});
+			} else {
+				console.log('user does not match user who created this location, cannot update');
+				res.sendStatus(403);
+			}
+		} else {
+			console.log('location not found in database table');
+			res.sendStatus(404);
+		}
+	});
+})
+
 module.exports = router;
