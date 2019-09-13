@@ -21,7 +21,7 @@ class LocationSmallPopup extends Component {
 				<div>
 					<h1>{this.props.displayedLocation.rating}</h1>
 					{commentHtml}
-					<button onClick={this.deleteMarker}>Delete</button>
+					<button onClick={this.props.deleteMarker}>Delete</button>
 				</div>
 			</InfoWindow>
 		);

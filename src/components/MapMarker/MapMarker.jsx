@@ -20,6 +20,11 @@ class MapMarker extends Component {
 		this.props.dispatch({ type: 'CLEAR_DISPLAYED_LOCATION' });
 	};
 
+	deleteMarker = () => {
+		this.props.dispatch({type: 'DELETE_MARKER', payload: this.props.marker.id})
+	}
+
+	//chooses correct icon based on type of location
 	getIcon = type => {
 		switch (type) {
 			case 'Bike Rack':
@@ -32,15 +37,6 @@ class MapMarker extends Component {
 	};
 	render() {
 		let icon = this.getIcon(this.props.marker.type_name);
-		// let commentHtml = this.props.displayedLocation.comments ? (
-		// 	<ul>
-		// 		{this.props.displayedLocation.comments.comment.map((comment, index) => {
-		// 			while (index < 3) {
-		// 				return <li key={index}>{comment}</li>;
-		// 			}
-		// 		})}
-		// 	</ul>
-		// ) : null;
 
 		return (
 			<Marker
@@ -55,6 +51,7 @@ class MapMarker extends Component {
 					<LocationSmallPopup
 						closeWindow={this.closeWindow}
 						position={this.props.position}
+						deleteMarker={this.deleteMarker}
 						/>
 				)}
 			</Marker>

@@ -4,6 +4,7 @@ import registrationSaga from './registrationSaga';
 import userSaga from './userSaga';
 import locationSaga from './locationSaga'
 import mapSaga from './mapSaga'
+import markerSaga from './markerSaga';
 
 // rootSaga is the primary saga.
 
@@ -13,6 +14,7 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     locationSaga(),
-    mapSaga()
+    mapSaga(),
+    markerSaga()
   ]);
 }

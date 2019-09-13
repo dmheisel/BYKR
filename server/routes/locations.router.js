@@ -138,7 +138,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
 			if (result.rows[0].created_by_user_id === req.user.id) {
 				const sqlText = `DELETE FROM locations WHERE id = $1;`;
 				pool
-					.query(sqlText, [req.user.id])
+					.query(sqlText, [req.params.id])
 					.then(result => {
 						console.log('successful delete from location database table');
 						res.sendStatus(204);
