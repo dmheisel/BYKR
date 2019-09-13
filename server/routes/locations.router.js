@@ -49,8 +49,8 @@ router.get('/comments/:id', (req, res) => {
     lat,
     lng,
     location_type_id,
-    array_agg(users_locations_comments.comment) as user_comments,
-    array_agg(users_locations_comments.user_id) as user_ids
+    array_agg(users_locations_comments.comment order by users_locations_comments.id DESC) as user_comments,
+    array_agg(users_locations_comments.user_id order by users_locations_comments.id DESC) as user_ids
   FROM
     locations
   left join
