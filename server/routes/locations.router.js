@@ -8,7 +8,7 @@ const router = express.Router();
 // get route to get all locations from database locations table
 router.get('/', (req, res) => {
 	const sqlText = `
-	SELECT locations.id, lat, lng, created_by_user_id, location_types.type_name
+	SELECT locations.id, lat, lng, address, created_by_user_id, location_types.type_name
 		FROM locations
 		JOIN location_types
 			ON locations.location_type_id = location_types.id;`;
@@ -45,7 +45,8 @@ router.get('/comments/:id', (req, res) => {
 	const id = req.params.id;
 	const sqlText = `
 	select
-    locations.id,
+		locations.id,
+		address,
     lat,
     lng,
 		location_type_id,

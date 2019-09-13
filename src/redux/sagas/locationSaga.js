@@ -34,6 +34,7 @@ function* fetchLocationDetails(action) {
 			type: 'SET_DISPLAYED_LOCATION',
 			payload: {
 				id: commentsResponse.data.id,
+				address: commentsResponse.data.address,
 				location_type: commentsResponse.data.location_type_id,
 				created_by_user_id: commentsResponse.data.created_by_user_id,
 				comments: {

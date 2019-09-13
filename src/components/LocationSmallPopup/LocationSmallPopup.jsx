@@ -44,6 +44,7 @@ class LocationSmallPopup extends Component {
 				onCloseClick={this.props.closeWindow}
 				position={this.props.position}>
 				<div>
+					<h5>{this.props.displayedLocation.address}</h5>
 					<h1>{this.props.displayedLocation.rating}</h1>
 					{commentHtml}
 					{this.props.user.id ===
