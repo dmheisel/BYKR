@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Marker, InfoWindow } from '@react-google-maps/api';
+import {connect} from 'react-redux'
 import LocalParking from '../Views/LocalParking.png'
 import BuildIcon from '../Views/BuildIcon.png'
 
@@ -8,8 +9,13 @@ class MapMarker extends Component {
 		infoWindowShown: false
 	};
 
-	toggleInfoWindow = () => {
-		this.setState({ infoWindowShown: !this.state.infoWindowShown });
+	openInfoWindow = () => {
+		this.setState({ infoWindowShown: true });
+		this.props.dispatch({type: 'FETCH_LOCATION_DETAILS', payload: this.props.marker.id})
+	}
+
+	closeInfoWindow = () => {
+		this.setState({ infoWindowShown: false });
 	};
 
 	getIcon = (type) => {
@@ -28,16 +34,16 @@ class MapMarker extends Component {
 		return (
 			<Marker
 				position={this.props.position}
-				onClick={this.toggleInfoWindow}
+				onClick={this.openInfoWindow}
 				icon={icon}
 				// animation={Animation.DROP}
 			>
 				{this.state.infoWindowShown && (
 					<InfoWindow
-						onCloseClick={this.toggleInfoWindow}
+						onCloseClick={this.closeWindow}
 						position={this.props.position}>
 						<div>
-							<h1>{this.props.marker.type_name}</h1>
+							<h1>{this.props.details.rating}</h1>
 						</div>
 					</InfoWindow>
 				)}
@@ -45,5 +51,7 @@ class MapMarker extends Component {
 		);
 	}
 }
-
-export default MapMarker;
+const mapStateToProps = reduxStore => ({
+	details: reduxStore.locations.locationDetails
+})
+export default connect(mapStateToProps)(MapMarker);

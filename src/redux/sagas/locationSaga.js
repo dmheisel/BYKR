@@ -21,6 +21,17 @@ function* fetchLocationTypes() {
 	}
 }
 
+function* fetchLocationDetails(action) {
+	//gets all location comments and average rating from database to store in redux state
+	try {
+		let commentsResponse = yield axios.get(`/api/locations/comments/${action.payload}`)
+		let ratingsResponse = yield axios.get(`/api/locations/rating/${action.payload}`)
+		yield put({type: 'SET_LOCATION_DETAILS', payload: {comments: commentsResponse.data, rating: ratingsResponse.data.avg_rating}})
+	} catch (error) {
+		console.log('error on fetching location comments and ratings', error)
+	}
+}
+
 function* addLocation(action) {
 	//add location to database
 	try {
@@ -35,6 +46,7 @@ function* locationSaga() {
 	yield takeLatest('FETCH_LOCATIONS', fetchLocations);
 	yield takeLatest('ADD_LOCATION', addLocation);
 	yield takeLatest('FETCH_LOCATION_TYPES', fetchLocationTypes)
+	yield takeLatest('FETCH_LOCATION_DETAILS', fetchLocationDetails)
 }
 
 export default locationSaga;

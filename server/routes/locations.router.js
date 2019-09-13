@@ -50,10 +50,10 @@ router.get('/comments/:id', (req, res) => {
 	where
 		location_id = $1;`;
 	pool
-		.query(sqlText, id)
+		.query(sqlText, [id])
 		.then(result => {
 			console.log('successful GET of location comments')
-			res.send(result.rows)
+			res.send(result.rows[0])
 		})
 		.catch(error => {
 			console.log('error on GET request of location comments', error)
@@ -71,10 +71,10 @@ router.get('/rating/:id', (req, res) => {
 		location_id = $1;`;
 
 	pool
-		.query(sqlText, id)
+		.query(sqlText, [id])
 		.then(result => {
 			console.log('successful GET of location rating');
-			res.send(result.rows);
+			res.send(result.rows[0]);
 		})
 		.catch(error => {
 			console.log('error on GET request of location rating', error);
