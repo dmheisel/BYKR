@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { InfoWindow } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 import TypeMenu from '../TypeMenu/TypeMenu';
+import { Link } from '@material-ui/core';
 
 class LocationSmallPopup extends Component {
 	state = {
-		anchorEl: null
+		anchorEl: null,
+		moreDetails: false
 	};
 
 	handleOpen = event => {
@@ -29,15 +31,20 @@ class LocationSmallPopup extends Component {
 	};
 
 	render() {
-		let commentHtml = this.props.displayedLocation.comments ? (
-			<ul>
-				{this.props.displayedLocation.comments.comment.map((comment, index) => {
-					while (index < 3) {
-						return <li key={index}>{comment}</li>;
-					}
-				})}
-			</ul>
-		) : null;
+		let commentHtml =
+			//if there are no comments for this location, server returns array with first value null
+			//this conditional prevents list from being rendered if the first value is null (no comments)
+			this.props.displayedLocation.comments.comment[0] !== null ? (
+				<ul>
+					{this.props.displayedLocation.comments.comment.map(
+						(comment, index) => {
+							while (index < 3) {
+								return <li key={index}>{comment}</li>;
+							}
+						}
+					)}
+				</ul>
+			) : null;
 
 		return (
 			<InfoWindow
@@ -54,6 +61,12 @@ class LocationSmallPopup extends Component {
 							<button onClick={this.handleOpen}>Change Location Type</button>
 						</div>
 					)}
+					<Link
+						component='button'
+						variant='body2'
+						onClick={this.props.toggleMoreDetails}>
+						More Details...
+					</Link>
 					<TypeMenu
 						id='simple-menu'
 						anchorEl={this.state.anchorEl}

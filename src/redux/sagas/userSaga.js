@@ -11,7 +11,7 @@ function* fetchUser() {
 		// the config includes credentials which allow the server session to recognize the user
 		// If a user is logged in, this will return their information from the server session (req.user)
 		const response = yield axios.get('/api/user', config);
-		const settingsResponse = yield axios.get(
+		const accountDetailsResponse = yield axios.get(
 			`/api/settings/${response.data.id}`
 		);
 		// now that the session has given us a user object with an id and username set
@@ -20,9 +20,9 @@ function* fetchUser() {
 			type: 'SET_USER',
 			payload: {
 				...response.data,
-				default_location: settingsResponse.data.default_location,
-				lat: settingsResponse.data.lat,
-				lng: settingsResponse.data.lng
+				default_location: accountDetailsResponse.data.default_location,
+				lat: accountDetailsResponse.data.lat,
+				lng: accountDetailsResponse.data.lng
 			}
 		});
 	} catch (error) {

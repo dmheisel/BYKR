@@ -4,8 +4,12 @@ import { connect } from 'react-redux';
 import LocalParking from '../Views/LocalParking.png';
 import BuildIcon from '../Views/BuildIcon.png';
 import LocationSmallPopup from '../LocationSmallPopup/LocationSmallPopup';
+import LocationLargePopUp from '../LocationLargePopup/LocationLargePopUp';
 
 class MapMarker extends Component {
+	state = {
+		moreDetails: false
+	};
 
 	//uses redux state to set displayed info window
 	openInfoWindow = () => {
@@ -18,11 +22,20 @@ class MapMarker extends Component {
 	//clears displayed info window from redux state
 	closeWindow = () => {
 		this.props.dispatch({ type: 'CLEAR_DISPLAYED_LOCATION' });
+		this.setState({moreDetails: false})
+	};
+	//deletes marker from database if user id matches
+	deleteMarker = () => {
+		this.props.dispatch({
+			type: 'DELETE_MARKER',
+			payload: this.props.marker.id
+		});
 	};
 
-	deleteMarker = () => {
-		this.props.dispatch({type: 'DELETE_MARKER', payload: this.props.marker.id})
-	}
+	toggleMoreDetails = () => {
+		console.log('clicked');
+		this.setState({ moreDetails: !this.state.moreDetails });
+	};
 
 	//chooses correct icon based on type of location
 	getIcon = type => {
@@ -46,14 +59,24 @@ class MapMarker extends Component {
 				// animation={Animation.DROP}
 			>
 				{/* conditionally render infowindow only if this marker id is in redux as displayed */}
-				{this.props.marker.id === this.props.displayedLocation.id && (
-
-					<LocationSmallPopup
-						closeWindow={this.closeWindow}
-						position={this.props.position}
-						deleteMarker={this.deleteMarker}
+				{this.props.marker.id === this.props.displayedLocation.id &&
+					(this.state.moreDetails ? (
+						<LocationLargePopUp
+							closeWindow={this.closeWindow}
+							position={this.props.position}
+							deleteMarker={this.deleteMarker}
+							toggleMoreDetails={this.toggleMoreDetails}
+							marker={this.props.marker}
 						/>
-				)}
+					) : (
+						<LocationSmallPopup
+							closeWindow={this.closeWindow}
+							marker={this.props.marker}
+							position={this.props.position}
+							deleteMarker={this.deleteMarker}
+							toggleMoreDetails={this.toggleMoreDetails}
+						/>
+					))}
 			</Marker>
 		);
 	}
