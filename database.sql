@@ -64,3 +64,37 @@ SELECT "locations"."id", "lat", "lng", "created_by_user_id", "type_name"
     FROM locations
     JOIN location_types
       ON locations.location_type_id = location_types.id;
+
+--sql query to get a location and all associated comments and their user_ids who created them
+select
+    locations.id,
+    lat,
+    lng,
+    location_type_id,
+    array_agg(users_locations_comments.comment) as user_comments,
+    array_agg(users_locations_comments.user_id) as user_ids
+  FROM
+    locations
+  left join
+    users_locations_comments
+  ON
+    locations.id = users_locations_comments.location_id
+  WHERE
+    locations.id = $1
+  group BY
+    locations.id;
+
+--query to get location and the average user rating on that location
+select
+    locations.id,
+    round(avg(rating), 1) as avg_rating
+	from
+		locations
+	left join
+		users_locations_ratings
+	on
+		locations.id = users_locations_ratings.location_id
+	where
+		locations.id = $1
+	group by
+		locations.id;

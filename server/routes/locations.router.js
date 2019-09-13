@@ -43,32 +43,54 @@ router.get('/types', (req, res) => {
 //get route to get comments for specific location and save to state.
 router.get('/comments/:id', (req, res) => {
 	const id = req.params.id;
-	const sqlText =
-	`select array_agg(comment) as user_comments, array_agg(user_id) as user_ids
-	from
-		users_locations_comments
-	where
-		location_id = $1;`;
+	const sqlText = `
+	select
+    locations.id,
+    lat,
+    lng,
+    location_type_id,
+    array_agg(users_locations_comments.comment) as user_comments,
+    array_agg(users_locations_comments.user_id) as user_ids
+  FROM
+    locations
+  left join
+    users_locations_comments
+  ON
+    locations.id = users_locations_comments.location_id
+  WHERE
+    locations.id = $1
+  group BY
+    locations.id;`;
+
 	pool
 		.query(sqlText, [id])
 		.then(result => {
-			console.log('successful GET of location comments')
-			res.send(result.rows[0])
+			console.log('successful GET of location comments');
+			res.send(result.rows[0]);
 		})
 		.catch(error => {
-			console.log('error on GET request of location comments', error)
-			res.sendStatus(500)
-		})
-})
+			console.log('error on GET request of location comments', error);
+			res.sendStatus(500);
+		});
+});
 
 //get route to get average ratings for specific location and save to state.
 router.get('/rating/:id', (req, res) => {
-	const id = req.params.id
-	const sqlText = `select round(avg(rating), 1) as avg_rating
+	const id = req.params.id;
+	const sqlText = `
+	select
+    locations.id,
+    round(avg(rating), 1) as avg_rating
 	from
+		locations
+	left join
 		users_locations_ratings
+	on
+		locations.id = users_locations_ratings.location_id
 	where
-		location_id = $1;`;
+		locations.id = $1
+	group by
+		locations.id;`;
 
 	pool
 		.query(sqlText, [id])
@@ -80,7 +102,7 @@ router.get('/rating/:id', (req, res) => {
 			console.log('error on GET request of location rating', error);
 			res.sendStatus(500);
 		});
-})
+});
 
 // post route to add location into database locations table
 router.post('/', rejectUnauthenticated, (req, res) => {

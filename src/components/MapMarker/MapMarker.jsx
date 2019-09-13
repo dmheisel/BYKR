@@ -14,8 +14,9 @@ class MapMarker extends Component {
 		this.props.dispatch({type: 'FETCH_LOCATION_DETAILS', payload: this.props.marker.id})
 	}
 
-	closeInfoWindow = () => {
+	closeWindow = () => {
 		this.setState({ infoWindowShown: false });
+		this.props.dispatch({type: 'CLEAR_DISPLAYED_LOCATION'})
 	};
 
 	getIcon = (type) => {
@@ -38,12 +39,12 @@ class MapMarker extends Component {
 				icon={icon}
 				// animation={Animation.DROP}
 			>
-				{this.state.infoWindowShown && (
+				{this.props.marker.id === this.props.displayedLocation.id && (
 					<InfoWindow
 						onCloseClick={this.closeWindow}
 						position={this.props.position}>
 						<div>
-							<h1>{this.props.details.rating}</h1>
+							<h1>{this.props.displayedLocation.rating}</h1>
 						</div>
 					</InfoWindow>
 				)}
@@ -52,6 +53,6 @@ class MapMarker extends Component {
 	}
 }
 const mapStateToProps = reduxStore => ({
-	details: reduxStore.locations.locationDetails
+	displayedLocation: reduxStore.locations.displayedLocation
 })
 export default connect(mapStateToProps)(MapMarker);
