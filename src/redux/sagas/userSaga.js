@@ -12,7 +12,7 @@ function* fetchUser() {
 		// If a user is logged in, this will return their information from the server session (req.user)
 		const response = yield axios.get('/api/user', config);
 		const accountDetailsResponse = yield axios.get(
-			`/api/settings/${response.data.id}`
+			`/api/account/${response.data.id}`
 		);
 		// now that the session has given us a user object with an id and username set
 		//the client - side user object to let the client-side code know the user is logged in
@@ -21,6 +21,7 @@ function* fetchUser() {
 			payload: {
 				...response.data,
 				default_location: accountDetailsResponse.data.default_location,
+				saved_locations: accountDetailsResponse.data.saved_locations,
 				lat: accountDetailsResponse.data.lat,
 				lng: accountDetailsResponse.data.lng
 			}
@@ -35,7 +36,7 @@ function* updateUser(action) {
 		let newCoordsResponse = yield axios.get(
 			`/api/geocode/${action.payload.newLocation}`
 		);
-		yield axios.put(`/api/settings/${action.payload.id}`, {
+		yield axios.put(`/api/account/${action.payload.id}`, {
 			...action.payload,
 			coords: newCoordsResponse.data
 		});

@@ -3,17 +3,26 @@ const pool = require('../modules/pool');
 const {
 	rejectUnauthenticated
 } = require('../modules/authentication-middleware');
-const axios = require('axios');
 const router = express.Router();
 
-//get route to get the lat, lng from a user's settings
+//get route to get account details such as lat, lng, default location, saved locations
+//for one user out of database
 router.get('/:id', (req, res) => {
-	console.log('in settings get for ', req.params.id);
+	console.log('in accountDetails get for ', req.params.id);
 	const id = req.params.id;
 	const sqlText = `
-			SELECT lat, lng, default_location
-				FROM user_settings
-				WHERE user_id = $1;`;
+	select user_settings.user_id, lat, lng, default_location, array_agg(users_locations_saved.location_id) as saved_locations
+	from
+		user_settings
+	left join
+		users_locations_saved
+	on
+		user_settings.user_id = users_locations_saved.user_id
+	where
+		user_settings.user_id = $1
+	group by
+		user_settings.id;`;
+
 	pool
 		.query(sqlText, [id])
 		.then(result => {
@@ -43,11 +52,11 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
 		pool
 			.query(sqlText, values)
 			.then(result => {
-				console.log('Successful edit user settings');
+				console.log('Successful edit user account details');
 				res.sendStatus(204);
 			})
 			.catch(error => {
-				console.log('Error on edit user settings: ', error);
+				console.log('Error on edit user account details: ', error);
 			});
 	} else {
 		res.sendStatus(403);
@@ -56,7 +65,7 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
 
 //post route to add settings with new user to database
 router.post('/', (req, res) => {
-	console.log('in settings post: ', req.body);
+	console.log('in account details post: ', req.body);
 
 	const values = [
 		req.body.user_id,
@@ -83,5 +92,26 @@ router.post('/', (req, res) => {
 			);
 		});
 });
+
+router.post(`/save/:id`, rejectUnauthenticated, (req, res) => {
+	const locationId = req.params.id
+	const userId = req.user.id
+
+	const sqlText = `
+			INSERT
+				INTO users_locations_saved
+					(user_id, location_id)
+				VALUES
+					($1, $2);`
+
+	pool.query(sqlText, [userId, locationId])
+		.then(result => {
+			console.log('location saved!')
+			res.sendStatus(201)
+		})
+		.catch(error => {
+			console.log('error on saving location: ', error)
+		})
+})
 
 module.exports = router;

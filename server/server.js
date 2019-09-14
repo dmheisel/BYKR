@@ -9,7 +9,7 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const userRouter = require('./routes/user.router');
-const settingsRouter = require('./routes/settings.router')
+const accountDetails = require('./routes/accountDetails.router')
 const geocodeRouter = require('./routes/geocode.router')
 const locationsRouter = require('./routes/locations.router')
 
@@ -26,7 +26,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
-app.use('/api/settings', settingsRouter)
+app.use('/api/account', accountDetails)
 app.use('/api/geocode', geocodeRouter)
 app.use('/api/locations', locationsRouter)
 

@@ -16,7 +16,6 @@ import LocalParking from '../Views/LocalParking.png';
 import BuildIcon from '../Views/BuildIcon.png';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import UnfoldLessIcon from '@material-ui/icons/UnfoldLess';
 import CommentIcon from '@material-ui/icons/Comment';
 import Rating from '@material-ui/lab/Rating';
 

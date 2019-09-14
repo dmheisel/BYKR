@@ -16,7 +16,7 @@ function* registerUser(action) {
 		);
 
 		//sends user id and coords to settings table
-		yield axios.post('/api/settings', {
+		yield axios.post('/api/account', {
 			user_id: response.data.id,
 			location: action.payload.location,
 			coords: coordsResponse.data
