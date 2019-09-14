@@ -19,7 +19,6 @@ import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import CommentIcon from '@material-ui/icons/Comment';
 import Rating from '@material-ui/lab/Rating';
-
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -73,7 +72,9 @@ class LocationInfoPopUp extends Component {
 
 	updateRating = (event, newValue) => {
 		this.props.dispatch({
-			type: 'UPDATE_USER_RATING',
+			type: this.props.userRating.rating
+				? 'UPDATE_USER_RATING'
+				: 'ADD_USER_RATING',
 			payload: { id: this.props.displayedLocation.id, rating: newValue }
 		});
 	};

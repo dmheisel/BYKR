@@ -1,9 +1,9 @@
-const rating = (state = 0, action) => {
+const rating = (state = {}, action) => {
 	switch (action.type) {
 		case 'SET_USER_RATING':
       return action.payload;
     case 'CLEAR_USER_RATING':
-      return 0
+      return {}
 		default:
 			return state;
 	}

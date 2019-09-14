@@ -15,7 +15,7 @@ CREATE TABLE "user" (
 --table to contain user settings and account info - default location lat and lon, if they have given permission to use device location
 CREATE TABLE user_settings (
     id serial primary key,
-    user_id INT REFERENCES "user",
+    user_id INT REFERENCES "user" on delete cascade,
     lat decimal not null,
     lng decimal not null,
     use_device_location boolean default false
@@ -33,30 +33,30 @@ create table locations (
     id serial primary key,
     lat decimal not null,
     lng decimal not null,
-    location_type_id int references location_types,
-    created_by_user_id int references "user"
+    location_type_id int references location_types on delete cascade,
+    created_by_user_id int references "user" on delete cascade
 );
 
 --junction table for users saved locations
 create table users_locations_saved (
     id serial primary key,
-    user_id int references "user",
-    location_id int references locations
+    user_id int references "user" on delete cascade,
+    location_id int references locations on delete cascade
 );
 
 --junction table for ratings on each location
 create table users_locations_ratings (
     id serial primary key,
-    user_id int references "user",
-    location_id int references locations,
+    user_id int references "user" on delete cascade,
+    location_id int references locations on delete cascade,
     rating int not null
 );
 
 --junction table for comments on each location
 create table users_locations_comments (
     id serial primary key,
-    user_id int references "user",
-    location_id int references locations,
+    user_id int references "user" on delete cascade,
+    location_id int references locations on delete cascade,
     "comment" varchar(750) not null
 );
 
