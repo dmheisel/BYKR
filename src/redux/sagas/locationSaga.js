@@ -30,6 +30,7 @@ function* fetchLocationDetails(action) {
 		let ratingsResponse = yield axios.get(
 			`/api/locations/rating/${action.payload}`
 		);
+		yield put({ type: 'FETCH_USER_RATING', payload: action.payload });
 		yield put({
 			type: 'SET_DISPLAYED_LOCATION',
 			payload: {

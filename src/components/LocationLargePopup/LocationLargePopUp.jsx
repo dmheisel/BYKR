@@ -186,7 +186,8 @@ class LocationInfoPopUp extends Component {
 }
 const mapStateToProps = reduxStore => ({
 	displayedLocation: reduxStore.locations.displayedLocation,
-	user: reduxStore.user
+	user: reduxStore.user,
+	userRating: reduxStore.rating
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(LocationInfoPopUp));

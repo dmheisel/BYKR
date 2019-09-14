@@ -1,27 +1,27 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* fetchRating(action) {
+function* fetchUserRating(action) {
   try {
-    let ratingResponse = axios.get(`/api/rating/${id}`)
-    yield put('SET_RATING', ratingResponse.data)
+    let ratingResponse = yield axios.get(`/api/rating/${action.payload}`)
+    yield put({type: 'SET_USER_RATING', payload: ratingResponse.data || 0})
   } catch (error) {
     console.log('error on fetching rating from database: ', error)
   }
 }
 
-function* updateRating(action) {
+function* updateUserRating(action) {
   try {
-    yield axios.post(`/api/rating/${id}`, action.payload)
-    yield put('FETCH_RATING', action.payload.id)
+    yield axios.post(`/api/rating/${action.payload.locationId}`, action.payload)
+    yield put('FETCH_USER_RATING', action.payload.id)
   } catch (error) {
     console.log('error on updating rating in database: ', error)
   }
 }
 
 function* ratingSaga() {
-  yield takeLatest('UPDATE_RATING', updateRating)
-  yield takeLatest('FETCH_RATING', fetchRating)
+  yield takeLatest('UPDATE_USER_RATING', updateUserRating)
+  yield takeLatest('FETCH_USER_RATING', fetchUserRating)
 }
 
 export default ratingSaga;
