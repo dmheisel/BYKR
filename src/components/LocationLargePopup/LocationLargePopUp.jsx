@@ -73,8 +73,8 @@ class LocationInfoPopUp extends Component {
 
 	updateRating = (event, newValue) => {
 		this.props.dispatch({
-			type: 'UPDATE_RATING',
-			payload: { id: this.props.displayedLocation.id, newRating: newValue }
+			type: 'UPDATE_USER_RATING',
+			payload: { id: this.props.displayedLocation.id, rating: newValue }
 		});
 	};
 

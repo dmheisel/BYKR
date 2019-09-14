@@ -37,11 +37,9 @@ class LocationSmallPopup extends Component {
 			this.props.displayedLocation.comments.comment[0] !== null ? (
 				<ul>
 					{this.props.displayedLocation.comments.comment.map(
-						(comment, index) => {
-							while (index < 3) {
-								return <li key={index}>{comment}</li>;
-							}
-						}
+						(comment, index) =>
+							index < 3 && (<li key={index}>{comment}</li>)
+
 					)}
 				</ul>
 			) : null;

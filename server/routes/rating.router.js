@@ -27,10 +27,27 @@ router.get(`/:id`, rejectUnauthenticated, (req, res) => {
     })
 });
 
-/**
- * POST route template
- */
-router.post('/', (req, res) => {
+//POST route to add new rating into database table
+router.post('/:id', rejectUnauthenticated, (req, res) => {
+  let locationId = req.params.id
+  let userId = req.user.id
+  let rating = req.body.rating
+
+  let sqlText = `
+    insert into users_locations_ratings
+      (user_id, location_id, rating)
+    values
+      ($1, $2, $3)`
+  pool
+    .query(sqlText, [userId, locationId, rating])
+    .then(result => {
+      console.log('successful POST user rating into db table')
+      res.sendStatus(201)
+    })
+    .catch(error => {
+      console.log('error on POST user rating into db table: ', error)
+      res.sendStatus(500)
+    })
 
 });
 

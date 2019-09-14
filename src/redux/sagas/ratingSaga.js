@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
+//fetches user rating from database to set into redux state
 function* fetchUserRating(action) {
   try {
     let ratingResponse = yield axios.get(`/api/rating/${action.payload}`)
@@ -10,10 +11,11 @@ function* fetchUserRating(action) {
   }
 }
 
+//sends new user rating to database, then triggers fetch to set into redux state
 function* updateUserRating(action) {
   try {
-    yield axios.post(`/api/rating/${action.payload.locationId}`, action.payload)
-    yield put('FETCH_USER_RATING', action.payload.id)
+    yield axios.post(`/api/rating/${action.payload.id}`, {rating: action.payload.rating})
+    yield put({type: 'FETCH_USER_RATING', payload: action.payload.id})
   } catch (error) {
     console.log('error on updating rating in database: ', error)
   }
