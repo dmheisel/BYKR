@@ -12,6 +12,7 @@ const userRouter = require('./routes/user.router');
 const accountDetails = require('./routes/accountDetails.router')
 const geocodeRouter = require('./routes/geocode.router')
 const locationsRouter = require('./routes/locations.router')
+const ratingsRouter = require('./routes/ratings.router')
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -29,6 +30,7 @@ app.use('/api/user', userRouter);
 app.use('/api/account', accountDetails)
 app.use('/api/geocode', geocodeRouter)
 app.use('/api/locations', locationsRouter)
+app.use('/api/ratings', ratingsRouter)
 
 // Serve static files
 app.use(express.static('build'));
