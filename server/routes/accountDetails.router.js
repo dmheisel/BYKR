@@ -93,25 +93,51 @@ router.post('/', (req, res) => {
 		});
 });
 
+//POST route to save location into user's favorites list
 router.post(`/save/:id`, rejectUnauthenticated, (req, res) => {
-	const locationId = req.params.id
-	const userId = req.user.id
+	const locationId = req.params.id;
+	const userId = req.user.id;
 
 	const sqlText = `
 			INSERT
 				INTO users_locations_saved
 					(user_id, location_id)
 				VALUES
-					($1, $2);`
+					($1, $2);`;
 
-	pool.query(sqlText, [userId, locationId])
+	pool
+		.query(sqlText, [userId, locationId])
 		.then(result => {
-			console.log('location saved!')
-			res.sendStatus(201)
+			console.log('location saved!');
+			res.sendStatus(201);
 		})
 		.catch(error => {
-			console.log('error on saving location: ', error)
+			console.log('error on saving location: ', error);
+			res.sendStatus(500)
+		});
+});
+
+//DELETE route to remove location from user's favorites list
+router.delete(`/unsave/:id`, rejectUnauthenticated, (req, res) => {
+	const locationId = req.params.id;
+	const userId = req.user.id;
+
+	const sqlText = `
+			DELETE
+				FROM users_locations_saved
+				WHERE
+					(user_id = $1) AND
+					(location_id = $2);`;
+	pool
+		.query(sqlText, [userId, locationId])
+		.then(result => {
+			console.log('successful delete from users saved locations list');
+			res.sendStatus(204);
 		})
-})
+		.catch(error => {
+			console.log('error on removing from users saved locations list: ', error);
+			res.sendStatus(500);
+		});
+});
 
 module.exports = router;

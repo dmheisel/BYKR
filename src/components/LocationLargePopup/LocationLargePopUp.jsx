@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { InfoWindow } from '@react-google-maps/api';
 import {
-  Grid,
-  Link,
+	Grid,
+	Link,
 	List,
 	ListItem,
 	ListItemText,
@@ -16,6 +16,7 @@ import LocalParking from '../Views/LocalParking.png';
 import BuildIcon from '../Views/BuildIcon.png';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 import CommentIcon from '@material-ui/icons/Comment';
 import Rating from '@material-ui/lab/Rating';
 
@@ -23,18 +24,23 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
 	root: {
+		display: 'flex',
 		width: '60vw',
-		height: '35vh'
+		height: '40vh'
 	},
 	header: {
-		height: '25%'
+		height: '15%'
 	},
 	list: {
 		height: '50%',
-		overflow: 'auto'
+		overflow: 'auto',
+		border: '2px black'
 	},
 	footer: {
-		height: '25%'
+		height: '15%'
+	},
+	subfooter: {
+		height: '5%'
 	}
 });
 
@@ -42,7 +48,7 @@ class LocationInfoPopUp extends Component {
 	state = {
 		anchorEl: null,
 		moreDetails: false,
-		ratingValue: Number(this.props.displayedLocation.rating)
+		ratingValue: 0
 	};
 
 	handleOpen = event => {
@@ -51,6 +57,25 @@ class LocationInfoPopUp extends Component {
 
 	handleClose = () => {
 		this.setState({ anchorEl: null });
+	};
+
+	handleSaveClick = () => {
+		this.props.user.saved_locations.includes(this.props.displayedLocation.id)
+			? this.props.dispatch({
+					type: 'REMOVE_SAVED_LOCATION',
+					payload: this.props.displayedLocation.id
+			  })
+			: this.props.dispatch({
+					type: 'ADD_SAVED_LOCATION',
+					payload: this.props.displayedLocation.id
+			  });
+	};
+
+	updateRating = (event, newValue) => {
+		this.props.dispatch({
+			type: 'UPDATE_RATING',
+			payload: { id: this.props.displayedLocation.id, newRating: newValue }
+		});
 	};
 
 	getAvatarIcon = () => {
@@ -79,7 +104,7 @@ class LocationInfoPopUp extends Component {
 									<ListItemAvatar>
 										<AccountCircleTwoToneIcon />
 									</ListItemAvatar>
-                  <ListItemText>{comment}</ListItemText>
+									<ListItemText>{comment}</ListItemText>
 								</ListItem>
 							);
 						}
@@ -93,7 +118,7 @@ class LocationInfoPopUp extends Component {
 				position={this.props.position}
 				className={classes.root}>
 				<Grid className={classes.root} container>
-					<Grid container>
+					<Grid container className={classes.header}>
 						<Grid item xs={2}>
 							<Avatar src={this.getAvatarIcon()} />
 						</Grid>
@@ -104,7 +129,11 @@ class LocationInfoPopUp extends Component {
 							</Typography>
 						</Grid>
 						<Grid item xs={5}>
-							<Rating value={Number(this.props.displayedLocation.rating)} readOnly size="small" />
+							<Rating
+								value={Number(this.props.displayedLocation.rating)}
+								readOnly
+								size='small'
+							/>
 						</Grid>
 					</Grid>
 					<Grid container className={classes.list}>
@@ -112,21 +141,26 @@ class LocationInfoPopUp extends Component {
 							{commentsList}
 						</Grid>
 					</Grid>
-					<Grid container>
+					<Grid container className={classes.footer}>
 						<Grid item xs={3}>
-							<IconButton aria-label={'save to favorites'}>
-								<BookmarkBorderIcon />
+							<IconButton
+								aria-label={'save to favorites'}
+								onClick={this.handleSaveClick}>
+								{this.props.user.saved_locations.includes(
+									this.props.displayedLocation.id
+								) ? (
+									<BookmarkIcon />
+								) : (
+									<BookmarkBorderIcon />
+								)}
 							</IconButton>
 						</Grid>
 						<Grid item xs={6}>
-							<Typography component="legend">Add Rating!</Typography>
+							<Typography component='legend'>Add Rating!</Typography>
 							<Rating
-								name="addNewRating"
+								name='addNewRating'
 								value={this.state.ratingValue}
-								onChange={(event, newValue) => {
-									this.setState({ratingValue: newValue})
-								}}
-								precision={0.5}
+								onChange={this.updateRating}
 							/>
 						</Grid>
 						<Grid item xs={3}>
@@ -135,7 +169,7 @@ class LocationInfoPopUp extends Component {
 							</IconButton>
 						</Grid>
 					</Grid>
-					<Grid container>
+					<Grid container className={classes.subfooter}>
 						<Grid item xs={12}>
 							<Link
 								component='button'
