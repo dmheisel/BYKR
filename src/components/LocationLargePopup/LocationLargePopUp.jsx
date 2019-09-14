@@ -48,7 +48,7 @@ class LocationInfoPopUp extends Component {
 	state = {
 		anchorEl: null,
 		moreDetails: false,
-		ratingValue: 0
+		ratingValue: this.props.userRating.rating
 	};
 
 	handleOpen = event => {
