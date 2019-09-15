@@ -20,6 +20,7 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import CommentIcon from '@material-ui/icons/Comment';
 import Rating from '@material-ui/lab/Rating';
 import { withStyles } from '@material-ui/core/styles';
+import CommentDialogue from '../CommentDialogue/CommentDialogue';
 
 const styles = theme => ({
 	root: {
@@ -47,7 +48,8 @@ class LocationInfoPopUp extends Component {
 	state = {
 		anchorEl: null,
 		moreDetails: false,
-		ratingValue: this.props.userRating.rating
+		ratingValue: this.props.userRating.rating,
+		dialogOpen: false
 	};
 
 	handleOpen = event => {
@@ -57,7 +59,12 @@ class LocationInfoPopUp extends Component {
 	handleClose = () => {
 		this.setState({ anchorEl: null });
 	};
-
+	handleDialogClose = () => {
+		this.setState({ dialogOpen: false });
+	};
+	handleDialogOpen = () => {
+		this.setState({ dialogOpen: true });
+	};
 	handleSaveClick = () => {
 		this.props.user.saved_locations.includes(this.props.displayedLocation.id)
 			? this.props.dispatch({
@@ -114,74 +121,83 @@ class LocationInfoPopUp extends Component {
 			) : null;
 
 		return (
-			<InfoWindow
-				onCloseClick={this.props.closeWindow}
-				position={this.props.position}
-				className={classes.root}>
-				<Grid className={classes.root} container>
-					<Grid container className={classes.header}>
-						<Grid item xs={2}>
-							<Avatar src={this.getAvatarIcon()} />
+			<>
+				<InfoWindow
+					onCloseClick={this.props.closeWindow}
+					position={this.props.position}
+					className={classes.root}>
+					<Grid className={classes.root} container>
+						<Grid container className={classes.header}>
+							<Grid item xs={2}>
+								<Avatar src={this.getAvatarIcon()} />
+							</Grid>
+							<Grid item xs={5}>
+								<Typography variant='subtitle1'>Parking Rack</Typography>
+								<Typography variant='caption' noWrap={true}>
+									{this.props.displayedLocation.address}
+								</Typography>
+							</Grid>
+							<Grid item xs={5}>
+								<Rating
+									value={Number(this.props.displayedLocation.rating)}
+									readOnly
+									size='small'
+								/>
+							</Grid>
 						</Grid>
-						<Grid item xs={5}>
-							<Typography variant='subtitle1'>Parking Rack</Typography>
-							<Typography variant='caption' noWrap={true}>
-								{this.props.displayedLocation.address}
-							</Typography>
+						<Grid container className={classes.list}>
+							<Grid item xs={12}>
+								{commentsList}
+							</Grid>
 						</Grid>
-						<Grid item xs={5}>
-							<Rating
-								value={Number(this.props.displayedLocation.rating)}
-								readOnly
-								size='small'
-							/>
+						<Grid container className={classes.footer}>
+							<Grid item xs={3}>
+								<IconButton
+									aria-label={'save to favorites'}
+									onClick={this.handleSaveClick}>
+									{this.props.user.saved_locations.includes(
+										this.props.displayedLocation.id
+									) ? (
+										<BookmarkIcon />
+									) : (
+										<BookmarkBorderIcon />
+									)}
+								</IconButton>
+							</Grid>
+							<Grid item xs={6}>
+								<Typography component='legend'>Add Rating!</Typography>
+								<Rating
+									name='addNewRating'
+									value={this.state.ratingValue}
+									onChange={this.updateRating}
+								/>
+							</Grid>
+							<Grid item xs={3}>
+								<IconButton
+									aria-label={'add comment'}
+									onClick={this.handleDialogOpen}>
+									<CommentIcon />
+								</IconButton>
+							</Grid>
+						</Grid>
+						<Grid container className={classes.subfooter}>
+							<Grid item xs={12}>
+								<Link
+									component='button'
+									variant='body2'
+									onClick={this.props.toggleMoreDetails}>
+									<Typography variant='caption'>Less Details...</Typography>
+								</Link>
+							</Grid>
 						</Grid>
 					</Grid>
-					<Grid container className={classes.list}>
-						<Grid item xs={12}>
-							{commentsList}
-						</Grid>
-					</Grid>
-					<Grid container className={classes.footer}>
-						<Grid item xs={3}>
-							<IconButton
-								aria-label={'save to favorites'}
-								onClick={this.handleSaveClick}>
-								{this.props.user.saved_locations.includes(
-									this.props.displayedLocation.id
-								) ? (
-									<BookmarkIcon />
-								) : (
-									<BookmarkBorderIcon />
-								)}
-							</IconButton>
-						</Grid>
-						<Grid item xs={6}>
-							<Typography component='legend'>Add Rating!</Typography>
-							<Rating
-								name='addNewRating'
-								value={this.state.ratingValue}
-								onChange={this.updateRating}
-							/>
-						</Grid>
-						<Grid item xs={3}>
-							<IconButton aria-label={'add comment'}>
-								<CommentIcon />
-							</IconButton>
-						</Grid>
-					</Grid>
-					<Grid container className={classes.subfooter}>
-						<Grid item xs={12}>
-							<Link
-								component='button'
-								variant='body2'
-								onClick={this.props.toggleMoreDetails}>
-								<Typography variant='caption'>Less Details...</Typography>
-							</Link>
-						</Grid>
-					</Grid>
-				</Grid>
-			</InfoWindow>
+				</InfoWindow>
+				<CommentDialogue
+					handleClose={this.handleDialogClose}
+					handleOpen={this.handleDialogOpen}
+					dialogOpen={this.state.dialogOpen}
+				/>
+			</>
 		);
 	}
 }
