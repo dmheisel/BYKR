@@ -13,7 +13,7 @@ function* fetchComments(action) {
 function* addUserComment(action) {
 	try {
 		yield axios.post(`/api/comment/${action.payload.locationId}`, action.payload);
-		yield put({ type: 'FETCH_MARKER_DETAILS', payload: action.payload.locationId });
+		yield put({ type: 'FETCH_COMMENTS', payload: action.payload.locationId });
 	} catch (error) {
 		console.log('error on adding comment in saga: ', error);
 	}

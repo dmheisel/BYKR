@@ -119,9 +119,9 @@ class LocationInfoPopUp extends Component {
 		const commentsList =
 			//if there are no comments for this location, server returns array with first value null
 			//this conditional prevents list from being rendered if the first value is null (no comments)
-			this.props.comments && (
+			this.props.selectedMarker.comments && (
 				<List className={classes.listRoot} dense>
-					{this.props.comments.map((commentObject, index) => {
+					{this.props.selectedMarker.comments.map((commentObject, index) => {
 						return (
 							<ListItem key={commentObject.id} alignItems='flex-start'>
 								<ListItemAvatar>
