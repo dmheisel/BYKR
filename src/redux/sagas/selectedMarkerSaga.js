@@ -12,7 +12,7 @@ function* fetchMarkerDetails(action) {
 		console.log('error on retrieving details for selected marker: ', error);
 	}
 }
-
+//posts marker to save into database
 function* saveMarker(action) {
 	try {
 		yield axios.post(`/api/account/save/${action.payload}`);
@@ -24,7 +24,7 @@ function* saveMarker(action) {
 		);
 	}
 }
-
+//deletes saved marker from database
 function* unSaveMarker(action) {
 	try {
 		yield axios.delete(`/api/account/unsave/${action.payload}`);

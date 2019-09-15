@@ -84,11 +84,11 @@ class LocationInfoPopUp extends Component {
 	handleSaveClick = () => {
 		this.props.user.saved_locations.includes(this.props.selectedMarker.id)
 			? this.props.dispatch({
-					type: 'REMOVE_SAVED_LOCATION',
+					type: 'UNSAVE_MARKER',
 					payload: this.props.selectedMarker.id
 			  })
 			: this.props.dispatch({
-					type: 'ADD_SAVED_LOCATION',
+					type: 'SAVE_MARKER',
 					payload: this.props.selectedMarker.id
 			  });
 	};
