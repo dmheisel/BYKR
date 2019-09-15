@@ -16,7 +16,7 @@ class CommentDialogue extends Component {
 	handleSubmit = () => {
 		this.props.dispatch({
 			type: 'ADD_USER_COMMENT',
-			payload: {locationId: this.props.displayedLocation.id, comment: this.state.newComment}
+			payload: {locationId: this.props.selectedMarker.id, comment: this.state.newComment}
 		});
 		this.setState({ newComment: '' });
 		this.props.handleClose();
@@ -59,6 +59,6 @@ class CommentDialogue extends Component {
 	}
 }
 const mapStateToProps = reduxStore => ({
-	displayedLocation: reduxStore.locations.displayedLocation
+	selectedMarker: reduxStore.selectedMarker
 })
 export default connect(mapStateToProps)(CommentDialogue);

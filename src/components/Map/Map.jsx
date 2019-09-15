@@ -9,7 +9,6 @@ class Map extends Component {
 	};
 
 	componentDidMount() {
-		this.props.dispatch({ type: 'FETCH_LOCATIONS' });
 		this.props.dispatch({
 			type: 'SET_CENTER',
 			payload: {
@@ -27,13 +26,14 @@ class Map extends Component {
 	};
 
 	render() {
-		let markersHtml = this.props.markers.map(marker => (
+		const markersHtml = this.props.markers.markerList.map(marker => (
 			<MapMarker
 				key={marker.id}
 				marker={marker}
 				position={{ lat: Number(marker.lat), lng: Number(marker.lng) }}
 			/>
-		));
+		))
+
 		return (
 			<GoogleMap
 				mapContainerStyle={{
@@ -63,7 +63,7 @@ class Map extends Component {
 				}}
 				onDragEnd={this.updateCenter}>
 				<BicyclingLayer />
-				{this.props.markers && markersHtml}
+				{this.props.markers.markerList && markersHtml}
 				{/* not sure if conditional rendering is needed here. */}
 			</GoogleMap>
 		);
@@ -71,7 +71,7 @@ class Map extends Component {
 }
 const mapStateToProps = reduxStore => ({
 	user: reduxStore.user,
-	markers: reduxStore.locations.markers,
+	markers: reduxStore.markers,
 	mapCenter: reduxStore.mapCenter
 });
 export default connect(mapStateToProps)(Map);

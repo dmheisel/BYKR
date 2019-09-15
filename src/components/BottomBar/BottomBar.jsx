@@ -56,6 +56,6 @@ class BottomBar extends Component {
 	}
 }
 const mapStateToProps = reduxStore => ({
-	locationTypes: reduxStore.locations.locationTypes
+	markerTypes: reduxStore.markers.markerTypes
 })
 export default connect(mapStateToProps)(withStyles(styles)(BottomBar));

@@ -51,13 +51,12 @@ const styles = theme => ({
 class LocationInfoPopUp extends Component {
 	state = {
 		anchorEl: null,
-		moreDetails: false,
-		ratingValue: this.props.userRating.rating,
 		dialogOpen: false
 	};
 
+
 	handleOpen = event => {
-		this.props.user.id === this.props.displayedLocation.created_by_user_id &&
+		this.props.user.id === this.props.selectedMarker.created_by_user_id &&
 			this.setState({ anchorEl: event.currentTarget });
 	};
 
@@ -69,7 +68,7 @@ class LocationInfoPopUp extends Component {
 		this.props.dispatch({
 			type: 'UPDATE_MARKER_TYPE',
 			payload: {
-				id: this.props.displayedLocation.id,
+				id: this.props.selectedMarker.id,
 				type_id: event.target.value
 			}
 		});
@@ -83,28 +82,28 @@ class LocationInfoPopUp extends Component {
 		this.setState({ dialogOpen: true });
 	};
 	handleSaveClick = () => {
-		this.props.user.saved_locations.includes(this.props.displayedLocation.id)
+		this.props.user.saved_locations.includes(this.props.selectedMarker.id)
 			? this.props.dispatch({
 					type: 'REMOVE_SAVED_LOCATION',
-					payload: this.props.displayedLocation.id
+					payload: this.props.selectedMarker.id
 			  })
 			: this.props.dispatch({
 					type: 'ADD_SAVED_LOCATION',
-					payload: this.props.displayedLocation.id
+					payload: this.props.selectedMarker.id
 			  });
 	};
 
 	updateRating = (event, newValue) => {
 		this.props.dispatch({
-			type: this.props.userRating.rating
+			type: this.props.selectedMarker.userRating
 				? 'UPDATE_USER_RATING'
 				: 'ADD_USER_RATING',
-			payload: { id: this.props.displayedLocation.id, rating: newValue }
+			payload: { id: this.props.selectedMarker.id, rating: newValue }
 		});
 	};
 
 	getAvatarIcon = () => {
-		switch (this.props.displayedLocation.location_type) {
+		switch (this.props.selectedMarker.location_type) {
 			case 1:
 				return LocalParking;
 			case 2:
@@ -152,12 +151,12 @@ class LocationInfoPopUp extends Component {
 							<Grid item xs={5}>
 								<Typography variant='subtitle1'>Parking Rack</Typography>
 								<Typography variant='caption' noWrap={true}>
-									{this.props.displayedLocation.address}
+									{this.props.selectedMarker.address}
 								</Typography>
 							</Grid>
 							<Grid item xs={5}>
 								<Rating
-									value={Number(this.props.displayedLocation.rating)}
+									value={Number(this.props.selectedMarker.avgRating)}
 									readOnly
 									size='small'
 								/>
@@ -174,7 +173,7 @@ class LocationInfoPopUp extends Component {
 									aria-label={'save to favorites'}
 									onClick={this.handleSaveClick}>
 									{this.props.user.saved_locations.includes(
-										this.props.displayedLocation.id
+										this.props.selectedMarker.id
 									) ? (
 										<BookmarkIcon />
 									) : (
@@ -186,7 +185,7 @@ class LocationInfoPopUp extends Component {
 								<Typography component='legend'>Add Rating!</Typography>
 								<Rating
 									name='addNewRating'
-									value={this.state.ratingValue}
+									value={Number(this.props.selectedMarker.userRating)}
 									onChange={this.updateRating}
 								/>
 							</Grid>
@@ -198,16 +197,7 @@ class LocationInfoPopUp extends Component {
 								</IconButton>
 							</Grid>
 						</Grid>
-						<Grid container className={classes.subfooter}>
-							<Grid item xs={12}>
-								<Link
-									component='button'
-									variant='body2'
-									onClick={this.props.toggleMoreDetails}>
-									<Typography variant='caption'>Less Details...</Typography>
-								</Link>
-							</Grid>
-						</Grid>
+
 					</Grid>
 				</InfoWindow>
 				<CommentDialogue
@@ -228,10 +218,8 @@ class LocationInfoPopUp extends Component {
 	}
 }
 const mapStateToProps = reduxStore => ({
-	displayedLocation: reduxStore.locations.displayedLocation,
+	selectedMarker: reduxStore.selectedMarker,
 	user: reduxStore.user,
-	userRating: reduxStore.rating,
-	comments: reduxStore.comments
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(LocationInfoPopUp));

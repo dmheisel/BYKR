@@ -66,7 +66,6 @@ class MyLocationsPage extends Component {
 						aria-label='simple tabs example'>
 						<Tab label='Saved Locations' />
 						<Tab label='Created Locations' />
-						{/* <Tab label='Item Three' /> */}
 					</Tabs>
 				</AppBar>
 				<List

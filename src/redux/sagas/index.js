@@ -2,7 +2,7 @@ import { all } from 'redux-saga/effects';
 import loginSaga from './loginSaga';
 import registrationSaga from './registrationSaga';
 import userSaga from './userSaga';
-import locationSaga from './locationSaga';
+import selectedMarkerSaga from './selectedMarkerSaga';
 import mapSaga from './mapSaga';
 import markerSaga from './markerSaga';
 import ratingSaga from './ratingSaga';
@@ -15,7 +15,7 @@ export default function* rootSaga() {
 		loginSaga(),
 		registrationSaga(),
 		userSaga(),
-		locationSaga(),
+		selectedMarkerSaga(),
 		mapSaga(),
 		markerSaga(),
 		ratingSaga(),

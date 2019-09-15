@@ -14,7 +14,8 @@ class MapPage extends Component {
 		drawerOpen: false
 	};
 	componentDidMount = () => {
-		this.props.dispatch({type: 'FETCH_LOCATION_TYPES'})
+		this.props.dispatch({type: 'FETCH_MARKERS'})
+		this.props.dispatch({type: 'FETCH_MARKER_TYPES'})
 	}
 	//toggles add mode on or off -- can only add locations if currentlyin add mode
 	toggleAddMode = () => {
@@ -32,7 +33,7 @@ class MapPage extends Component {
 	addLocation = location => {
 		if (this.state.addMode) {
 			this.props.dispatch({
-				type: 'ADD_LOCATION',
+				type: 'ADD_NEW_MARKER',
 				payload: {
 					coords: { lat: location.latLng.lat(), lng: location.latLng.lng() },
 					type: this.state.typeSelected

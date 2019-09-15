@@ -5,13 +5,34 @@ const {
 } = require('../modules/authentication-middleware');
 const router = express.Router();
 
+router.get(`/avgRating/:id`, (req, res) => {
+	const locationId = req.params.id;
+	const sqlText = `
+		select round(avg(rating), 1) as avg_rating
+			from users_locations_ratings
+		where
+			location_id = $1`;
+	pool
+		.query(sqlText, [locationId])
+		.then(result => {
+			console.log('average rating gathered from database table');
+			console.log(result.rows)
+			res.send({rating: result.rows[0].avg_rating || 0});
+		})
+		.catch(error => {
+			console.log(
+				'error on gathering average rating from database table: ',
+				error
+			);
+		});
+});
 //get route to retrieve user's rating for the currently displayed location
-router.get(`/:id`, rejectUnauthenticated, (req, res) => {
+router.get(`/userRating/:id`, rejectUnauthenticated, (req, res) => {
 	const locationId = req.params.id;
 	const userId = req.user.id;
 
 	const sqlText = `
-      select *
+      select rating
           from users_locations_ratings
         where
           user_id = $1 AND location_id = $2`;
@@ -19,7 +40,7 @@ router.get(`/:id`, rejectUnauthenticated, (req, res) => {
 		.query(sqlText, [userId, locationId])
 		.then(result => {
 			console.log(result.rows);
-			res.send(result.rows[0]);
+			res.send(result.rows[0] || null);
 		})
 		.catch(error => {
 			console.log('error retrieving user rating from database: ', error);

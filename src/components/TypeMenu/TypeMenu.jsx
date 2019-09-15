@@ -6,7 +6,7 @@ import { Menu, MenuItem } from '@material-ui/core';
 
 class TypeMenu extends Component {
   render() {
-    const menuOptions = this.props.locationTypes.map(type => (
+    const menuOptions = this.props.markerTypes.map(type => (
 			<MenuItem key={type.id} value={type.id} onClick={this.props.handleSelect}>
 				{type.type_name}
 			</MenuItem>
@@ -25,6 +25,6 @@ class TypeMenu extends Component {
   }
 }
 const mapStateToProps = reduxStore => ({
-	locationTypes: reduxStore.locations.locationTypes
+	markerTypes: reduxStore.markers.markerTypes
 });
 export default connect(mapStateToProps)(TypeMenu);
