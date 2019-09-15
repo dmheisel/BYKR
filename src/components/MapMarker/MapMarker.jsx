@@ -60,15 +60,16 @@ class MapMarker extends Component {
 			>
 				{/* conditionally render infowindow only if this marker id is in redux as displayed */}
 				{this.props.marker.id === this.props.displayedLocation.id &&
-					(this.state.moreDetails ? (
-						<LocationLargePopUp
-							closeWindow={this.closeWindow}
-							position={this.props.position}
-							deleteMarker={this.deleteMarker}
-							toggleMoreDetails={this.toggleMoreDetails}
-							marker={this.props.marker}
-						/>
-					) : (
+					// (this.state.moreDetails ? (
+					(<LocationLargePopUp
+						closeWindow={this.closeWindow}
+						position={this.props.position}
+						deleteMarker={this.deleteMarker}
+						toggleMoreDetails={this.toggleMoreDetails}
+						marker={this.props.marker}
+					/>
+					)}
+					{/* : (
 						<LocationSmallPopup
 							closeWindow={this.closeWindow}
 							marker={this.props.marker}
@@ -76,7 +77,7 @@ class MapMarker extends Component {
 							deleteMarker={this.deleteMarker}
 							toggleMoreDetails={this.toggleMoreDetails}
 						/>
-					))}
+					))} */}
 			</Marker>
 		);
 	}

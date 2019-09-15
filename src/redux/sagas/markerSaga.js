@@ -35,6 +35,7 @@ function* updateMarkerType(action) {
 		yield axios.put(`/api/locations/type/${action.payload.id}`, {
 			type_id: action.payload.type_id
 		});
+		yield put({ type: 'FETCH_LOCATION_DETAILS', payload: action.payload.id})
 		yield put({ type: 'FETCH_LOCATIONS' });
 	} catch (error) {
 		console.log(

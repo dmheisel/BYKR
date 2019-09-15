@@ -21,6 +21,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import Rating from '@material-ui/lab/Rating';
 import { withStyles } from '@material-ui/core/styles';
 import CommentDialogue from '../CommentDialogue/CommentDialogue';
+import TypeMenu from '../TypeMenu/TypeMenu';
 
 const styles = theme => ({
 	root: {
@@ -35,6 +36,9 @@ const styles = theme => ({
 		height: '50%',
 		overflow: 'auto',
 		border: '2px black'
+	},
+	listRoot: {
+		width: '100%'
 	},
 	footer: {
 		height: '15%'
@@ -53,12 +57,25 @@ class LocationInfoPopUp extends Component {
 	};
 
 	handleOpen = event => {
-		this.setState({ anchorEl: event.currentTarget });
+		this.props.user.id === this.props.displayedLocation.created_by_user_id &&
+			this.setState({ anchorEl: event.currentTarget });
 	};
 
 	handleClose = () => {
 		this.setState({ anchorEl: null });
 	};
+
+	handleSelect = event => {
+		this.props.dispatch({
+			type: 'UPDATE_MARKER_TYPE',
+			payload: {
+				id: this.props.displayedLocation.id,
+				type_id: event.target.value
+			}
+		});
+		this.handleClose();
+	};
+
 	handleDialogClose = () => {
 		this.setState({ dialogOpen: false });
 	};
@@ -104,21 +121,22 @@ class LocationInfoPopUp extends Component {
 			//if there are no comments for this location, server returns array with first value null
 			//this conditional prevents list from being rendered if the first value is null (no comments)
 			this.props.comments && (
-				<List>
-					{this.props.comments.map(
-						(commentObject, index) => {
-							return (
-								<ListItem key={commentObject.id}>
-									<ListItemAvatar>
-										<AccountCircleTwoToneIcon />
-									</ListItemAvatar>
-									<ListItemText>{commentObject.comment}</ListItemText>
-								</ListItem>
-							);
-						}
-					)}
+				<List className={classes.listRoot}>
+					{this.props.comments.map((commentObject, index) => {
+						return (
+							<ListItem key={commentObject.id} alignItems='flex-start'>
+								<ListItemAvatar>
+									<AccountCircleTwoToneIcon />
+								</ListItemAvatar>
+								<ListItemText
+									primary={commentObject.username}
+									secondary={commentObject.comment}
+								/>
+							</ListItem>
+						);
+					})}
 				</List>
-			) ;
+			);
 
 		return (
 			<>
@@ -129,7 +147,7 @@ class LocationInfoPopUp extends Component {
 					<Grid className={classes.root} container>
 						<Grid container className={classes.header}>
 							<Grid item xs={2}>
-								<Avatar src={this.getAvatarIcon()} />
+								<Avatar src={this.getAvatarIcon()} onClick={this.handleOpen} />
 							</Grid>
 							<Grid item xs={5}>
 								<Typography variant='subtitle1'>Parking Rack</Typography>
@@ -196,6 +214,14 @@ class LocationInfoPopUp extends Component {
 					handleClose={this.handleDialogClose}
 					handleOpen={this.handleDialogOpen}
 					dialogOpen={this.state.dialogOpen}
+				/>
+				<TypeMenu
+					id='simple-menu'
+					anchorEl={this.state.anchorEl}
+					keepMounted
+					open={Boolean(this.state.anchorEl)}
+					handleClose={this.handleClose}
+					handleSelect={this.handleSelect}
 				/>
 			</>
 		);
