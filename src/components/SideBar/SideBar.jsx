@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import LogOutButton from '../LogOutButton/LogOutButton'
+import LogOutButton from '../LogOutButton/LogOutButton';
 import { connect } from 'react-redux';
 
 //material-ui imports
@@ -9,7 +9,9 @@ import {
 	Divider,
 	ListItem,
 	ListItemAvatar,
-	ListItemText
+	ListItemText,
+	Button,
+	Link
 } from '@material-ui/core';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import { withStyles } from '@material-ui/core/styles';
@@ -22,41 +24,62 @@ const styles = theme => ({
 	menuHeader: {
 		height: '20vh'
 	},
+	tabs: {
+		borderRight: `1px solid ${theme.palette.divider}`
+	},
+	button: {
+		margin: theme.spacing(0)
+	},
 	list: {
 		// width: 'auto'
 	}
 });
 
 class SideBar extends Component {
+	state = {
+		tabValue: 0
+	};
 	render() {
 		const { classes } = this.props;
 
 		return (
-      <Drawer open={this.props.drawerOpen} onClose={this.props.toggleDrawer}>
+			<Drawer open={this.props.drawerOpen} onClose={this.props.toggleDrawer}>
 				<div className={classes.root}>
 					<List className={classes.menuHeader}>
-						<ListItem >
+						<ListItem>
 							<ListItemAvatar>
 								<AccountCircleTwoToneIcon />
 							</ListItemAvatar>
 							<ListItemText>{this.props.user.username}</ListItemText>
 						</ListItem>
 						<ListItem>
-							<LogOutButton />
+							<Button
+								size='small'
+								className={classes.button}
+								onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>
+								Log Out
+							</Button>
 						</ListItem>
-          </List>
-          <List>
+					</List>
+					<List>
+						<Divider />
+
+						<ListItem>
+							<ListItemText>
+								<Button className={classes.button}>Favorites</Button>
+							</ListItemText>
+						</ListItem>
 						<Divider />
 						<ListItem>
-							<ListItemText>Test Text 1</ListItemText>
+							<ListItemText>
+								<Button className={classes.button}>My Locations</Button>
+							</ListItemText>
 						</ListItem>
 						<Divider />
 						<ListItem>
-							<ListItemText>Test Text 2</ListItemText>
-						</ListItem>
-						<Divider />
-						<ListItem>
-							<ListItemText>Test Text 3</ListItemText>
+							<ListItemText>
+								<Button className={classes.button}>Settings</Button>
+							</ListItemText>
 						</ListItem>
 						<Divider />
 					</List>
@@ -67,5 +90,5 @@ class SideBar extends Component {
 }
 const mapStateToProps = reduxState => ({
 	user: reduxState.user
-})
+});
 export default withStyles(styles)(connect(mapStateToProps)(SideBar));
