@@ -13,7 +13,8 @@ router.get(`/:id`, (req, res) => {
       from
         users_locations_comments
       where
-        location_id = $1`;
+        location_id = $1
+      ORDER BY id desc`;
   pool
     .query(sqlText, [locationId])
     .then(result => {

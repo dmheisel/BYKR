@@ -14,10 +14,6 @@ class CommentDialogue extends Component {
 	};
 
 	handleSubmit = () => {
-		console.log({
-			locationId: this.props.displayedLocation.id,
-			comment: this.state.newComment
-		});
 		this.props.dispatch({
 			type: 'ADD_USER_COMMENT',
 			payload: {locationId: this.props.displayedLocation.id, comment: this.state.newComment}
@@ -25,6 +21,11 @@ class CommentDialogue extends Component {
 		this.setState({ newComment: '' });
 		this.props.handleClose();
 	};
+
+	handleCancel = () => {
+		this.setState({ newComment: '' })
+		this.props.handleClose()
+	}
 
 	render() {
 		return (
@@ -40,12 +41,13 @@ class CommentDialogue extends Component {
 						id='commentBox'
 						label='Add Your Comment Here'
 						value={this.state.newComment}
-						onChange={e => { this.setState({ newComment: e.target.value }); console.log(this.state)}}
+						onChange={e => { this.setState({ newComment: e.target.value }); console.log(this.state) }}
+						placeholder="text here"
 						fullWidth
 					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={this.props.handleClose} color='primary'>
+					<Button onClick={this.handleCancel} color='primary'>
 						Cancel
 					</Button>
 					<Button onClick={this.handleSubmit} color='primary'>

@@ -13,13 +13,13 @@ function* fetchComments(action) {
 function* addUserComment(action) {
 	try {
 		yield axios.post(`/api/comment/${action.payload.locationId}`, action.payload);
-		yield put({ type: 'FETCH_COMMENTS', payload: action.payload.locationId });
+		yield put({ type: 'FETCH_LOCATION_DETAILS', payload: action.payload.locationId });
 	} catch (error) {
 		console.log('error on adding comment in saga: ', error);
 	}
 }
 function* commentSaga() {
 	yield takeLatest('ADD_USER_COMMENT', addUserComment);
-	yield takeLatest('FETCH_COMMENTS', fetchComments);
+	yield takeLatest('FETCH_LOCATION_DETAILS', fetchComments);
 }
 export default commentSaga;

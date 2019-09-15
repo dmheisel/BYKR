@@ -34,11 +34,11 @@ class LocationSmallPopup extends Component {
 		let commentHtml =
 			//if there are no comments for this location, server returns array with first value null
 			//this conditional prevents list from being rendered if the first value is null (no comments)
-			this.props.displayedLocation.comments.comment[0] !== null ? (
+			this.props.comments ? (
 				<ul>
-					{this.props.displayedLocation.comments.comment.map(
-						(comment, index) =>
-							index < 3 && (<li key={index}>{comment}</li>)
+					{this.props.comments.map(
+						(commentObject, index) =>
+							index < 3 && (<li key={commentObject.id}>{commentObject.comment}</li>)
 
 					)}
 				</ul>
@@ -80,6 +80,7 @@ class LocationSmallPopup extends Component {
 }
 const mapStateToProps = reduxStore => ({
 	displayedLocation: reduxStore.locations.displayedLocation,
-	user: reduxStore.user
+	user: reduxStore.user,
+	comments: reduxStore.comments
 });
 export default connect(mapStateToProps)(LocationSmallPopup);

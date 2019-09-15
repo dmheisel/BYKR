@@ -6,3 +6,5 @@ const commentReducer = (state = [], action) => {
 			return state;
 	}
 };
+
+export default commentReducer;

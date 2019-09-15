@@ -103,22 +103,22 @@ class LocationInfoPopUp extends Component {
 		const commentsList =
 			//if there are no comments for this location, server returns array with first value null
 			//this conditional prevents list from being rendered if the first value is null (no comments)
-			this.props.displayedLocation.comments.comment[0] !== null ? (
+			this.props.comments && (
 				<List>
-					{this.props.displayedLocation.comments.comment.map(
-						(comment, index) => {
+					{this.props.comments.map(
+						(commentObject, index) => {
 							return (
-								<ListItem key={index}>
+								<ListItem key={commentObject.id}>
 									<ListItemAvatar>
 										<AccountCircleTwoToneIcon />
 									</ListItemAvatar>
-									<ListItemText>{comment}</ListItemText>
+									<ListItemText>{commentObject.comment}</ListItemText>
 								</ListItem>
 							);
 						}
 					)}
 				</List>
-			) : null;
+			) ;
 
 		return (
 			<>
@@ -204,7 +204,8 @@ class LocationInfoPopUp extends Component {
 const mapStateToProps = reduxStore => ({
 	displayedLocation: reduxStore.locations.displayedLocation,
 	user: reduxStore.user,
-	userRating: reduxStore.rating
+	userRating: reduxStore.rating,
+	comments: reduxStore.comments
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(LocationInfoPopUp));
