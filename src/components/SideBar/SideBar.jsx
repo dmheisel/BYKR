@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import { connect } from 'react-redux';
+import {withRouter} from 'react-router-dom'
 
 //material-ui imports
 import {
@@ -11,7 +11,6 @@ import {
 	ListItemAvatar,
 	ListItemText,
 	Button,
-	Link
 } from '@material-ui/core';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import { withStyles } from '@material-ui/core/styles';
@@ -66,7 +65,7 @@ class SideBar extends Component {
 
 						<ListItem>
 							<ListItemText>
-								<Button className={classes.button}>Favorites</Button>
+								<Button className={classes.button} onClick={() => this.props.history.push('/myLocations')}>Favorites</Button>
 							</ListItemText>
 						</ListItem>
 						<Divider />
@@ -91,4 +90,4 @@ class SideBar extends Component {
 const mapStateToProps = reduxState => ({
 	user: reduxState.user
 });
-export default withStyles(styles)(connect(mapStateToProps)(SideBar));
+export default withStyles(styles)(connect(mapStateToProps)(withRouter(SideBar)));
