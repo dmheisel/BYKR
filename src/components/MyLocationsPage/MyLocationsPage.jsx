@@ -4,11 +4,17 @@ import {
 	AppBar,
 	Toolbar,
 	IconButton,
-  Typography,
-  Tabs,
-  Tab,
-	Button
+	Typography,
+	Tabs,
+	Tab,
+	List,
+	ListItem,
+	ListItemIcon,
+	ListItemAvatar,
+	ListItemText
 } from '@material-ui/core';
+import Rating from '@material-ui/lab/Rating';
+import LocalParkingIcon from '@material-ui/icons/LocalParking';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
@@ -16,21 +22,21 @@ const styles = theme => ({
 		flexGrow: 1
 	},
 	menuButton: {
-    marginRight: theme.spacing(2),
-    position: 'absolute'
+		marginRight: theme.spacing(2),
+		position: 'absolute'
 	},
 	title: {
-    margin: 'auto'
+		margin: 'auto'
 	}
 });
 class MyLocationsPage extends Component {
-  state = {
-    tabValue: 0
-  }
+	state = {
+		tabValue: 0
+	};
 
-  handleChange = (e, val) => {
-    this.setState({tabValue: val})
-  }
+	handleChange = (e, val) => {
+		this.setState({ tabValue: val });
+	};
 
 	render() {
 		const { classes } = this.props;
@@ -52,17 +58,36 @@ class MyLocationsPage extends Component {
 						</Typography>
 					</Toolbar>
 				</AppBar>
-				<AppBar position="static">
+				<AppBar position='static'>
 					<Tabs
 						value={this.state.tabValue}
-            onChange={this.handleChange}
-            variant="fullWidth"
+						onChange={this.handleChange}
+						variant='fullWidth'
 						aria-label='simple tabs example'>
-						<Tab label='Saved Locations'  />
-						<Tab label='Created Locations'  />
+						<Tab label='Saved Locations' />
+						<Tab label='Created Locations' />
 						{/* <Tab label='Item Three' /> */}
 					</Tabs>
 				</AppBar>
+				<List
+					dense
+					className={classes.root}
+					index={0}
+					hidden={this.state.tabValue !== 0}
+					role='tabpanel'>
+					<ListItem>
+						<ListItemAvatar>
+							<LocalParkingIcon />
+						</ListItemAvatar>
+						<ListItemText
+							primary='Type of Location'
+							secondary='Location Address'
+						/>
+						<ListItemIcon edge='end'>
+							<Rating value={3} readOnly size='small' />
+						</ListItemIcon>
+					</ListItem>
+				</List>
 			</div>
 		);
 	}
