@@ -17,6 +17,7 @@ import BuildIcon from '@material-ui/icons/Build';
 import LocalParkingIcon from '@material-ui/icons/LocalParking';
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
+import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 
 const styles = theme => ({
 	listItem: {
@@ -30,19 +31,35 @@ const styles = theme => ({
 });
 
 class MyLocationsPageList extends Component {
+	state = {
+		openDialog: false
+	};
+
 	handlePinClick = () => {
-		this.props.history.push(`/home/${this.props.marker.lat}/${this.props.marker.lng}`);
+		this.props.history.push(
+			`/home/${this.props.marker.lat}/${this.props.marker.lng}`
+		);
 	};
 
 	handleDeleteClick = () => {
-		this.props.dispatch({type: 'DELETE_MARKER', payload: this.props.marker.location_id})
-	}
+		this.props.dispatch({
+			type: 'DELETE_MARKER',
+			payload: this.props.marker.location_id
+		});
+	};
+
+	toggleConfirmationDialog = () => {
+		this.setState({ openDialog: !this.state.openDialog });
+	};
 
 	render() {
 		const { classes } = this.props;
 		return (
 			<div>
-				<ListItem disableGutters={true} divider={true} className={classes.listItem}>
+				<ListItem
+					disableGutters={true}
+					divider={true}
+					className={classes.listItem}>
 					<ListItemAvatar edge='start'>
 						{Number(this.props.marker.location_type_id) === 1 ? (
 							<LocalParkingIcon />
@@ -60,7 +77,7 @@ class MyLocationsPageList extends Component {
 					{this.props.type === 'myCreated' && (
 						<IconButton
 							className={classes.iconButton}
-							onClick={this.handleDeleteClick}>
+							onClick={this.toggleConfirmationDialog}>
 							<DeleteSweepOutlinedIcon />
 						</IconButton>
 					)}
@@ -79,6 +96,11 @@ class MyLocationsPageList extends Component {
 						/>
 					</ListItemIcon>
 				</ListItem>
+				<ConfirmationDialog
+					open={this.state.openDialog}
+					handleDeleteClick={this.handleDeleteClick}
+					toggleConfirmationDialog={this.toggleConfirmationDialog}
+				/>
 			</div>
 		);
 	}
