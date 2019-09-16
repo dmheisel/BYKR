@@ -15,9 +15,11 @@ import {
 	Collapse
 } from '@material-ui/core';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
+import EditLocationOutlinedIcon from '@material-ui/icons/EditLocationOutlined';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
+import InputDiaolog from '../InputDialog/InputDiaolog';
 
 //styling for page
 const styles = theme => ({
@@ -34,14 +36,25 @@ const styles = theme => ({
 		margin: theme.spacing(0)
 	},
 	nested: {
-		paddingLeft: theme.spacing(4)
+		margin: theme.spacing(0),
+		paddingLeft: theme.spacing(4),
+		paddingRight: theme.spacing(0)
 	}
 });
 
 class SideBar extends Component {
 	state = {
-		settingsOpen: false
+		settingsOpen: false,
+		dialogOpen: false
 	};
+
+		handleDialogClose = () => {
+		this.setState({ dialogOpen: false });
+	};
+	handleDialogOpen = () => {
+		this.setState({ dialogOpen: true });
+	};
+
 	render() {
 		const { classes } = this.props;
 
@@ -97,9 +110,9 @@ class SideBar extends Component {
 						</ListItem>
 						<Collapse in={this.state.settingsOpen} timeout='auto' unmountOnExit>
 							<List component='div' disablePadding>
-								<ListItem button className={classes.nested}>
+								<ListItem button className={classes.nested} onClick={this.handleDialogOpen}>
 									<ListItemIcon>
-										<AccountCircleTwoToneIcon />
+										<EditLocationOutlinedIcon />
 									</ListItemIcon>
 									<ListItemText primary='Change Default Location'/>
 								</ListItem>
@@ -107,6 +120,13 @@ class SideBar extends Component {
 						</Collapse>
 						<Divider />
 					</List>
+					<InputDiaolog
+						dialogOpen={this.state.dialogOpen}
+						dialogTitle="Change your Default Location?"
+						dialogTextLabel="Input New Default Location"
+						handleClose={this.handleDialogClose}
+						handleOpen={this.handleDialogOpen}
+						onConfirm={(inputText) => {console.log(inputText)}} />
 				</div>
 			</Drawer>
 		);
