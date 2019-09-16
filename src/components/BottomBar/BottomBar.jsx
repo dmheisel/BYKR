@@ -18,14 +18,17 @@ class BottomBar extends Component {
 		anchorEl: null
 	};
 
+	//sets anchor element for info window to the current marker's location
 	handleOpen = event => {
 		this.setState({ anchorEl: event.currentTarget });
 	};
 
+	//removes anchor element for info window -- this removes it from view
 	handleClose = () => {
 		this.setState({ anchorEl: null });
 	};
 
+	//used for selecting an item type in the menu to add to the map
 	handleSelect = event => {
 		this.props.selectType(event.target.value);
 		this.handleClose();
@@ -38,6 +41,7 @@ class BottomBar extends Component {
 				<BottomNavigation showLabels className={classes.root}>
 					<BottomNavigationAction label='Filter Map' />
 					<BottomNavigationAction
+						// conditinoally render "cancel add" or "add site" based on if currently in add mode
 						label={this.props.addMode ? 'Cancel Add' : 'Add Site'}
 						icon={<AddCircleOutline />}
 						onClick={
@@ -47,6 +51,7 @@ class BottomBar extends Component {
 					<BottomNavigationAction
 						label='Back to Default'
 						onClick={() =>
+							//dispatch sets center of map back to user's defaults.
 							this.props.dispatch({
 								type: 'SET_CENTER',
 								payload: {
@@ -58,9 +63,9 @@ class BottomBar extends Component {
 					/>
 				</BottomNavigation>
 				<TypeMenu
-					id='simple-menu'
+					//type menu for selecting what type of location someone is adding to the map
+					id='typeMenu'
 					anchorEl={this.state.anchorEl}
-					keepMounted
 					open={Boolean(this.state.anchorEl)}
 					handleClose={this.handleClose}
 					handleSelect={this.handleSelect}
