@@ -7,6 +7,7 @@ import mapSaga from './mapSaga';
 import markerSaga from './markerSaga';
 import ratingSaga from './ratingSaga';
 import commentSaga from './commentSaga'
+import myLocationSaga from './myLocationsSaga'
 
 // rootSaga is the primary saga.
 
@@ -19,6 +20,7 @@ export default function* rootSaga() {
 		mapSaga(),
 		markerSaga(),
 		ratingSaga(),
-		commentSaga()
+		commentSaga(),
+		myLocationSaga()
 	]);
 }
