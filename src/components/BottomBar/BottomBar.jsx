@@ -39,10 +39,14 @@ class BottomBar extends Component {
 			<div>
 				<BottomNavigation showLabels className={classes.root}>
 					<BottomNavigationAction
+						label='Filter Map' />
+					<BottomNavigationAction
 						label={this.props.addMode ? 'Cancel Add' : 'Add Site'}
 						icon={<AddCircleOutline />}
 						onClick={this.props.addMode ? this.props.toggleAddMode : this.handleOpen}
 					/>
+					<BottomNavigationAction
+						label='Back to Default' />
 				</BottomNavigation>
 				<TypeMenu
 					id='simple-menu'
