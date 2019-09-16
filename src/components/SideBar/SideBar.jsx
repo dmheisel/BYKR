@@ -65,13 +65,13 @@ class SideBar extends Component {
 
 						<ListItem>
 							<ListItemText>
-								<Button className={classes.button} onClick={() => this.props.history.push('/myLocations')}>Favorites</Button>
+								<Button className={classes.button} onClick={() => this.props.history.push('/myLocations/0')}>Favorites</Button>
 							</ListItemText>
 						</ListItem>
 						<Divider />
 						<ListItem>
 							<ListItemText>
-								<Button className={classes.button}>My Locations</Button>
+								<Button className={classes.button} onClick={() => this.props.history.push('/myLocations/1')}>My Locations</Button>
 							</ListItemText>
 						</ListItem>
 						<Divider />

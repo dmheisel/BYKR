@@ -34,7 +34,7 @@ const styles = theme => ({
 });
 class MyLocationsPage extends Component {
 	state = {
-		tabValue: 0
+		tabValue: Number(this.props.match.params.listIndex)
 	};
 
 	componentDidMount() {
