@@ -29,7 +29,8 @@ function* addNewMarker(action) {
 		yield console.log(response);
 		yield axios.post('/api/locations', {
 			...action.payload,
-			address: response.data
+			address: response.data.address,
+			locality: response.data.locality
 		});
 		yield put({ type: 'FETCH_MARKERS' });
 	} catch (error) {

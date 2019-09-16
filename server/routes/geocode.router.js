@@ -33,18 +33,25 @@ router.get('/address/:location', (req, res) => {
 		.get(url)
 		.then(response => {
 			console.log('successful retrieval of geocode address from google API');
-			let address =
-				response.data.results[0].address_components[0].short_name +
-				' ' +
-				response.data.results[0].address_components[1].short_name;
-			console.log('address received: ', address);
-			res.send(address);
+			const addressComponents = response.data.results[0].address_components;
+			const streetNumber = addressComponents.find(component =>
+				component.types.includes('street_number')
+			).short_name;
+			const streetName = addressComponents.find(component =>
+				component.types.includes('route')
+			).short_name;
+			const locality = addressComponents.find(component =>
+				component.types.includes('locality')
+			).short_name;
+			const address = streetNumber + ' ' + streetName
+			// const streetNumber = response.data.results[0].address_components.filter(component => component.types.includes('street_number'))[0].short_name;
+			console.log('address received: ', address, locality);
+			res.send({address, locality});
 		})
 		.catch(error => {
 			console.log('error on retrieving address from google geocode API', error);
 			res.sendStatus(500);
 		});
 });
-
 
 module.exports = router;

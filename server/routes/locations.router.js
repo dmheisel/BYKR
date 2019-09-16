@@ -8,7 +8,7 @@ const router = express.Router();
 // get route to get all locations from database locations table
 router.get('/', (req, res) => {
 	const sqlText = `
-	SELECT locations.id, lat, lng, address, created_by_user_id, location_types.type_name
+	SELECT locations.id, lat, lng, address, locality, created_by_user_id, location_types.type_name
 		FROM locations
 		JOIN location_types
 			ON locations.location_type_id = location_types.id;`;
@@ -112,12 +112,13 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 	const coords = req.body.coords;
 	const type = req.body.type;
 	const address = req.body.address;
+	const locality = req.body.locality;
 	const sqlText = `INSERT
         INTO locations
-          (lat, lng, address, location_type_id, created_by_user_id)
+          (lat, lng, address, locality, location_type_id, created_by_user_id)
         VALUES
-          ($1, $2, $3, $4, $5);`;
-	const values = [coords.lat, coords.lng, address, type, req.user.id];
+          ($1, $2, $3, $4, $5, $6);`;
+	const values = [coords.lat, coords.lng, address, locality, type, req.user.id];
 	pool
 		.query(sqlText, values)
 		.then(result => {

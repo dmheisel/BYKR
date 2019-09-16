@@ -71,7 +71,11 @@ class MyLocationsPageList extends Component {
 							this.props.markerTypes[this.props.marker.location_type_id - 1]
 								.type_name
 						}
-						secondary={this.props.marker.address}
+						secondary={
+							this.props.marker.locality
+								? this.props.marker.address + ', ' + this.props.marker.locality
+								: this.props.marker.address
+						}
 					/>
 					{this.props.type === 'myCreated' && (
 						<IconButton

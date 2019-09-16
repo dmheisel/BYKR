@@ -33,6 +33,8 @@ create table locations (
     id serial primary key,
     lat decimal not null,
     lng decimal not null,
+    "address" varchar(500),
+    locality varchar(500),
     location_type_id int references location_types on delete cascade,
     created_by_user_id int references "user" on delete cascade
 );
