@@ -4,7 +4,7 @@ import Map from '../Map/Map';
 import { LoadScript } from '@react-google-maps/api';
 import SearchBar from '../SearchBar/SearchBar';
 import BottomBar from '../BottomBar/BottomBar';
-import SideBar from '../SideBar/SideBar'
+import SideBar from '../SideBar/SideBar';
 
 class MapPage extends Component {
 	state = {
@@ -14,9 +14,18 @@ class MapPage extends Component {
 		drawerOpen: false
 	};
 	componentDidMount = () => {
-		this.props.dispatch({type: 'FETCH_MARKERS'})
-		this.props.dispatch({type: 'FETCH_MARKER_TYPES'})
-	}
+		this.props.dispatch({ type: 'FETCH_MARKERS' });
+		this.props.dispatch({ type: 'FETCH_MARKER_TYPES' });
+		if (this.props.match.params.lat && this.props.match.params.lng) {
+			this.props.dispatch({
+				type: 'SET_CENTER',
+				payload: {
+					lat: Number(this.props.match.params.lat),
+					lng: Number(this.props.match.params.lng)
+				}
+			});
+		}
+	};
 	//toggles add mode on or off -- can only add locations if currentlyin add mode
 	toggleAddMode = () => {
 		console.log(!this.state.addMode);
@@ -51,8 +60,11 @@ class MapPage extends Component {
 		return (
 			<div>
 				<LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY}>
-					<SideBar drawerOpen={this.state.drawerOpen} toggleDrawer={this.toggleDrawer}/>
-					<SearchBar toggleDrawer={this.toggleDrawer}/>
+					<SideBar
+						drawerOpen={this.state.drawerOpen}
+						toggleDrawer={this.toggleDrawer}
+					/>
+					<SearchBar toggleDrawer={this.toggleDrawer} />
 					<Map addLocation={this.addLocation} />
 					<BottomBar
 						toggleAddMode={this.toggleAddMode}

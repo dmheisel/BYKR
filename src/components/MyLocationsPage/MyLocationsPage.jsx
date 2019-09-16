@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SwipeableViews from 'react-swipeable-views';
-import MyLocationsPageListItem from '../MyLocationsPageListItem/MyLocationsPageListItem'
+import MyLocationsPageListItem from '../MyLocationsPageListItem/MyLocationsPageListItem';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
 	AppBar,
@@ -44,14 +44,18 @@ class MyLocationsPage extends Component {
 	getListHtml = (type, index) => {
 		return (
 			<List
-				dense
+				// dense
 				index={index}
 				hidden={this.state.tabValue !== index}
-				role='tabpanel'
-				>
+				role='tabpanel'>
 				{this.props.myLocations[type].map(marker => {
 					return (
-						<MyLocationsPageListItem key={marker.location_id} markerTypes={this.props.markerTypes} marker={marker} type={type}/>
+						<MyLocationsPageListItem
+							key={marker.location_id}
+							markerTypes={this.props.markerTypes}
+							marker={marker}
+							type={type}
+						/>
 					);
 				})}
 			</List>
@@ -90,8 +94,12 @@ class MyLocationsPage extends Component {
 				<SwipeableViews
 					axis={this.props.theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 					index={this.state.tabValue}>
-					<div dir={this.props.theme.direction}>{this.getListHtml('mySaved', 0)}</div>
-					 <div dir={this.props.theme.direction}>{this.getListHtml('myCreated', 1)}</div>
+					<div dir={this.props.theme.direction}>
+						{this.getListHtml('mySaved', 0)}
+					</div>
+					<div dir={this.props.theme.direction}>
+						{this.getListHtml('myCreated', 1)}
+					</div>
 				</SwipeableViews>
 			</div>
 		);
@@ -101,4 +109,6 @@ const mapStateToProps = reduxStore => ({
 	myLocations: reduxStore.myLocations,
 	markerTypes: reduxStore.markers.markerTypes
 });
-export default connect(mapStateToProps)(withStyles(styles)(withTheme(MyLocationsPage)));
+export default connect(mapStateToProps)(
+	withStyles(styles)(withTheme(MyLocationsPage))
+);

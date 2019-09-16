@@ -8,15 +8,15 @@ class Map extends Component {
 		map: {}
 	};
 
-	componentDidMount() {
-		this.props.dispatch({
-			type: 'SET_CENTER',
-			payload: {
-				lat: Number(this.props.user.lat),
-				lng: Number(this.props.user.lng)
-			}
-		});
-	}
+	// componentDidMount() {
+	// 	this.props.dispatch({
+	// 		type: 'SET_CENTER',
+	// 		payload: {
+	// 			lat: Number(this.props.user.lat),
+	// 			lng: Number(this.props.user.lng)
+	// 		}
+	// 	});
+	// }
 	updateCenter = () => {
 		let newCenter = {
 			lat: this.state.map.getCenter().lat(),
@@ -43,7 +43,6 @@ class Map extends Component {
 				onLoad={map =>
 					this.setState({
 						map: map,
-						center: { lat: map.getCenter().lat(), lng: map.getCenter().lng() }
 					})
 				}
 				zoom={15}
