@@ -8,6 +8,7 @@ import {
 	List,
 	Divider,
 	ListItem,
+	ListItemIcon,
 	ListItemAvatar,
 	ListItemText,
 	Button,
@@ -32,8 +33,8 @@ const styles = theme => ({
 	button: {
 		margin: theme.spacing(0)
 	},
-	list: {
-		// width: 'auto'
+	nested: {
+		paddingLeft: theme.spacing(4)
 	}
 });
 
@@ -94,6 +95,16 @@ class SideBar extends Component {
 							/>
 							{this.state.settingsOpen ? <ExpandLess /> : <ExpandMore />}
 						</ListItem>
+						<Collapse in={this.state.settingsOpen} timeout='auto' unmountOnExit>
+							<List component='div' disablePadding>
+								<ListItem button className={classes.nested}>
+									<ListItemIcon>
+										<AccountCircleTwoToneIcon />
+									</ListItemIcon>
+									<ListItemText primary='Change Default Location'/>
+								</ListItem>
+							</List>
+						</Collapse>
 						<Divider />
 					</List>
 				</div>

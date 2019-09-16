@@ -19,7 +19,7 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import CommentIcon from '@material-ui/icons/Comment';
 import Rating from '@material-ui/lab/Rating';
 import { withStyles } from '@material-ui/core/styles';
-import CommentDialog from '../CommentDialog/CommentDialog';
+import InputDialog from '../InputDialog/InputDiaolog';
 import TypeMenu from '../TypeMenu/TypeMenu';
 
 const styles = theme => ({
@@ -52,7 +52,6 @@ class LocationInfoPopUp extends Component {
 		anchorEl: null,
 		dialogOpen: false
 	};
-
 
 	handleOpen = event => {
 		this.props.user.id === this.props.selectedMarker.created_by_user_id &&
@@ -196,13 +195,23 @@ class LocationInfoPopUp extends Component {
 								</IconButton>
 							</Grid>
 						</Grid>
-
 					</Grid>
 				</InfoWindow>
-				<CommentDialog
+				<InputDialog
 					handleClose={this.handleDialogClose}
 					handleOpen={this.handleDialogOpen}
+					onConfirm={(inputText) =>
+						this.props.dispatch({
+							type: 'ADD_USER_COMMENT',
+							payload: {
+								locationId: this.props.selectedMarker.id,
+								comment: inputText
+							}
+						})
+					}
 					dialogOpen={this.state.dialogOpen}
+					dialogTitle='Leave a Comment?'
+					dialogTextLabel='Add Your Comment'
 				/>
 				<TypeMenu
 					id='simple-menu'
@@ -218,7 +227,7 @@ class LocationInfoPopUp extends Component {
 }
 const mapStateToProps = reduxStore => ({
 	selectedMarker: reduxStore.selectedMarker,
-	user: reduxStore.user,
+	user: reduxStore.user
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(LocationInfoPopUp));

@@ -10,27 +10,26 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 class CommentDialogue extends Component {
 	state = {
-		newComment: ''
+		inputText: ''
 	};
 
-	handleSubmit = () => {
-		this.props.dispatch({
-			type: 'ADD_USER_COMMENT',
-			payload: {locationId: this.props.selectedMarker.id, comment: this.state.newComment}
-		});
-		this.setState({ newComment: '' });
+	handleConfirm = () => {
+		this.props.onConfirm(this.state.inputText);
+		this.setState({ inputText: '' });
 		this.props.handleClose();
 	};
 
 	handleCancel = () => {
-		this.setState({ newComment: '' })
-		this.props.handleClose()
-	}
+		this.setState({ inputText: '' });
+		this.props.handleClose();
+	};
 
 	render() {
 		return (
 			<Dialog open={this.props.dialogOpen} onClose={this.props.handleClose}>
-				<DialogTitle id='form-dialog-title'>Leave a Comment?</DialogTitle>
+				<DialogTitle id='form-dialog-title'>
+					{this.props.dialogTitle}
+				</DialogTitle>
 				<DialogContent>
 					<TextField
 						autoFocus
@@ -39,19 +38,21 @@ class CommentDialogue extends Component {
 						multiline
 						rowsMax='3'
 						id='commentBox'
-						label='Add Your Comment Here'
-						value={this.state.newComment}
-						onChange={e => { this.setState({ newComment: e.target.value }); console.log(this.state) }}
-						placeholder="text here"
+						label={this.props.dialogTextLabel}
+						value={this.state.inputText}
+						onChange={e => {
+							this.setState({ inputText: e.target.value });
+							console.log(this.state);
+						}}
 						fullWidth
 					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={this.handleCancel} color='primary'>
+					<Button onClick={this.handleCancel} color='secondary'>
 						Cancel
 					</Button>
-					<Button onClick={this.handleSubmit} color='primary'>
-						Submit
+					<Button onClick={this.handleConfirm} color='primary'>
+						Confirm
 					</Button>
 				</DialogActions>
 			</Dialog>
@@ -60,5 +61,5 @@ class CommentDialogue extends Component {
 }
 const mapStateToProps = reduxStore => ({
 	selectedMarker: reduxStore.selectedMarker
-})
+});
 export default connect(mapStateToProps)(CommentDialogue);
