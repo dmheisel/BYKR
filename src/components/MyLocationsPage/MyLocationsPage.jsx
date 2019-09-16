@@ -35,6 +35,11 @@ class MyLocationsPage extends Component {
 		tabValue: 0
 	};
 
+	componentDidMount() {
+		this.props.dispatch({ type: 'FETCH_USER_FAVORITES' })
+		this.props.dispatch({type: 'FETCH_USER_CREATED'})
+	}
+
 	handleChange = (e, val) => {
 		this.setState({ tabValue: val });
 	};
@@ -93,4 +98,4 @@ class MyLocationsPage extends Component {
 	}
 }
 
-export default withStyles(styles)(MyLocationsPage);
+export default connect()(withStyles(styles)(MyLocationsPage));
