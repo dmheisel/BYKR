@@ -42,7 +42,6 @@ class CommentDialogue extends Component {
 						value={this.state.inputText}
 						onChange={e => {
 							this.setState({ inputText: e.target.value });
-							console.log(this.state);
 						}}
 						fullWidth
 					/>

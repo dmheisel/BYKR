@@ -129,12 +129,13 @@ class SideBar extends Component {
 						dialogTextLabel='Input New Default Location'
 						handleClose={this.handleDialogClose}
 						handleOpen={this.handleDialogOpen}
-						onConfirm={inputText =>
+						onConfirm={inputText => {
 							this.props.dispatch({
 								type: 'UPDATE_USER_DEFAULT_LOCATION',
 								payload: { id: this.props.user.id, newLocation: inputText }
-							})
-						}
+							});
+							this.props.toggleDrawer();
+						}}
 					/>
 				</div>
 			</Drawer>
