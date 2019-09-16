@@ -40,7 +40,7 @@ router.get(`/saved`, rejectUnauthenticated, (req, res) => {
 router.get('/created', rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
   const sqlText = `
-    select loc.created_by_user_id, loc.id, lat, lng, loc.address, loc.location_type_id, round(avg(rating), 1) as avg_rating
+    select loc.created_by_user_id, loc.id as location_id, lat, lng, loc.address, loc.location_type_id, round(avg(rating), 1) as avg_rating
       from
         locations as loc
       left join

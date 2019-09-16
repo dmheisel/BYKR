@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import LocalParkingIcon from '@material-ui/icons/LocalParking';
+import BuildIcon from '@material-ui/icons/Build'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
@@ -36,12 +37,46 @@ class MyLocationsPage extends Component {
 	};
 
 	componentDidMount() {
-		this.props.dispatch({ type: 'FETCH_USER_FAVORITES' })
-		this.props.dispatch({type: 'FETCH_USER_CREATED'})
+		this.props.dispatch({type: 'FETCH_MARKER_TYPES'})
+		this.props.dispatch({ type: 'FETCH_USER_FAVORITES' });
+		this.props.dispatch({ type: 'FETCH_USER_CREATED' });
 	}
 
 	handleChange = (e, val) => {
 		this.setState({ tabValue: val });
+	};
+	//function to get the list to be displayed on the mylocations page based on which tab is clicked
+	getListHtml = (type, index) => {
+		return (
+			<List
+				dense
+				index={index}
+				hidden={this.state.tabValue !== index}
+				role='tabpanel'>
+				{this.props.myLocations[type].map(marker => {
+					return (
+						<ListItem key={marker.location_id}>
+							<ListItemAvatar>
+								{marker.location_type_id == 1 ? <LocalParkingIcon /> : <BuildIcon />}
+							</ListItemAvatar>
+							<ListItemText
+								primary={
+									this.props.markerTypes[marker.location_type_id-1].type_name
+								}
+								secondary={marker.address}
+							/>
+							<ListItemIcon edge='end'>
+								<Rating
+									value={Number(marker.avg_rating)}
+									readOnly
+									size='small'
+								/>
+							</ListItemIcon>
+						</ListItem>
+					);
+				})}
+			</List>
+		);
 	};
 
 	render() {
@@ -74,28 +109,14 @@ class MyLocationsPage extends Component {
 						<Tab label='Created Locations' />
 					</Tabs>
 				</AppBar>
-				<List
-					dense
-					className={classes.root}
-					index={0}
-					hidden={this.state.tabValue !== 0}
-					role='tabpanel'>
-					<ListItem>
-						<ListItemAvatar>
-							<LocalParkingIcon />
-						</ListItemAvatar>
-						<ListItemText
-							primary='Type of Location'
-							secondary='Location Address'
-						/>
-						<ListItemIcon edge='end'>
-							<Rating value={3} readOnly size='small' />
-						</ListItemIcon>
-					</ListItem>
-				</List>
+				{this.getListHtml('mySaved', 0)}
+				{this.getListHtml('myCreated', 1)}
 			</div>
 		);
 	}
 }
-
-export default connect()(withStyles(styles)(MyLocationsPage));
+const mapStateToProps = reduxStore => ({
+	myLocations: reduxStore.myLocations,
+	markerTypes: reduxStore.markers.markerTypes
+});
+export default connect(mapStateToProps)(withStyles(styles)(MyLocationsPage));
