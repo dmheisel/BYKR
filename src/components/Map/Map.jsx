@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { GoogleMap, BicyclingLayer } from '@react-google-maps/api';
 import { connect } from 'react-redux';
-import MapMarker from '../MapMarker/MapMarker'
+import MapMarker from '../MapMarker/MapMarker';
 
 class Map extends Component {
 	state = {
@@ -32,32 +32,35 @@ class Map extends Component {
 				marker={marker}
 				position={{ lat: Number(marker.lat), lng: Number(marker.lng) }}
 			/>
-		))
+		));
 
 		return (
 			<GoogleMap
+				id='base-map'
 				mapContainerStyle={{
 					height: '90vh',
 					width: '100vw'
 				}}
-				onLoad={map =>
-					this.setState({
-						map: map,
-					})
-				}
 				zoom={17}
 				center={{
 					lat: this.props.mapCenter.lat || Number(this.props.user.lat),
 					lng: this.props.mapCenter.lng || Number(this.props.user.lng)
 				}}
+				onLoad={map => {
+					// map.setMapTypeId('hybrid');
+					this.setState({
+						map: map
+					});
+				}}
 				options={{
 					scaleControl: true,
 					mapTypeControl: false,
-					streetViewControl: false,
+					// streetViewControl: false,
 					fullscreenControl: false,
 					zoomControl: true
 				}}
 				onClick={event => {
+					console.log(this.state.map);
 					this.props.addLocation(event);
 				}}
 				onDragEnd={this.updateCenter}>
