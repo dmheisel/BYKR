@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import SwipeableViews from 'react-swipeable-views';
+import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
 	AppBar,
 	Toolbar,
@@ -16,7 +17,7 @@ import {
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import LocalParkingIcon from '@material-ui/icons/LocalParking';
-import BuildIcon from '@material-ui/icons/Build'
+import BuildIcon from '@material-ui/icons/Build';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
@@ -37,7 +38,7 @@ class MyLocationsPage extends Component {
 	};
 
 	componentDidMount() {
-		this.props.dispatch({type: 'FETCH_MARKER_TYPES'})
+		this.props.dispatch({ type: 'FETCH_MARKER_TYPES' });
 		this.props.dispatch({ type: 'FETCH_USER_FAVORITES' });
 		this.props.dispatch({ type: 'FETCH_USER_CREATED' });
 	}
@@ -52,16 +53,21 @@ class MyLocationsPage extends Component {
 				dense
 				index={index}
 				hidden={this.state.tabValue !== index}
-				role='tabpanel'>
+				role='tabpanel'
+				>
 				{this.props.myLocations[type].map(marker => {
 					return (
 						<ListItem key={marker.location_id}>
 							<ListItemAvatar>
-								{marker.location_type_id == 1 ? <LocalParkingIcon /> : <BuildIcon />}
+								{Number(marker.location_type_id) === 1 ? (
+									<LocalParkingIcon />
+								) : (
+									<BuildIcon />
+								)}
 							</ListItemAvatar>
 							<ListItemText
 								primary={
-									this.props.markerTypes[marker.location_type_id-1].type_name
+									this.props.markerTypes[marker.location_type_id - 1].type_name
 								}
 								secondary={marker.address}
 							/>
@@ -81,7 +87,6 @@ class MyLocationsPage extends Component {
 
 	render() {
 		const { classes } = this.props;
-
 		return (
 			<div className={classes.root}>
 				<AppBar position='static'>
@@ -109,8 +114,12 @@ class MyLocationsPage extends Component {
 						<Tab label='Created Locations' />
 					</Tabs>
 				</AppBar>
-				{this.getListHtml('mySaved', 0)}
-				{this.getListHtml('myCreated', 1)}
+				<SwipeableViews
+					axis={this.props.theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+					index={this.state.tabValue}>
+					<div dir={this.props.theme.direction}>{this.getListHtml('mySaved', 0)}</div>
+					 <div dir={this.props.theme.direction}>{this.getListHtml('myCreated', 1)}</div>
+				</SwipeableViews>
 			</div>
 		);
 	}
@@ -119,4 +128,4 @@ const mapStateToProps = reduxStore => ({
 	myLocations: reduxStore.myLocations,
 	markerTypes: reduxStore.markers.markerTypes
 });
-export default connect(mapStateToProps)(withStyles(styles)(MyLocationsPage));
+export default connect(mapStateToProps)(withStyles(styles)(withTheme(MyLocationsPage)));
