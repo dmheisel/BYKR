@@ -19,7 +19,7 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import CommentIcon from '@material-ui/icons/Comment';
 import Rating from '@material-ui/lab/Rating';
 import { withStyles } from '@material-ui/core/styles';
-import CommentDialogue from '../CommentDialogue/CommentDialogue';
+import CommentDialog from '../CommentDialog/CommentDialog';
 import TypeMenu from '../TypeMenu/TypeMenu';
 
 const styles = theme => ({
@@ -199,7 +199,7 @@ class LocationInfoPopUp extends Component {
 
 					</Grid>
 				</InfoWindow>
-				<CommentDialogue
+				<CommentDialog
 					handleClose={this.handleDialogClose}
 					handleOpen={this.handleDialogOpen}
 					dialogOpen={this.state.dialogOpen}

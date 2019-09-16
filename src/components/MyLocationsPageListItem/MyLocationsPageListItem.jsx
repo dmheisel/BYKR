@@ -19,6 +19,9 @@ import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
 
 const styles = theme => ({
+	listItem: {
+		padding: '5px'
+	},
 	iconButton: {
 		width: 'auto',
 		margin: theme.spacing(0),
@@ -39,7 +42,7 @@ class MyLocationsPageList extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<ListItem>
+				<ListItem disableGutters={true} divider={true} className={classes.listItem}>
 					<ListItemAvatar edge='start'>
 						{Number(this.props.marker.location_type_id) === 1 ? (
 							<LocalParkingIcon />
