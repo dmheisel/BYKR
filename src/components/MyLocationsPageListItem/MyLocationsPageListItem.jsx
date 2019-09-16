@@ -40,7 +40,7 @@ class MyLocationsPageList extends Component {
 					</ListItemIcon>
 					{this.props.type === 'myCreated' && (
 						<ListItemIcon>
-							<DeleteSweepOutlinedIcon
+							<DeleteSweepOutlinedIcon />
 						</ListItemIcon>
 					)}
 					<ListItemIcon>
