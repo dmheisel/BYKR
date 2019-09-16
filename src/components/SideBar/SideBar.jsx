@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 //material-ui imports
 import {
@@ -11,8 +11,11 @@ import {
 	ListItemAvatar,
 	ListItemText,
 	Button,
+	Collapse
 } from '@material-ui/core';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
 
 //styling for page
@@ -36,7 +39,7 @@ const styles = theme => ({
 
 class SideBar extends Component {
 	state = {
-		tabValue: 0
+		settingsOpen: false
 	};
 	render() {
 		const { classes } = this.props;
@@ -63,22 +66,33 @@ class SideBar extends Component {
 					<List>
 						<Divider />
 
-						<ListItem>
-							<ListItemText>
-								<Button className={classes.button} onClick={() => this.props.history.push('/myLocations/0')}>Favorites</Button>
-							</ListItemText>
+						<ListItem
+							button
+							onClick={() => this.props.history.push('/myLocations/0')}>
+							<ListItemText
+								primary={<Button className={classes.button}>Favorites</Button>}
+							/>
 						</ListItem>
 						<Divider />
-						<ListItem>
-							<ListItemText>
-								<Button className={classes.button} onClick={() => this.props.history.push('/myLocations/1')}>My Locations</Button>
-							</ListItemText>
+						<ListItem
+							button
+							onClick={() => this.props.history.push('/myLocations/1')}>
+							<ListItemText
+								primary={
+									<Button className={classes.button}>My Locations</Button>
+								}
+							/>
 						</ListItem>
 						<Divider />
-						<ListItem>
-							<ListItemText>
-								<Button className={classes.button}>Settings</Button>
-							</ListItemText>
+						<ListItem
+							button
+							onClick={() =>
+								this.setState({ settingsOpen: !this.state.settingsOpen })
+							}>
+							<ListItemText
+								primary={<Button className={classes.button}>Settings</Button>}
+							/>
+							{this.state.settingsOpen ? <ExpandLess /> : <ExpandMore />}
 						</ListItem>
 						<Divider />
 					</List>
@@ -90,4 +104,6 @@ class SideBar extends Component {
 const mapStateToProps = reduxState => ({
 	user: reduxState.user
 });
-export default withStyles(styles)(connect(mapStateToProps)(withRouter(SideBar)));
+export default withStyles(styles)(
+	connect(mapStateToProps)(withRouter(SideBar))
+);
