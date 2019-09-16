@@ -31,6 +31,10 @@ class MyLocationsPageList extends Component {
 		this.props.history.push(`/home/${this.props.marker.lat}/${this.props.marker.lng}`);
 	};
 
+	handleDeleteClick = () => {
+		this.props.dispatch({type: 'DELETE_MARKER', payload: this.props.marker.location_id})
+	}
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -53,7 +57,7 @@ class MyLocationsPageList extends Component {
 					{this.props.type === 'myCreated' && (
 						<IconButton
 							className={classes.iconButton}
-							onClick={() => console.log('delete icon clicked')}>
+							onClick={this.handleDeleteClick}>
 							<DeleteSweepOutlinedIcon />
 						</IconButton>
 					)}

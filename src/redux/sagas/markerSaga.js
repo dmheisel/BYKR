@@ -39,7 +39,7 @@ function* addNewMarker(action) {
 function* deleteMarker(action) {
 	try {
 		yield axios.delete(`/api/locations/${action.payload}`);
-		yield put({ type: 'FETCH_MARKERS' });
+		yield put({ type: 'FETCH_USER_CREATED' });
 	} catch (error) {
 		console.log('error on delete route through markers saga: ', error);
 	}
