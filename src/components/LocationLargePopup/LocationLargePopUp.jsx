@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { InfoWindow } from '@react-google-maps/api';
 import {
 	Grid,
-	Link,
 	List,
 	ListItem,
 	ListItemText,

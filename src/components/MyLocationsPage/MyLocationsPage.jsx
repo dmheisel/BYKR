@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SwipeableViews from 'react-swipeable-views';
+import MyLocationsPageListItem from '../MyLocationsPageListItem/MyLocationsPageListItem'
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
 	AppBar,
@@ -9,15 +10,8 @@ import {
 	Typography,
 	Tabs,
 	Tab,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemAvatar,
-	ListItemText
+	List
 } from '@material-ui/core';
-import Rating from '@material-ui/lab/Rating';
-import LocalParkingIcon from '@material-ui/icons/LocalParking';
-import BuildIcon from '@material-ui/icons/Build';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
@@ -57,28 +51,7 @@ class MyLocationsPage extends Component {
 				>
 				{this.props.myLocations[type].map(marker => {
 					return (
-						<ListItem key={marker.location_id}>
-							<ListItemAvatar>
-								{Number(marker.location_type_id) === 1 ? (
-									<LocalParkingIcon />
-								) : (
-									<BuildIcon />
-								)}
-							</ListItemAvatar>
-							<ListItemText
-								primary={
-									this.props.markerTypes[marker.location_type_id - 1].type_name
-								}
-								secondary={marker.address}
-							/>
-							<ListItemIcon edge='end'>
-								<Rating
-									value={Number(marker.avg_rating)}
-									readOnly
-									size='small'
-								/>
-							</ListItemIcon>
-						</ListItem>
+						<MyLocationsPageListItem key={marker.location_id} markerTypes={this.props.markerTypes} marker={marker} type={type}/>
 					);
 				})}
 			</List>
