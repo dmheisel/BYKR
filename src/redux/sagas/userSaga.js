@@ -31,10 +31,10 @@ function* fetchUser() {
 	}
 }
 
-function* updateUser(action) {
+function* updateUserDefaultLocation(action) {
 	try {
 		let newCoordsResponse = yield axios.get(
-			`/api/geocode/${action.payload.newLocation}`
+			`/api/geocode/coords/${action.payload.newLocation}`
 		);
 		yield axios.put(`/api/account/${action.payload.id}`, {
 			...action.payload,
@@ -48,7 +48,7 @@ function* updateUser(action) {
 
 function* userSaga() {
 	yield takeLatest('FETCH_USER', fetchUser);
-	yield takeLatest('UPDATE_USER', updateUser);
+	yield takeLatest('UPDATE_USER_DEFAULT_LOCATION', updateUserDefaultLocation);
 }
 
 export default userSaga;
