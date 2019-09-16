@@ -45,7 +45,7 @@ class Map extends Component {
 						map: map,
 					})
 				}
-				zoom={15}
+				zoom={17}
 				center={{
 					lat: this.props.mapCenter.lat || Number(this.props.user.lat),
 					lng: this.props.mapCenter.lng || Number(this.props.user.lng)
