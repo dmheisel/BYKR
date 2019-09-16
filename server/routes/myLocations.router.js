@@ -23,7 +23,9 @@ router.get(`/saved`, rejectUnauthenticated, (req, res) => {
 	where
 		sav.user_id = $1
 	group by
-		sav.user_id, loc.id;`;
+		sav.user_id, loc.id
+	order by
+		loc.id desc;`;
 
 	pool
 		.query(sqlText, [userId])
@@ -50,7 +52,9 @@ router.get('/created', rejectUnauthenticated, (req, res) => {
       where
         loc.created_by_user_id = $1
       group by
-        loc.id;`
+				loc.id
+			order by
+				loc.id desc;`
   pool
     .query(sqlText, [userId])
     .then(result => {
