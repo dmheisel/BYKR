@@ -3,7 +3,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* fetchUserFavorites(action) {
   try {
-    let response = yield axios.get(`/api/myLocations/favorites/:id`)
+    let response = yield axios.get(`/api/myLocations/saved`)
     yield put({type: 'SET_USER_FAVORITES', payload: response.data})
   } catch (error) {
     console.log('error on retrieving users favorites: ', error)
@@ -12,7 +12,7 @@ function* fetchUserFavorites(action) {
 
 function* fetchUserCreated(actions) {
   try {
-    let response = yield axios.get(`api/myLocations/created/:id`)
+    let response = yield axios.get(`api/myLocations/created`)
     yield put({ type: 'SET_USER_CREATED', payload: response.data })
   } catch (error) {
     console.log('error on retrieving users created: ', error)

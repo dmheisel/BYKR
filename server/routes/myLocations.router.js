@@ -6,7 +6,7 @@ const {
 const router = express.Router();
 
 //get route to get all of a user's saved locations
-router.get(`/favorites`, rejectUnauthenticated, (req, res) => {
+router.get(`/saved`, rejectUnauthenticated, (req, res) => {
 	let userId = req.user.id;
 	let sqlText = `
 		select sav.user_id, loc.id as location_id, lat, lng, loc.address, loc.location_type_id, round(avg(rating),1) as avg_rating

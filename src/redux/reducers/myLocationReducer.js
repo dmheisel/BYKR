@@ -1,14 +1,24 @@
-const myLocationReducer = (state = {}, action) => {
+import { combineReducers } from 'redux';
+
+const mySaved = (state = [], action) => {
 	switch (action.type) {
-		case 'SET_USER_SAVED_LOCATIONS':
-			return { ...state, saved: action.payload };
-		case 'SET_USER_CREATED_LOCATIONS':
-			return { ...state, created: action.payload };
-		case 'CLEAR_USER_LOCATIONS':
-			return {};
+		case 'SET_USER_FAVORITES':
+			return action.payload;
 		default:
 			return state;
 	}
 };
 
-export default myLocationReducer;
+const myCreated = (state = [], action) => {
+	switch (action.type) {
+		case 'SET_USER_CREATED':
+			return action.payload;
+		default:
+			return state;
+	}
+};
+
+export default combineReducers({
+	mySaved,
+	myCreated
+});

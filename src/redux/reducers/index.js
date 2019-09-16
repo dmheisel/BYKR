@@ -5,7 +5,7 @@ import user from './userReducer';
 import markers from './markerReducer'
 import mapCenter from './mapReducer'
 import selectedMarker from './selectedMarkerReducer'
-import myLocationReducer from './myLocationReducer'
+import myLocations from './myLocationReducer'
 
 // rootReducer is the primary reducer -- it bundles up all of the other reducers
 // This is imported in index.js as rootSaga
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   markers, //will have an array of all locations stored in database and
   mapCenter, // will have an object {lat: num, lng: num} for center coordinates
   selectedMarker, //object containing details of currently selected marker
-  myLocationReducer
+  myLocations // contains mySaved and myCreated
 });
 
 export default rootReducer;
