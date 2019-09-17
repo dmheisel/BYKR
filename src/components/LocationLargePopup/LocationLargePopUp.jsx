@@ -26,24 +26,27 @@ const styles = theme => ({
 	root: {
 		display: 'flex',
 		width: '60vw',
-		height: '35vh'
+		height: '30vh'
 	},
 	header: {
-		height: '15%',
-		marginBottom: '0'
+		height: '12%',
+		margin: '0',
+		padding: '0'
 	},
 	list: {
-		height: '50%',
+		height: '40%',
 		overflow: 'auto',
 		border: '2px black',
-		marginTop: '0',
-		marginBottom: '0'
+		margin: '0',
+		padding: '0'
 	},
 	listRoot: {
 		width: '100%'
 	},
 	footer: {
-		height: '15%'
+		height: '12%',
+		margin: '0',
+		padding: '0'
 	}
 });
 

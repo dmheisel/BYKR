@@ -12,7 +12,7 @@ const styles = theme => ({
 		backgroundColor: 'white',
 		marginRight: '5%',
 		marginLeft: '5%',
-		marginTop: '2.5%',
+		marginTop: '3%',
 		zIndex: '1',
 		width: '90%',
 		display: 'flex',
