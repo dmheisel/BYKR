@@ -78,26 +78,6 @@ class SideBar extends Component {
 						</ListItem>
 					</List>
 					<List>
-						<Divider />
-
-						<ListItem
-							button
-							onClick={() => this.props.history.push('/myLocations/0')}>
-							<ListItemText
-								primary={<Button className={classes.button}>Favorites</Button>}
-							/>
-						</ListItem>
-						<Divider />
-						<ListItem
-							button
-							onClick={() => this.props.history.push('/myLocations/1')}>
-							<ListItemText
-								primary={
-									<Button className={classes.button}>My Locations</Button>
-								}
-							/>
-						</ListItem>
-						<Divider />
 						<ListItem
 							button
 							onClick={() =>
@@ -122,6 +102,26 @@ class SideBar extends Component {
 							</List>
 						</Collapse>
 						<Divider />
+
+						<ListItem
+							button
+							onClick={() => this.props.history.push('/myLocations/0')}>
+							<ListItemText
+								primary={<Button className={classes.button}>Saved</Button>}
+							/>
+						</ListItem>
+						<Divider />
+						<ListItem
+							button
+							onClick={() => this.props.history.push('/myLocations/1')}>
+							<ListItemText
+								primary={
+									<Button className={classes.button}>My Locations</Button>
+								}
+							/>
+						</ListItem>
+						<Divider />
+
 					</List>
 					<InputDiaolog
 						dialogOpen={this.state.dialogOpen}

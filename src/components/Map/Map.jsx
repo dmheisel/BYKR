@@ -41,13 +41,13 @@ class Map extends Component {
 					height: '90vh',
 					width: '100vw'
 				}}
-				zoom={17}
+				zoom={18}
 				center={{
 					lat: this.props.mapCenter.lat || Number(this.props.user.lat),
 					lng: this.props.mapCenter.lng || Number(this.props.user.lng)
 				}}
 				onLoad={map => {
-					// map.setMapTypeId('hybrid');
+					map.setMapTypeId('hybrid');
 					this.setState({
 						map: map
 					});
