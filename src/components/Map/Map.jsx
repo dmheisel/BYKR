@@ -60,7 +60,6 @@ class Map extends Component {
 					zoomControl: true
 				}}
 				onClick={event => {
-					console.log(this.state.map);
 					this.props.addLocation(event);
 				}}
 				onDragEnd={this.updateCenter}>

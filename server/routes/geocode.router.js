@@ -44,7 +44,7 @@ router.get('/address/:location', (req, res) => {
 			const coords = foundResult.geometry.location
 			//sends an object with address, locality, and coords
 			//will update coords for pin so it drops at the closest street address
-			res.send({ address: `${streetNumber.short_name} ${streetName.shortName}`, locality: locality.short_nam, coords: coords });
+			res.send({ address: `${streetNumber.short_name} ${streetName.short_name}`, locality: locality.short_name, coords: coords });
 		})
 		.catch(error => {
 			console.log('error on retrieving address from google geocode API', error);
