@@ -8,7 +8,8 @@ import {
 	ListItemIcon,
 	ListItemText,
 	Button,
-	Collapse
+	Collapse,
+	Checkbox
 } from '@material-ui/core';
 import EditLocationOutlinedIcon from '@material-ui/icons/EditLocationOutlined';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -17,15 +18,6 @@ import { withStyles } from '@material-ui/core/styles';
 import InputDialog from '../InputDialog/InputDialog';
 
 const styles = theme => ({
-	root: {
-		width: '70vw'
-	},
-	menuHeader: {
-		height: '20vh'
-	},
-	tabs: {
-		borderRight: `1px solid ${theme.palette.divider}`
-	},
 	button: {
 		margin: theme.spacing(0)
 	},
@@ -47,6 +39,17 @@ class SettingsList extends Component {
 	handleDialogOpen = () => {
 		this.setState({ dialogOpen: true });
 	};
+
+	toggleUserDeviceLocation = () => {
+		this.props.dispatch({
+			type: 'UPDATE_USER_DEVICE_SETTING',
+			payload: {
+				id: this.props.user.id,
+				newSetting: !this.props.user.use_device_location
+			}
+		});
+	};
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -64,7 +67,21 @@ class SettingsList extends Component {
 				<Collapse in={this.state.settingsOpen} timeout='auto' unmountOnExit>
 					<List component='div' disablePadding>
 						<ListItem
+							className={classes.nested}
 							button
+							onClick={this.toggleUserDeviceLocation}>
+							<ListItemIcon>
+								<Checkbox
+									edge='start'
+									checked={this.props.user.use_device_location}
+									disableRipple
+								/>
+							</ListItemIcon>
+							<ListItemText primary='Use Device Location?' />
+						</ListItem>
+						<ListItem
+							button
+							disabled={this.props.user.use_device_location}
 							className={classes.nested}
 							onClick={this.handleDialogOpen}>
 							<ListItemIcon>

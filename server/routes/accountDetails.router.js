@@ -5,13 +5,13 @@ const {
 } = require('../modules/authentication-middleware');
 const router = express.Router();
 
-//get route to get account details such as lat, lng, default location, saved locations
+//get route to get account details such as lat, lng, default location, device permission, saved locations
 //for one user out of database
 router.get('/:id', (req, res) => {
 	console.log('in accountDetails get for ', req.params.id);
 	const id = req.params.id;
 	const sqlText = `
-	select user_settings.user_id, lat, lng, default_location, array_agg(users_locations_saved.location_id) as saved_locations
+	select lat, lng, default_location, use_device_location, array_agg(users_locations_saved.location_id) as saved_locations
 	from
 		user_settings
 	left join
@@ -61,6 +61,28 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
 	} else {
 		res.sendStatus(403);
 	}
+});
+
+//put route to change user's setting to use current device location and set as default location
+router.put('/useDevice/:id', rejectUnauthenticated, (req, res) => {
+	const userID = req.user.id;
+	const newSetting = req.body.newSetting;
+	const sqlText = `
+		UPDATE user_settings
+			SET
+				use_device_location = $1
+			WHERE
+				user_id = $2;`;
+	pool
+		.query(sqlText, [newSetting, userID])
+		.then(result => {
+			console.log('successful toggle of device location setting');
+			res.sendStatus(201);
+		})
+		.catch(error => {
+			console.log('error toggling user device location setting: ', error);
+			res.sendStatus(500);
+		});
 });
 
 //post route to add settings with new user to database
@@ -113,7 +135,7 @@ router.post(`/save/:id`, rejectUnauthenticated, (req, res) => {
 		})
 		.catch(error => {
 			console.log('error on saving location: ', error);
-			res.sendStatus(500)
+			res.sendStatus(500);
 		});
 });
 

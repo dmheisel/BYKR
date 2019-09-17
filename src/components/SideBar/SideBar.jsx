@@ -10,11 +10,11 @@ import {
 	ListItem,
 	ListItemAvatar,
 	ListItemText,
-	Button,
+	Button
 } from '@material-ui/core';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import { withStyles } from '@material-ui/core/styles';
-import SettingsList from '../SettingsList/SettingsList'
+import SettingsList from '../SettingsList/SettingsList';
 
 //styling for page
 const styles = theme => ({
@@ -29,16 +29,10 @@ const styles = theme => ({
 	},
 	button: {
 		margin: theme.spacing(0)
-	},
-	nested: {
-		margin: theme.spacing(0),
-		paddingLeft: theme.spacing(4),
-		paddingRight: theme.spacing(0)
 	}
 });
 
 class SideBar extends Component {
-
 	render() {
 		const { classes } = this.props;
 
@@ -83,9 +77,7 @@ class SideBar extends Component {
 							/>
 						</ListItem>
 						<Divider />
-
 					</List>
-
 				</div>
 			</Drawer>
 		);
