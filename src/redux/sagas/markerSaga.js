@@ -27,14 +27,14 @@ function* addNewMarker(action) {
 			`api/geocode/address/${action.payload.coords.lat},${action.payload.coords.lng}`
 		);
 		yield console.log(response);
-		yield axios.post('/api/locations', {
+		let returningID = yield axios.post('/api/locations', {
 			...action.payload,
 			address: response.data.address,
 			locality: response.data.locality,
 			coords: response.data.coords
 		});
 		yield put({ type: 'FETCH_MARKERS' });
-		yield put({type: 'SET_SELECTED_MARKER'})
+		yield put({ type: 'FETCH_MARKER_DETAILS', payload: returningID.data.id });
 	} catch (error) {
 		console.log('error on saga sending location to server');
 	}
@@ -62,7 +62,6 @@ function* updateMarkerType(action) {
 		);
 	}
 }
-
 
 function* markerSaga() {
 	yield takeLatest('FETCH_MARKERS', fetchMarkers);

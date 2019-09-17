@@ -4,11 +4,11 @@ import { put, takeLatest } from 'redux-saga/effects';
 function* fetchMarkerDetails(action) {
 	//gets all location comments and average rating from database to store in redux state
 	try {
-		let response = yield axios.get(`/api/locations/info/${action.payload.id}`)
+		let response = yield axios.get(`/api/locations/info/${action.payload}`)
 		yield put({ type: 'SET_SELECTED_MARKER', payload: response.data });
-		yield put({ type: 'FETCH_COMMENTS', payload: action.payload.id });
-		yield put({ type: 'FETCH_AVG_RATING', payload: action.payload.id });
-		yield put({ type: 'FETCH_USER_RATING', payload: action.payload.id });
+		yield put({ type: 'FETCH_COMMENTS', payload: action.payload });
+		yield put({ type: 'FETCH_AVG_RATING', payload: action.payload });
+		yield put({ type: 'FETCH_USER_RATING', payload: action.payload });
 	} catch (error) {
 		console.log('error on retrieving details for selected marker: ', error);
 	}

@@ -106,6 +106,7 @@ router.get('/rating/:id', (req, res) => {
 		});
 });
 
+//get route to get all details for current location
 router.get('/info/:id', (req, res) => {
 	const locationId = req.params.id;
 	const sqlText = `
@@ -133,13 +134,14 @@ router.post('/', rejectUnauthenticated, (req, res) => {
         INTO locations
           (lat, lng, address, locality, location_type_id, created_by_user_id)
         VALUES
-          ($1, $2, $3, $4, $5, $6);`;
+					($1, $2, $3, $4, $5, $6)
+				RETURNING id;`;
 	const values = [coords.lat, coords.lng, address, locality, type, req.user.id];
 	pool
 		.query(sqlText, values)
 		.then(result => {
 			console.log('location succesfully added to db table locations');
-			res.sendStatus(201);
+			res.send(result.rows[0]);
 		})
 		.catch(error => {
 			console.log('error on adding to db table locations: ', error);

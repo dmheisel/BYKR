@@ -1,3 +1,6 @@
+//NOT CURRENTLY USED
+
+
 import React, { Component } from 'react';
 import { InfoWindow } from '@react-google-maps/api';
 import { connect } from 'react-redux';

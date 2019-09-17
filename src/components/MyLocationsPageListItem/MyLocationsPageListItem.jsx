@@ -18,6 +18,7 @@ import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 
+
 const styles = theme => ({
 	listItem: {
 		padding: '5px'
