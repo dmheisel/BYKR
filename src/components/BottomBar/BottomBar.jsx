@@ -37,7 +37,6 @@ class BottomBar extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div>
 				<BottomNavigation showLabels className={classes.root}>
 					<BottomNavigationAction label='Filter Map' />
 					<BottomNavigationAction
@@ -61,16 +60,15 @@ class BottomBar extends Component {
 							})
 						}
 					/>
+					<TypeMenu
+						//type menu for selecting what type of location someone is adding to the map
+						id='typeMenu'
+						anchorEl={this.state.anchorEl}
+						open={Boolean(this.state.anchorEl)}
+						handleClose={this.handleClose}
+						handleSelect={this.handleSelect}
+					/>
 				</BottomNavigation>
-				<TypeMenu
-					//type menu for selecting what type of location someone is adding to the map
-					id='typeMenu'
-					anchorEl={this.state.anchorEl}
-					open={Boolean(this.state.anchorEl)}
-					handleClose={this.handleClose}
-					handleSelect={this.handleSelect}
-				/>
-			</div>
 		);
 	}
 }

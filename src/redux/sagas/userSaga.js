@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, call, takeLatest } from 'redux-saga/effects';
 
 // worker Saga: will be fired on "FETCH_USER" actions
 function* fetchUser() {
@@ -32,25 +32,60 @@ function* fetchUser() {
 
 function* updateUserDefaultLocation(action) {
 	try {
-		let newCoordsResponse = yield axios.get(
-			`/api/geocode/coords/${action.payload.newLocation}`
-		);
-		yield axios.put(`/api/account/${action.payload.id}`, {
-			...action.payload,
-			coords: newCoordsResponse.data
-		});
+		console.log('update location triggered');
+		let newCoordsResponse;
+		if (!action.payload.coords) {
+			action.payload.coords = yield axios.get(
+				`/api/geocode/coords/${action.payload.newLocation}`
+			);
+		}
+		yield axios.put(`/api/account/${action.payload.id}`, action.payload);
+
 		yield put({ type: 'FETCH_USER' });
-		yield put({ type: 'SET_CENTER', payload: newCoordsResponse.data });
+		yield put({
+			type: 'SET_CENTER',
+			payload: action.payload.coords || newCoordsResponse.data
+		});
 	} catch (error) {
 		console.log('Update settings request failed', error);
 	}
 }
-
+//creates a promise to resolve on getting user's current device location
+const getUserLocation = () =>
+	new Promise((resolve, reject) => {
+		navigator.geolocation.getCurrentPosition(
+			loc => resolve(loc),
+			err => reject(err),
+			{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+		);
+	});
 //saga to update user's device location setting in db table
 function* updateUserDeviceSetting(action) {
 	try {
-		yield axios.put(`/api/account/useDevice/${action.payload.id}`, {newSetting: action.payload.newSetting});
-		yield put({ type: 'FETCH_USER' });
+		yield axios.put(`/api/account/useDevice/${action.payload.id}`, {
+			newSetting: action.payload.newSetting
+		});
+		if (action.payload.newSetting === true) {
+			console.log('gathering coordinates from device, please wait...');
+			const location = yield call(getUserLocation);
+			yield console.log(location.coords);
+			let addressResponse = yield axios.get(
+				`/api/geocode/address/${location.coords.latitude},${location.coords.longitude}`
+			);
+			yield put({
+				type: 'UPDATE_USER_DEFAULT_LOCATION',
+				payload: {
+					...action.payload,
+					newLocation: addressResponse.data.address,
+					coords: {
+						lat: location.coords.latitude,
+						lng: location.coords.longitude
+					}
+				}
+			});
+		} else {
+			yield put({ type: 'FETCH_USER' });
+		}
 	} catch (error) {
 		console.log('error on updating user device permission: ', error);
 	}

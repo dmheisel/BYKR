@@ -36,7 +36,7 @@ function* addNewMarker(action) {
 		yield put({ type: 'FETCH_MARKERS' });
 		yield put({ type: 'FETCH_MARKER_DETAILS', payload: returningID.data.id });
 	} catch (error) {
-		console.log('error on saga sending location to server');
+		console.log('error on saga sending location to server: ', error);
 	}
 }
 function* deleteMarker(action) {

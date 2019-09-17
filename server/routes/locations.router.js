@@ -153,7 +153,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
 	//get created_by_id from database to double check before deleting
 	//users can only delete locations they created
-	const sqlText = `SELECT created_by_user_id FROM locations WHERE id = $1;`;
+	const sqlText = `SELECT created_by_user_id FROM locations WHERE locations.id = $1;`;
 	pool.query(sqlText, [req.params.id]).then(result => {
 		//checks if id is in database
 		if (result.rows.length > 0) {
