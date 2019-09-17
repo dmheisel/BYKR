@@ -44,7 +44,7 @@ const styles = theme => ({
 	},
 	footer: {
 		height: '15%'
-	},
+	}
 });
 
 class LocationInfoPopUp extends Component {
@@ -114,12 +114,12 @@ class LocationInfoPopUp extends Component {
 		const { classes } = this.props;
 
 		//makes comment list to display on map info window
-		const commentsList =
+		const commentsList = (
 			//if there are no comments for this location, server returns array with first value null
 			//this conditional prevents list from being rendered if the first value is null (no comments)
-			this.props.selectedMarker.comments && (
-				<List className={classes.listRoot} dense>
-					{this.props.selectedMarker.comments.map((commentObject, index) => {
+			<List className={classes.listRoot} dense>
+				{this.props.selectedMarker.comments &&
+					this.props.selectedMarker.comments.map((commentObject, index) => {
 						return (
 							<ListItem key={commentObject.id} alignItems='flex-start'>
 								<ListItemAvatar>
@@ -132,8 +132,11 @@ class LocationInfoPopUp extends Component {
 							</ListItem>
 						);
 					})}
-				</List>
-			);
+				<ListItem button onClick={this.handleDialogOpen}>
+					<ListItemText secondary="Leave a comment?" />
+				</ListItem>
+			</List>
+		);
 
 		return (
 			<>
@@ -200,7 +203,7 @@ class LocationInfoPopUp extends Component {
 				<InputDialog
 					handleClose={this.handleDialogClose}
 					handleOpen={this.handleDialogOpen}
-					onConfirm={(inputText) =>
+					onConfirm={inputText =>
 						this.props.dispatch({
 							type: 'ADD_USER_COMMENT',
 							payload: {
