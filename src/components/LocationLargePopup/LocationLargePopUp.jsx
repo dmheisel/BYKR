@@ -26,15 +26,18 @@ const styles = theme => ({
 	root: {
 		display: 'flex',
 		width: '60vw',
-		height: '40vh'
+		height: '35vh'
 	},
 	header: {
-		height: '15%'
+		height: '15%',
+		marginBottom: '0'
 	},
 	list: {
 		height: '50%',
 		overflow: 'auto',
-		border: '2px black'
+		border: '2px black',
+		marginTop: '0',
+		marginBottom: '0'
 	},
 	listRoot: {
 		width: '100%'
@@ -42,9 +45,6 @@ const styles = theme => ({
 	footer: {
 		height: '15%'
 	},
-	subfooter: {
-		height: '5%'
-	}
 });
 
 class LocationInfoPopUp extends Component {

@@ -34,6 +34,7 @@ function* addNewMarker(action) {
 			coords: response.data.coords
 		});
 		yield put({ type: 'FETCH_MARKERS' });
+		yield put({type: 'SET_SELECTED_MARKER'})
 	} catch (error) {
 		console.log('error on saga sending location to server');
 	}

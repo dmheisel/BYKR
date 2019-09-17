@@ -8,7 +8,7 @@ const router = express.Router();
 // get route to get all locations from database locations table
 router.get('/', (req, res) => {
 	const sqlText = `
-	SELECT locations.id, lat, lng, address, locality, created_by_user_id, location_types.type_name
+	SELECT locations.id, lat, lng, location_types.type_name
 		FROM locations
 		JOIN location_types
 			ON locations.location_type_id = location_types.id;`;
@@ -106,6 +106,22 @@ router.get('/rating/:id', (req, res) => {
 		});
 });
 
+router.get('/info/:id', (req, res) => {
+	const locationId = req.params.id;
+	const sqlText = `
+		select * from locations where id = $1`;
+
+	pool
+		.query(sqlText, [locationId])
+		.then(result => {
+			console.log('successful GET of specific location details');
+			res.send(result.rows[0]);
+		})
+		.catch(error => {
+			console.log('error on GET of specific details from db table: ', error);
+			res.sendStatus(500);
+		});
+});
 // post route to add location into database locations table
 router.post('/', rejectUnauthenticated, (req, res) => {
 	console.log('posting to locations db: ', req.body);
