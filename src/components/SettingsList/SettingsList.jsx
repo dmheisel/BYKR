@@ -69,7 +69,11 @@ class SettingsList extends Component {
 						<ListItem
 							className={classes.nested}
 							button
-							onClick={this.toggleUserDeviceLocation}>
+							onClick={() => {
+								this.toggleUserDeviceLocation();
+								!this.props.user.use_device_location &&
+									this.props.toggleDrawer();
+							}}>
 							<ListItemIcon>
 								<Checkbox
 									edge='start'

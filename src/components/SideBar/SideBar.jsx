@@ -56,7 +56,7 @@ class SideBar extends Component {
 						</ListItem>
 					</List>
 					<List>
-						<SettingsList toggleDrawer={this.props.toggleDrawer} />
+						<SettingsList toggleDrawer={this.props.toggleDrawer} drawerOpen={this.props.drawerOpen}/>
 						<Divider />
 
 						<ListItem

@@ -35,9 +35,10 @@ function* updateUserDefaultLocation(action) {
 		console.log('update location triggered');
 		let newCoordsResponse;
 		if (!action.payload.coords) {
-			action.payload.coords = yield axios.get(
+			let coordsResponse = yield axios.get(
 				`/api/geocode/coords/${action.payload.newLocation}`
 			);
+			action.payload.coords = coordsResponse.data
 		}
 		yield axios.put(`/api/account/${action.payload.id}`, action.payload);
 
