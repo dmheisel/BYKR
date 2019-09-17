@@ -41,6 +41,7 @@ function* updateUserDefaultLocation(action) {
 			coords: newCoordsResponse.data
 		});
 		yield put({ type: 'FETCH_USER' });
+		yield put({type: 'SET_CENTER', payload: newCoordsResponse.data})
 	} catch (error) {
 		console.log('Update settings request failed', error);
 	}

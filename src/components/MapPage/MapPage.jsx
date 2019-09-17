@@ -16,15 +16,15 @@ class MapPage extends Component {
 	componentDidMount = () => {
 		this.props.dispatch({ type: 'FETCH_MARKERS' });
 		this.props.dispatch({ type: 'FETCH_MARKER_TYPES' });
-		if (this.props.match.params.lat && this.props.match.params.lng) {
-			this.props.dispatch({
-				type: 'SET_CENTER',
-				payload: {
-					lat: Number(this.props.match.params.lat),
-					lng: Number(this.props.match.params.lng)
-				}
-			});
-		}
+		// if (this.props.match.params.lat && this.props.match.params.lng) {
+		// 	this.props.dispatch({
+		// 		type: 'SET_CENTER',
+		// 		payload: {
+		// 			lat: Number(this.props.match.params.lat),
+		// 			lng: Number(this.props.match.params.lng)
+		// 		}
+		// 	});
+		// }
 	};
 	//toggles add mode on or off -- can only add locations if currentlyin add mode
 	toggleAddMode = () => {

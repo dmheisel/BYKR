@@ -19,7 +19,7 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import CommentIcon from '@material-ui/icons/Comment';
 import Rating from '@material-ui/lab/Rating';
 import { withStyles } from '@material-ui/core/styles';
-import InputDialog from '../InputDialog/InputDiaolog';
+import InputDialog from '../InputDialog/InputDialog';
 import TypeMenu from '../TypeMenu/TypeMenu';
 
 const styles = theme => ({
