@@ -15,7 +15,7 @@ const getUserLocation = () =>
 		navigator.geolocation.getCurrentPosition(
 			loc => resolve(loc),
 			err => reject(err),
-			{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+			{ enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
 		);
 	});
 

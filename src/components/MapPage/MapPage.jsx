@@ -16,7 +16,7 @@ class MapPage extends Component {
 	componentDidMount = () => {
 		this.props.dispatch({ type: 'FETCH_MARKERS' });
 		this.props.dispatch({ type: 'FETCH_MARKER_TYPES' });
-	
+
 	};
 	//toggles add mode on or off -- can only add locations if currentlyin add mode
 	toggleAddMode = () => {

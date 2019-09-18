@@ -1,13 +1,16 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* fetchMarkers() {
+function* fetchMarkers(action) {
 	//get locations from server-database connection
 	try {
+		if (action.payload && action.payload.filters) {
+			yield console.log('filtering map for: ', action.payload.filters)
+		}
 		let response = yield axios.get('/api/locations');
 		yield put({ type: 'SET_MARKER_LIST', payload: response.data });
 	} catch (error) {
-		console.log('error on fetching locations and setting to redux state');
+		console.log('error on fetching locations and setting to redux state: ', error);
 	}
 }
 
