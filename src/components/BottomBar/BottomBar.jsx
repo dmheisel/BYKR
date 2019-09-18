@@ -37,38 +37,43 @@ class BottomBar extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-				<BottomNavigation showLabels className={classes.root}>
-					<BottomNavigationAction label='Filter Map' />
-					<BottomNavigationAction
-						// conditinoally render "cancel add" or "add site" based on if currently in add mode
-						label={this.props.addMode ? 'Cancel Add' : 'Add Site'}
-						icon={<AddCircleOutline />}
-						onClick={
-							this.props.addMode ? this.props.toggleAddMode : this.handleOpen
-						}
-					/>
-					<BottomNavigationAction
-						label='Back to Default'
-						onClick={() =>
-							//dispatch sets center of map back to user's defaults.
-							this.props.dispatch({
-								type: 'SET_CENTER',
-								payload: {
-									lat: Number(this.props.user.lat),
-									lng: Number(this.props.user.lng)
-								}
-							})
-						}
-					/>
-					<TypeMenu
-						//type menu for selecting what type of location someone is adding to the map
-						id='typeMenu'
-						anchorEl={this.state.anchorEl}
-						open={Boolean(this.state.anchorEl)}
-						handleClose={this.handleClose}
-						handleSelect={this.handleSelect}
-					/>
-				</BottomNavigation>
+			<BottomNavigation showLabels className={classes.root}>
+				<BottomNavigationAction label='Filter Map' />
+				<BottomNavigationAction
+					// conditinoally render "cancel add" or "add site" based on if currently in add mode
+					label={this.props.addMode ? 'Cancel Add' : 'Add Site'}
+					icon={<AddCircleOutline />}
+					onClick={
+						this.props.addMode ? this.props.toggleAddMode : this.handleOpen
+					}
+				/>
+				<BottomNavigationAction
+					label='Back to Default'
+					onClick={() =>
+						//dispatch sets center of map back to user's default location.
+						this.props.user.use_device_location
+							? this.props.dispatch({
+									type: 'FETCH_CENTER',
+									payload: { id: this.props.user.id }
+							  })
+							: this.props.dispatch({
+									type: 'SET_CENTER',
+									payload: {
+										lat: Number(this.props.user.lat),
+										lng: Number(this.props.user.lng)
+									}
+							  })
+					}
+				/>
+				<TypeMenu
+					//type menu for selecting what type of location someone is adding to the map
+					id='typeMenu'
+					anchorEl={this.state.anchorEl}
+					open={Boolean(this.state.anchorEl)}
+					handleClose={this.handleClose}
+					handleSelect={this.handleSelect}
+				/>
+			</BottomNavigation>
 		);
 	}
 }

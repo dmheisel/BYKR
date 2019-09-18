@@ -11,7 +11,7 @@ router.get('/:id', (req, res) => {
 	console.log('in accountDetails get for ', req.params.id);
 	const id = req.params.id;
 	const sqlText = `
-	select lat, lng, default_location, use_device_location, array_agg(users_locations_saved.location_id) as saved_locations
+	select lat, lng, use_device_location, array_agg(users_locations_saved.location_id) as saved_locations
 	from
 		user_settings
 	left join
@@ -39,16 +39,14 @@ router.get('/:id', (req, res) => {
 router.put('/:id', rejectUnauthenticated, (req, res) => {
 	console.log(req.user);
 	if (req.params.id == req.user.id) {
-		const newLocation = req.body.newLocation;
 		const newCoords = req.body.coords;
-		const values = [newLocation, newCoords.lat, newCoords.lng, req.user.id];
+		const values = [newCoords.lat, newCoords.lng, req.user.id];
 		const sqlText = `UPDATE user_settings
 					SET
-						default_location = $1,
-						lat = $2,
-						lng = $3
+						lat = $1,
+						lng = $2
 					WHERE
-						user_id = $4;`;
+						user_id = $3;`;
 		pool
 			.query(sqlText, values)
 			.then(result => {
@@ -91,16 +89,15 @@ router.post('/', (req, res) => {
 
 	const values = [
 		req.body.user_id,
-		req.body.location,
 		req.body.coords.lat,
 		req.body.coords.lng
 	];
 	const sqlText = `
 					INSERT
 						INTO user_settings
-							(user_id, default_location, lat, lng)
+							(user_id, lat, lng)
 						VALUES
-							($1, $2, $3, $4)`;
+							($1, $2, $3)`;
 	pool
 		.query(sqlText, values)
 		.then(result => {

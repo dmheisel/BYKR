@@ -67,23 +67,7 @@ function* updateUserDeviceSetting(action) {
 			newSetting: action.payload.newSetting
 		});
 		if (action.payload.newSetting === true) {
-			console.log('gathering coordinates from device, please wait...');
-			const location = yield call(getUserLocation);
-			yield console.log(location.coords);
-			let addressResponse = yield axios.get(
-				`/api/geocode/address/${location.coords.latitude},${location.coords.longitude}`
-			);
-			yield put({
-				type: 'UPDATE_USER_DEFAULT_LOCATION',
-				payload: {
-					...action.payload,
-					newLocation: addressResponse.data.address,
-					coords: {
-						lat: location.coords.latitude,
-						lng: location.coords.longitude
-					}
-				}
-			});
+			yield put({ type: 'FETCH_CENTER', payload: action.payload})
 		} else {
 			yield put({ type: 'FETCH_USER' });
 		}
