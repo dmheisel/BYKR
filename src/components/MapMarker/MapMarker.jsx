@@ -35,7 +35,7 @@ class MapMarker extends Component {
 			case 'Fixing Station':
 				return BuildIcon;
 			default:
-				return;
+				return null;
 		}
 	};
 	render() {
