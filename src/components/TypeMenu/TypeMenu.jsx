@@ -16,7 +16,7 @@ class TypeMenu extends Component {
 				id='simple-menu'
 				anchorEl={this.props.anchorEl}
 				keepMounted
-				open={Boolean(this.props.anchorEl)}
+				open={this.props.open}
 				onClose={this.props.handleClose}>
 				{menuOptions}
 				<MenuItem onClick={this.props.handleClose}>Cancel</MenuItem>

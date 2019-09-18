@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import TypeMenu from '../TypeMenu/TypeMenu';
+import FilterMenu from '../FilterMenu/FilterMenu';
 import { withStyles } from '@material-ui/core/styles';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
@@ -15,17 +16,24 @@ const styles = theme => ({
 
 class BottomBar extends Component {
 	state = {
-		anchorEl: null
+		typeMenuAnchorEl: null,
+		filterMenuAnchorEl: null
 	};
 
 	//sets anchor element for info window to the current marker's location
 	handleOpen = event => {
-		this.setState({ anchorEl: event.currentTarget });
+		this.setState({ typeMenuAnchorEl: event.currentTarget });
+	};
+	handleFilterOpen = event => {
+		this.setState({ filterMenuAnchorEl: event.currentTarget });
 	};
 
 	//removes anchor element for info window -- this removes it from view
 	handleClose = () => {
-		this.setState({ anchorEl: null });
+		this.setState({ typeMenuAnchorEl: null });
+	};
+	handleFilterClose = () => {
+		this.setState({ filterMenuAnchorEl: null });
 	};
 
 	//used for selecting an item type in the menu to add to the map
@@ -38,7 +46,10 @@ class BottomBar extends Component {
 		const { classes } = this.props;
 		return (
 			<BottomNavigation showLabels className={classes.root}>
-				<BottomNavigationAction label='Filter Map' />
+				<BottomNavigationAction
+					label='Filter Map'
+					onClick={this.handleFilterOpen}
+				/>
 				<BottomNavigationAction
 					// conditinoally render "cancel add" or "add site" based on if currently in add mode
 					label={this.props.addMode ? 'Cancel Add' : 'Add Site'}
@@ -68,9 +79,17 @@ class BottomBar extends Component {
 				<TypeMenu
 					//type menu for selecting what type of location someone is adding to the map
 					id='typeMenu'
-					anchorEl={this.state.anchorEl}
-					open={Boolean(this.state.anchorEl)}
+					anchorEl={this.state.typeMenuAnchorEl}
+					open={Boolean(this.state.typeMenuAnchorEl)}
 					handleClose={this.handleClose}
+					handleSelect={this.handleSelect}
+				/>
+				<FilterMenu
+					//filter menu for selecting what locations are showing on the map
+					id='filterMenu'
+					anchorEl={this.state.filterMenuAnchorEl}
+					open={Boolean(this.state.filterMenuAnchorEl)}
+					handleClose={this.handleFilterClose}
 					handleSelect={this.handleSelect}
 				/>
 			</BottomNavigation>
