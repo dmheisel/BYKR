@@ -25,8 +25,14 @@ CREATE TABLE user_settings (
 create table location_types (
     id serial primary key,
     type_name varchar(250),
-    services varchar(500)
+    user_can_create boolean default FALSE
 );
+
+insert
+  into location_types
+    (type_name, user_can_create)
+  VALUES
+    ('Bike Rack', true), ('Fixing Station', true), ('BikeShare Dock', false);
 
 --location table contains details for each location
 create table locations (

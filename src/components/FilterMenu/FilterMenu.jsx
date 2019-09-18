@@ -4,22 +4,15 @@ import { Menu, MenuList, MenuItem } from '@material-ui/core';
 
 class FilterMenu extends Component {
 	render() {
-		const optionList = [
-			'Default',
-			'Parking Racks',
-			'Fixing Stations',
-			'NiceRide Docking Stations'
-		];
-		const menuOptions = optionList.map((option, index) => {
-			return (
-				<MenuItem
-					key={index}
-					value={index}
-					onClick={() => console.log('clicked: ', option)}>
-					{option}
-				</MenuItem>
-			);
-		});
+		const menuOptions = this.props.markerTypes.map(type => (
+			<MenuItem
+				key={type.id}
+				value={type.id}
+				onClick={() => console.log('clicked: ', type.type_name)}>
+				{type.type_name + 's'}
+			</MenuItem>
+		));
+
 		return (
 			<Menu
 				id='simple-menu'
