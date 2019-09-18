@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put, call, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 
 // worker Saga: will be fired on "FETCH_USER" actions
 function* fetchUser() {
@@ -38,7 +38,7 @@ function* updateUserDefaultLocation(action) {
 			let coordsResponse = yield axios.get(
 				`/api/geocode/coords/${action.payload.newLocation}`
 			);
-			action.payload.coords = coordsResponse.data
+			action.payload.coords = coordsResponse.data;
 		}
 		yield axios.put(`/api/account/${action.payload.id}`, action.payload);
 
@@ -51,15 +51,6 @@ function* updateUserDefaultLocation(action) {
 		console.log('Update settings request failed', error);
 	}
 }
-//creates a promise to resolve on getting user's current device location
-const getUserLocation = () =>
-	new Promise((resolve, reject) => {
-		navigator.geolocation.getCurrentPosition(
-			loc => resolve(loc),
-			err => reject(err),
-			{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-		);
-	});
 //saga to update user's device location setting in db table
 function* updateUserDeviceSetting(action) {
 	try {
@@ -67,7 +58,7 @@ function* updateUserDeviceSetting(action) {
 			newSetting: action.payload.newSetting
 		});
 		if (action.payload.newSetting === true) {
-			yield put({ type: 'FETCH_CENTER', payload: action.payload})
+			yield put({ type: 'FETCH_CENTER', payload: action.payload });
 		} else {
 			yield put({ type: 'FETCH_USER' });
 		}

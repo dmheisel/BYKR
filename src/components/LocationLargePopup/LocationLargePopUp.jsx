@@ -11,8 +11,8 @@ import {
 	Typography,
 	IconButton
 } from '@material-ui/core';
-import LocalParking from '../Views/LocalParking.png';
-import BuildIcon from '../Views/BuildIcon.png';
+import LocalParkingIcon from '@material-ui/icons/LocalParking'
+import BuildIcon from '@material-ui/icons/Build';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
@@ -104,11 +104,11 @@ class LocationInfoPopUp extends Component {
 	};
 
 	getAvatarIcon = () => {
-		switch (this.props.selectedMarker.location_type) {
+		switch (this.props.selectedMarker.location_type_id) {
 			case 1:
-				return LocalParking;
+				return (<LocalParkingIcon />);
 			case 2:
-				return BuildIcon;
+				return (<BuildIcon />);
 			default:
 				return null;
 		}
@@ -150,7 +150,7 @@ class LocationInfoPopUp extends Component {
 					<Grid className={classes.root} container>
 						<Grid container className={classes.header}>
 							<Grid item xs={2}>
-								<Avatar src={this.getAvatarIcon()} onClick={this.handleOpen} />
+								<Avatar onClick={this.handleOpen} >{this.getAvatarIcon()}</Avatar>
 							</Grid>
 							<Grid item xs={5}>
 								<Typography variant='subtitle1'>Parking Rack</Typography>

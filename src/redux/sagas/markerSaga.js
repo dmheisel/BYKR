@@ -4,10 +4,14 @@ import { put, takeLatest } from 'redux-saga/effects';
 function* fetchMarkers(action) {
 	//get locations from server-database connection
 	try {
-		if (action.payload && action.payload.filters) {
-			yield console.log('filtering map for: ', action.payload.filters)
+		let url = '/api/locations'
+		if (action.payload) {
+			yield console.log('filtering map for ids: ', action.payload)
+			const filterString = '?filters=' + action.payload.join();
+			console.log(filterString);
+			url += filterString;
 		}
-		let response = yield axios.get('/api/locations');
+		const response = yield axios.get(url);
 		yield put({ type: 'SET_MARKER_LIST', payload: response.data });
 	} catch (error) {
 		console.log('error on fetching locations and setting to redux state: ', error);

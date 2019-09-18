@@ -7,14 +7,33 @@ const router = express.Router();
 
 // get route to get all locations from database locations table
 router.get('/', (req, res) => {
-	const sqlText = `
+	const filters = req.query.filters;
+	let values = [];
+	let sqlText = '';
+	if (filters) {
+		sqlText += `SELECT locations.id, lat, lng, location_types.type_name
+			FROM locations
+			JOIN location_types
+			ON locations.location_type_id = location_types.id
+			WHERE location_type_id = `;
+		const filterArray = filters.split(',');
+		filterArray.forEach((filterId, index) => {
+			if (index > 0) {
+				sqlText += ' OR location_type_id = ';
+			}
+			sqlText += `$${index + 1}`;
+			values.push(filterId);
+		});
+	} else {
+		sqlText += `
 	SELECT locations.id, lat, lng, location_types.type_name
 		FROM locations
 		JOIN location_types
 			ON locations.location_type_id = location_types.id;`;
-
+	}
+	console.log('sql text is: ', sqlText, 'values are: ', values)
 	pool
-		.query(sqlText)
+		.query(sqlText, values)
 		.then(result => {
 			console.log(`successful GET from locations db table`);
 			res.send(result.rows);
