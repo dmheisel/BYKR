@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
 	const filters = req.query.filters;
 	let values = [];
 	let sqlText = '';
+	//adds filters to get request if req.query.filters exists
 	if (filters) {
 		sqlText += `SELECT locations.id, lat, lng, location_types.type_name
 			FROM locations
@@ -24,6 +25,7 @@ router.get('/', (req, res) => {
 			sqlText += `$${index + 1}`;
 			values.push(filterId);
 		});
+		sqlText += ';';
 	} else {
 		sqlText += `
 	SELECT locations.id, lat, lng, location_types.type_name
@@ -31,7 +33,8 @@ router.get('/', (req, res) => {
 		JOIN location_types
 			ON locations.location_type_id = location_types.id;`;
 	}
-	console.log('sql text is: ', sqlText, 'values are: ', values)
+
+	console.log('sql text is: ', sqlText, 'values are: ', values);
 	pool
 		.query(sqlText, values)
 		.then(result => {

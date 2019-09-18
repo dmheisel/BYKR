@@ -3,17 +3,14 @@ import { connect } from 'react-redux';
 import {
 	Menu,
 	MenuItem,
-	List,
-	ListItem,
 	Checkbox,
 	ListItemText,
 	ListItemIcon,
-	ListItemAction
 } from '@material-ui/core';
 
 class FilterMenu extends Component {
 	state = {
-		filters: []
+		filters: [1, 2]
 	};
 
 	applyFilters = () => {
@@ -21,7 +18,8 @@ class FilterMenu extends Component {
 			'Sending filters to apply on following type ids: ',
 			this.state.filters
 		);
-		this.props.dispatch({type: 'FETCH_MARKERS', payload: this.state.filters})
+		this.props.dispatch({ type: 'FETCH_MARKERS', payload: this.state.filters})
+		this.props.handleClose()
 	};
 
 	//adds item to list of filters to apply to map or removes it if already is applied
