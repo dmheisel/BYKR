@@ -40,12 +40,15 @@ class BottomBar extends Component {
 	};
 
 	applyFilters = filters => {
-		console.log(
-			'Sending filters to apply on following type ids: ',
-			this.state.filters
-		);
+		console.log('Sending filters to apply on following type ids: ', filters);
 		this.props.dispatch({ type: 'FETCH_MARKERS', payload: filters });
 		this.handleCloseFor(null, 'filterMenuAnchorEl');
+	};
+
+	findNearest = types => {
+		console.log('searching for nearest location of following type id: ', types);
+		this.props
+		this.handleCloseFor(null, 'nearestMenuAnchorEl');
 	};
 	//used for selecting an item type in the menu to add to the map
 	handleSelect = event => {
@@ -110,6 +113,7 @@ class BottomBar extends Component {
 					handleClose={event =>
 						this.handleCloseFor(event, 'nearestMenuAnchorEl')
 					}
+					radio={true}
 					preSelected={[]}
 				/>
 			</BottomNavigation>
