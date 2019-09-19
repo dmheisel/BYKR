@@ -50,7 +50,7 @@ class BottomBar extends Component {
 		return (
 			<BottomNavigation showLabels className={classes.root}>
 				<BottomNavigationAction
-					label='Filter Map'
+					label='Filters'
 					onClick={this.handleFilterOpen}
 					icon={<MapIcon />}
 				/>
