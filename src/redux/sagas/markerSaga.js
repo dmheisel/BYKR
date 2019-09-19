@@ -11,7 +11,6 @@ function* fetchMarkers(action) {
 			console.log(filterString);
 			url += filterString;
 		}
-		yield put({type: 'FETCH_API_MARKERS'})
 		const response = yield axios.get(url);
 		yield put({ type: 'SET_MARKER_LIST', payload: response.data });
 	} catch (error) {
@@ -19,11 +18,12 @@ function* fetchMarkers(action) {
 	}
 }
 
-function* fetchAPIMarkers(action) {
+function* fetchAPIMarkers() {
 	try {
 		let response = yield axios.get(`https://gbfs.niceridemn.com/gbfs/en/station_information.json`)
+		yield put({type: 'SET_API_MARKERS', payload: response.data.data.stations})
 	} catch (error) {
-
+		console.log('error on gathering API markers (NiceRide, etc): ', error)
 	}
 }
 

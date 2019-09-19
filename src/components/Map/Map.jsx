@@ -7,30 +7,23 @@ class Map extends Component {
 	state = {
 		map: {}
 	};
-
-	// componentDidMount() {
-	// 	this.props.dispatch({
-	// 		type: 'SET_CENTER',
-	// 		payload: {
-	// 			lat: Number(this.props.user.lat),
-	// 			lng: Number(this.props.user.lng)
-	// 		}
-	// 	});
-	// }
 	updateCenter = () => {
 		let newCenter = {
 			lat: this.state.map.getCenter().lat(),
 			lng: this.state.map.getCenter().lng()
 		};
 		this.props.dispatch({ type: 'SET_CENTER', payload: newCenter });
+		this.props.dispatch({ type: 'FETCH_MARKERS' })
+		console.log(this.props.markers.markerList.length)
 	};
 
 	render() {
-		const markersHtml = this.props.markers.markerList.map(marker => (
+		const markersHtml = this.props.markers.markerList.map((marker, index) => (
 			<MapMarker
-				key={marker.id}
+				key={index}
 				marker={marker}
-				position={{ lat: Number(marker.lat), lng: Number(marker.lng) }}
+				index={index}
+				position={{ lat: Number(marker.lat), lng: Number(marker.lng) || Number(marker.lon) }}
 			/>
 		));
 
@@ -55,7 +48,7 @@ class Map extends Component {
 				options={{
 					scaleControl: true,
 					mapTypeControl: false,
-					// streetViewControl: false,
+					// stretViewControl: false,
 					fullscreenControl: false,
 					zoomControl: true
 				}}
@@ -64,7 +57,7 @@ class Map extends Component {
 				}}
 				onDragEnd={this.updateCenter}>
 				<BicyclingLayer />
-				{this.props.markers.markerList && markersHtml}
+				{markersHtml}
 				{/* not sure if conditional rendering is needed here. */}
 			</GoogleMap>
 		);

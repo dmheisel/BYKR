@@ -11,7 +11,7 @@ class MapMarker extends Component {
 	openInfoWindow = () => {
 		this.props.dispatch({
 			type: 'FETCH_MARKER_DETAILS',
-			payload: this.props.marker.id
+			payload: this.props.marker.id || this.props.marker.station_id
 		});
 	};
 

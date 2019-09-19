@@ -24,6 +24,9 @@ const styles = theme => ({
 	},
 	title: {
 		margin: 'auto'
+	},
+	lists: {
+		height: '85vh'
 	}
 });
 class MyLocationsPage extends Component {
@@ -93,7 +96,9 @@ class MyLocationsPage extends Component {
 				</AppBar>
 				<SwipeableViews
 					axis={this.props.theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-					index={this.state.tabValue}>
+					index={this.state.tabValue}
+					className={classes.lists}
+				>
 					<div dir={this.props.theme.direction}>
 						{this.getListHtml('mySaved', 0)}
 					</div>
