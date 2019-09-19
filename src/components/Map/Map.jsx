@@ -48,7 +48,6 @@ class Map extends Component {
 				options={{
 					scaleControl: true,
 					mapTypeControl: false,
-					// stretViewControl: false,
 					fullscreenControl: false,
 					zoomControl: true
 				}}

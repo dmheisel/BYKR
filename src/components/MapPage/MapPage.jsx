@@ -5,6 +5,7 @@ import { LoadScript } from '@react-google-maps/api';
 import SearchBar from '../SearchBar/SearchBar';
 import BottomBar from '../BottomBar/BottomBar';
 import SideBar from '../SideBar/SideBar';
+import CenterButton from '../CenterButton/CenterButton'
 
 class MapPage extends Component {
 	state = {
@@ -57,7 +58,9 @@ class MapPage extends Component {
 						toggleDrawer={this.toggleDrawer}
 					/>
 					<SearchBar toggleDrawer={this.toggleDrawer} />
+					<CenterButton />
 					<Map addLocation={this.addLocation} />
+
 					<BottomBar
 						toggleAddMode={this.toggleAddMode}
 						addMode={this.state.addMode}
