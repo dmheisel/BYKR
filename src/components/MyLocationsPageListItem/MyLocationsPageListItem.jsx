@@ -17,6 +17,8 @@ import LocalParkingIcon from '@material-ui/icons/LocalParking';
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 const styles = theme => ({
 	listItem: {
@@ -65,6 +67,25 @@ class MyLocationsPageList extends Component {
 		this.setState({ openDialog: !this.state.openDialog });
 	};
 
+	handleSaveClick = () => {
+		this.props.user.saved_locations.includes(this.props.marker.location_id)
+			? this.removeBookmark()
+			: this.bookmarkSite();
+	};
+
+	removeBookmark = () => {
+		this.props.dispatch({
+			type: 'UNSAVE_MARKER',
+			payload: this.props.marker.location_id
+		});
+	};
+	bookmarkSite = () => {
+		this.props.dispatch({
+			type: 'SAVE_MARKER',
+			payload: this.props.marker.location_id
+		});
+	};
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -91,13 +112,26 @@ class MyLocationsPageList extends Component {
 								: this.props.marker.address
 						}
 					/>
-					{this.props.type === 'myCreated' && (
+					{this.props.type === 'myCreated' ? (
 						<IconButton
 							className={classes.iconButton}
 							onClick={this.toggleConfirmationDialog}>
 							<DeleteSweepOutlinedIcon className={classes.deleteIcon} />
 						</IconButton>
+					) : (
+						<IconButton
+							aria-label={'save to favorites'}
+							onClick={this.handleSaveClick}>
+							{this.props.user.saved_locations.includes(
+								this.props.marker.location_id
+							) ? (
+								<BookmarkIcon color='secondary' />
+							) : (
+								<BookmarkBorderIcon color='secondary' />
+							)}
+						</IconButton>
 					)}
+
 					<IconButton
 						className={classes.iconButton}
 						onClick={this.handlePinClick}>
@@ -122,5 +156,9 @@ class MyLocationsPageList extends Component {
 		);
 	}
 }
-
-export default connect()(withStyles(styles)(withRouter(MyLocationsPageList)));
+const mapStateToProps = reduxStore => ({
+	user: reduxStore.user
+});
+export default connect(mapStateToProps)(
+	withStyles(styles)(withRouter(MyLocationsPageList))
+);

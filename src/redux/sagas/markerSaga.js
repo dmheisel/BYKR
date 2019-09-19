@@ -53,7 +53,12 @@ function* addNewMarker(action) {
 	} catch (error) {
 		console.log('error on saga sending location to server: ', error);
 	}
+};
+
+function* findNearestMarker(action) {
+	// yield axios.get('/api/locations/closest/')
 }
+
 function* deleteMarker(action) {
 	try {
 		yield axios.delete(`/api/locations/${action.payload}`);
@@ -83,6 +88,7 @@ function* markerSaga() {
 	yield takeLatest('FETCH_API_MARKERS', fetchAPIMarkers)
 	yield takeLatest('FETCH_MARKER_TYPES', fetchMarkerTypes);
 	yield takeLatest('ADD_NEW_MARKER', addNewMarker);
+	yield takeLatest('FIND_NEAREST_MARKER', findNearestMarker)
 	yield takeLatest('DELETE_MARKER', deleteMarker);
 	yield takeLatest('UPDATE_MARKER_TYPE', updateMarkerType);
 }

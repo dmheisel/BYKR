@@ -30,6 +30,7 @@ function* unSaveMarker(action) {
 	try {
 		yield axios.delete(`/api/account/unsave/${action.payload}`);
 		yield put({ type: 'FETCH_USER' });
+		yield put({ type: 'FETCH_USER_FAVORITES' })
 	} catch (error) {
 		console.log(
 			'error on deleting saved location from users saved locations: ',

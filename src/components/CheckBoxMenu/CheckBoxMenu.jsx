@@ -11,12 +11,12 @@ import {
 
 class FilterMenu extends Component {
 	state = {
-		selected: []
+		selected: this.props.preSelected
 	};
 
-	componentDidMount() {
-		this.setState({ selected: this.props.preSelected });
-	}
+	// componentDidMount() {
+	// 	this.setState({ selected: this.props.preSelected });
+	// }
 
 	//adds item to list of selected to apply to map or removes it if already is applied
 	toggleChecked = id => {
@@ -67,7 +67,13 @@ class FilterMenu extends Component {
 				{menuOptions}
 				<MenuItem
 					onClick={() => {
-						this.props.handleApply(this.state.selected);
+						this.props.handleApply(
+							this.props.markerTypes.filter(item =>
+								this.props.radio
+									? [this.state.selected].includes(item.id)
+									: this.state.selected.includes(item.id)
+							)
+						);
 					}}>
 					Apply
 				</MenuItem>

@@ -217,7 +217,7 @@ class LocationInfoPopUp extends Component {
 									) ? (
 										<BookmarkIcon color="secondary" />
 									) : (
-										<BookmarkBorderIcon color="primary" />
+										<BookmarkBorderIcon color="secondary" />
 									)}
 								</IconButton>
 							</Grid>
@@ -234,7 +234,7 @@ class LocationInfoPopUp extends Component {
 								<IconButton
 									aria-label={'add comment'}
 									onClick={this.handleDialogOpen}>
-									<CommentIcon color="primary"/>
+									<CommentIcon color="secondary"/>
 								</IconButton>
 							</Grid>
 						</Grid>
