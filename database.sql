@@ -22,10 +22,12 @@ CREATE TABLE user_settings (
 );
 
 --table to contain different types of locations available to create/view
+--is_third_party is used for third party apis
+--user doesn't add these to the database, but it will be used for requests to niceride/bikeshares etc...
 create table location_types (
     id serial primary key,
     type_name varchar(250),
-    user_can_create boolean default FALSE
+    is_third_party boolean default FALSE
 );
 
 insert

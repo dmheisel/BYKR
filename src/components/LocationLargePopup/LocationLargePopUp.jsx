@@ -7,6 +7,7 @@ import {
 	ListItem,
 	ListItemText,
 	ListItemAvatar,
+	Divider,
 	Avatar,
 	Typography,
 	IconButton
@@ -28,26 +29,20 @@ const styles = theme => ({
 		width: '60vw',
 		height: '30vh'
 	},
-	header: {
-		height: '12%',
-		margin: '0',
-		padding: '0'
+	icon: {
+		backgroundColor: theme.palette.primary.dark
 	},
+	header: {},
 	list: {
-		height: '40%',
+		height: '50%',
 		overflow: 'auto',
-		border: '2px black',
-		margin: '0',
-		padding: '0'
+		width: '100%',
+		backgroundColor: theme.palette.background.primary.main
 	},
 	listRoot: {
 		width: '100%'
 	},
-	footer: {
-		height: '12%',
-		margin: '0',
-		padding: '0'
-	}
+	footer: {}
 });
 
 class LocationInfoPopUp extends Component {
@@ -122,15 +117,18 @@ class LocationInfoPopUp extends Component {
 				{this.props.selectedMarker.comments.length > 0 ? (
 					this.props.selectedMarker.comments.map((commentObject, index) => {
 						return (
-							<ListItem key={commentObject.id} alignItems='flex-start'>
-								<ListItemAvatar>
-									<AccountCircleTwoToneIcon />
-								</ListItemAvatar>
-								<ListItemText
-									primary={commentObject.username}
-									secondary={commentObject.comment}
-								/>
-							</ListItem>
+							<>
+								<ListItem key={commentObject.id} alignItems='flex-start'>
+									<ListItemAvatar>
+										<AccountCircleTwoToneIcon />
+									</ListItemAvatar>
+									<ListItemText
+										primary={commentObject.username}
+										secondary={commentObject.comment}
+									/>
+								</ListItem>
+								<Divider />
+							</>
 						);
 					})
 				) : (
@@ -140,22 +138,32 @@ class LocationInfoPopUp extends Component {
 				)}
 			</List>
 		);
-
+		// const locationTypeName = this.props.markerTypes && this.props.selectedMarker && this.props.markerTypes.find(item => item.id == this.props.selectedMarker.location_type_id).type_name;
 		return (
 			<>
 				<InfoWindow
 					onCloseClick={this.props.closeWindow}
 					position={this.props.position}
 					className={classes.root}>
-					<Grid className={classes.root} container>
-						<Grid container className={classes.header}>
+					<Grid
+						direction='column'
+						justify='space-between'
+						alignItems='flex-start'
+						className={classes.root}
+						container>
+						<Grid
+							container
+							direcion='row'
+							justify='space-between'
+							align='center'
+							className={classes.header}>
 							<Grid item xs={2}>
-								<Avatar onClick={this.handleOpen}>
+								<Avatar className={classes.icon} onClick={this.handleOpen}>
 									{this.getAvatarIcon()}
 								</Avatar>
 							</Grid>
-							<Grid item xs={5}>
-								<Typography variant='subtitle1'>Parking Rack</Typography>
+							<Grid item xs={4} align='center'>
+								<Typography variant='subtitle1'>Filler Text</Typography>
 								<Typography variant='caption' noWrap={true}>
 									{this.props.selectedMarker.address}
 								</Typography>
@@ -168,13 +176,19 @@ class LocationInfoPopUp extends Component {
 								/>
 							</Grid>
 						</Grid>
-						<Grid container className={classes.list}>
-							<Grid item xs={12}>
+						<Grid container align='center' className={classes.list}>
+							<Grid item align='center' xs={12}>
 								{commentsList}
 							</Grid>
 						</Grid>
-						<Grid container className={classes.footer}>
-							<Grid item xs={3}>
+						<Grid
+							container
+							direction='row'
+							justify='space-around'
+							alignItems='flex-start'
+							align='center'
+							className={classes.footer}>
+							<Grid align='center' item xs={2}>
 								<IconButton
 									aria-label={'save to favorites'}
 									onClick={this.handleSaveClick}>
@@ -187,7 +201,7 @@ class LocationInfoPopUp extends Component {
 									)}
 								</IconButton>
 							</Grid>
-							<Grid item xs={6}>
+							<Grid item xs={6} align='center'>
 								<Typography component='legend'>Add Rating!</Typography>
 								<Rating
 									name='addNewRating'
@@ -195,7 +209,7 @@ class LocationInfoPopUp extends Component {
 									onChange={this.updateRating}
 								/>
 							</Grid>
-							<Grid item xs={3}>
+							<Grid align='center' item xs={2}>
 								<IconButton
 									aria-label={'add comment'}
 									onClick={this.handleDialogOpen}>
@@ -235,6 +249,7 @@ class LocationInfoPopUp extends Component {
 }
 const mapStateToProps = reduxStore => ({
 	selectedMarker: reduxStore.selectedMarker,
+	markerTypes: reduxStore.markers.markerTypes,
 	user: reduxStore.user
 });
 

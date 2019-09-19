@@ -6,7 +6,7 @@ class TypeMenu extends Component {
 	render() {
 		const menuOptions = this.props.markerTypes.map(
 			type =>
-				type.user_can_create && (
+				!type.is_third_party && (
 					<MenuItem
 						key={type.id}
 						value={type.id}
