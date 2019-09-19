@@ -5,7 +5,9 @@ import TypeMenu from '../TypeMenu/TypeMenu';
 import FilterMenu from '../FilterMenu/FilterMenu';
 import { withStyles } from '@material-ui/core/styles';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
-import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import AddLocationIcon from '@material-ui/icons/AddLocation';
+import MapIcon from '@material-ui/icons/Map';
+import NearMeIcon from '@material-ui/icons/NearMe';
 
 const styles = theme => ({
 	root: {
@@ -50,32 +52,34 @@ class BottomBar extends Component {
 				<BottomNavigationAction
 					label='Filter Map'
 					onClick={this.handleFilterOpen}
+					icon={<MapIcon />}
 				/>
 				<BottomNavigationAction
 					// conditinoally render "cancel add" or "add site" based on if currently in add mode
 					label={this.props.addMode ? 'Cancel Add' : 'Add Site'}
-					icon={<AddCircleOutline />}
+					icon={<AddLocationIcon />}
 					onClick={
 						this.props.addMode ? this.props.toggleAddMode : this.handleOpen
 					}
 				/>
 				<BottomNavigationAction
-					label='Back to Default'
-					onClick={() =>
-						//dispatch sets center of map back to user's default location.
-						this.props.user.use_device_location
-							? this.props.dispatch({
-									type: 'FETCH_CENTER',
-									payload: { id: this.props.user.id }
-							  })
-							: this.props.dispatch({
-									type: 'SET_CENTER',
-									payload: {
-										lat: Number(this.props.user.lat),
-										lng: Number(this.props.user.lng)
-									}
-							  })
-					}
+							label='Find Closest...'
+							icon={<NearMeIcon />}
+					// onClick={() =>
+					// 	//dispatch sets center of map back to user's default location.
+					// 	this.props.user.use_device_location
+					// 		? this.props.dispatch({
+					// 				type: 'FETCH_CENTER',
+					// 				payload: { id: this.props.user.id }
+					// 		  })
+					// 		: this.props.dispatch({
+					// 				type: 'SET_CENTER',
+					// 				payload: {
+					// 					lat: Number(this.props.user.lat),
+					// 					lng: Number(this.props.user.lng)
+					// 				}
+					// 		  })
+					// }
 				/>
 				<TypeMenu
 					//type menu for selecting what type of location someone is adding to the map
