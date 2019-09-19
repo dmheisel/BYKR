@@ -9,14 +9,15 @@ const styles = theme => ({
 	search: {
 		position: 'absolute',
 		borderRadius: theme.shape.borderRadius,
-		backgroundColor: 'white',
+		// backgroundColor: 'white',
 		marginRight: '5%',
 		marginLeft: '5%',
 		marginTop: '3%',
 		zIndex: '1',
 		width: '90%',
 		display: 'flex',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		backgroundColor: theme.palette.background.primary.main
 	},
 	icon: {
 		width: theme.spacing(7),
@@ -25,14 +26,16 @@ const styles = theme => ({
 		position: 'relative',
 		display: 'inline-flex',
 		alignSelf: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		backgroundColor: theme.palette.primary.light
 	},
 	inputRoot: {
 		color: 'inherit',
 		width: 'inherit'
 	},
 	inputInput: {
-		width: '100%'
+		width: '90%',
+		margin: 'auto'
 	}
 });
 

@@ -19,10 +19,13 @@ import SettingsList from '../SettingsList/SettingsList';
 //styling for page
 const styles = theme => ({
 	root: {
-		width: '70vw'
+		width: '70vw',
+		height: '100%',
+		backgroundColor: theme.palette.background.primary.main
 	},
 	menuHeader: {
-		height: '20vh'
+		height: '20vh',
+		backgroundColor: theme.palette.background.secondary.main
 	},
 	tabs: {
 		borderRight: `1px solid ${theme.palette.divider}`

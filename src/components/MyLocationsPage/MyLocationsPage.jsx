@@ -16,7 +16,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
+		backgroundColor: theme.palette.background.main
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),

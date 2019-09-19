@@ -10,7 +10,8 @@ import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 const styles = theme => ({
 	root: {
 		width: '100%',
-		height: '10vh'
+		height: '10vh',
+		backgroundColor: theme.palette.background.primary.main
 	}
 });
 
