@@ -3,6 +3,7 @@ const selectedMarker = (
 		id: null,
 		lat: null,
 		lng: null,
+		comments: [],
 		createdById: null,
 		avgRating: null,
 		userRating: null
@@ -11,7 +12,7 @@ const selectedMarker = (
 ) => {
 	switch (action.type) {
 		case 'SET_SELECTED_MARKER':
-			return action.payload;
+			return { ...state, ...action.payload };
 		case 'SET_SELECTED_MARKER_COMMENTS':
 			return { ...state, comments: action.payload };
 		case 'SET_SELECTED_MARKER_AVG_RATING':
@@ -23,6 +24,7 @@ const selectedMarker = (
 				id: null,
 				lat: null,
 				lng: null,
+				comments: [],
 				createdById: null,
 				avgRating: null,
 				userRating: null
@@ -32,6 +34,7 @@ const selectedMarker = (
 				id: null,
 				lat: null,
 				lng: null,
+				comments: [],
 				createdById: null,
 				avgRating: null,
 				userRating: null

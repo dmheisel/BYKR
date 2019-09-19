@@ -11,10 +11,19 @@ function* fetchMarkers(action) {
 			console.log(filterString);
 			url += filterString;
 		}
+		yield put({type: 'FETCH_API_MARKERS'})
 		const response = yield axios.get(url);
 		yield put({ type: 'SET_MARKER_LIST', payload: response.data });
 	} catch (error) {
 		console.log('error on fetching locations and setting to redux state: ', error);
+	}
+}
+
+function* fetchAPIMarkers(action) {
+	try {
+		let response = yield axios.get(`https://gbfs.niceridemn.com/gbfs/en/station_information.json`)
+	} catch (error) {
+
 	}
 }
 
@@ -38,7 +47,6 @@ function* addNewMarker(action) {
 			...action.payload,
 			address: response.data.address,
 			locality: response.data.locality,
-			coords: response.data.coords
 		});
 		yield put({ type: 'FETCH_MARKERS' });
 		yield put({ type: 'FETCH_MARKER_DETAILS', payload: returningID.data.id });
@@ -72,6 +80,7 @@ function* updateMarkerType(action) {
 
 function* markerSaga() {
 	yield takeLatest('FETCH_MARKERS', fetchMarkers);
+	yield takeLatest('FETCH_API_MARKERS', fetchAPIMarkers)
 	yield takeLatest('FETCH_MARKER_TYPES', fetchMarkerTypes);
 	yield takeLatest('ADD_NEW_MARKER', addNewMarker);
 	yield takeLatest('DELETE_MARKER', deleteMarker);

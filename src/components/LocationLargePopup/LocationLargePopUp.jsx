@@ -11,7 +11,7 @@ import {
 	Typography,
 	IconButton
 } from '@material-ui/core';
-import LocalParkingIcon from '@material-ui/icons/LocalParking'
+import LocalParkingIcon from '@material-ui/icons/LocalParking';
 import BuildIcon from '@material-ui/icons/Build';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
@@ -106,9 +106,9 @@ class LocationInfoPopUp extends Component {
 	getAvatarIcon = () => {
 		switch (this.props.selectedMarker.location_type_id) {
 			case 1:
-				return (<LocalParkingIcon />);
+				return <LocalParkingIcon />;
 			case 2:
-				return (<BuildIcon />);
+				return <BuildIcon />;
 			default:
 				return null;
 		}
@@ -118,10 +118,8 @@ class LocationInfoPopUp extends Component {
 
 		//makes comment list to display on map info window
 		const commentsList = (
-			//if there are no comments for this location, server returns array with first value null
-			//this conditional prevents list from being rendered if the first value is null (no comments)
 			<List className={classes.listRoot} dense>
-				{this.props.selectedMarker.comments &&
+				{this.props.selectedMarker.comments.length > 0 ? (
 					this.props.selectedMarker.comments.map((commentObject, index) => {
 						return (
 							<ListItem key={commentObject.id} alignItems='flex-start'>
@@ -134,10 +132,12 @@ class LocationInfoPopUp extends Component {
 								/>
 							</ListItem>
 						);
-					})}
-				<ListItem button onClick={this.handleDialogOpen}>
-					<ListItemText secondary="Leave a comment?" />
-				</ListItem>
+					})
+				) : (
+					<ListItem button onClick={this.handleDialogOpen}>
+						<ListItemText secondary='Leave a comment?' />
+					</ListItem>
+				)}
 			</List>
 		);
 
@@ -150,7 +150,9 @@ class LocationInfoPopUp extends Component {
 					<Grid className={classes.root} container>
 						<Grid container className={classes.header}>
 							<Grid item xs={2}>
-								<Avatar onClick={this.handleOpen} >{this.getAvatarIcon()}</Avatar>
+								<Avatar onClick={this.handleOpen}>
+									{this.getAvatarIcon()}
+								</Avatar>
 							</Grid>
 							<Grid item xs={5}>
 								<Typography variant='subtitle1'>Parking Rack</Typography>
