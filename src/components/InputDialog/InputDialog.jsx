@@ -7,6 +7,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = theme => ({
+
+})
 
 class CommentDialogue extends Component {
 	state = {
@@ -25,6 +30,7 @@ class CommentDialogue extends Component {
 	};
 
 	render() {
+		const { classes } = this.props
 		return (
 			<Dialog open={this.props.dialogOpen} onClose={this.props.handleClose}>
 				<DialogTitle id='form-dialog-title'>
@@ -61,4 +67,4 @@ class CommentDialogue extends Component {
 const mapStateToProps = reduxStore => ({
 	selectedMarker: reduxStore.selectedMarker
 });
-export default connect(mapStateToProps)(CommentDialogue);
+export default connect(mapStateToProps)(withStyles(styles)(CommentDialogue));

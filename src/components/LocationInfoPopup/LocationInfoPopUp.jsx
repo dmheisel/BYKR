@@ -39,7 +39,8 @@ const styles = theme => ({
 		height: '50%',
 		overflow: 'auto',
 		width: '100%',
-		backgroundColor: theme.palette.primary.main
+		backgroundColor: theme.palette.primary.main,
+		color: theme.palette.primary.contrastText
 	},
 	listRoot: {
 		width: '100%'
@@ -137,14 +138,14 @@ class LocationInfoPopUp extends Component {
 					this.props.selectedMarker.comments.map((commentObject, index) => {
 						return (
 							<section key={index}>
-								<ListItem alignItems='flex-start'>
+								<ListItem >
 									<ListItemAvatar>
 										<AccountCircleTwoToneIcon />
 									</ListItemAvatar>
-									<ListItemText
-										primary={commentObject.username}
-										secondary={commentObject.comment}
-									/>
+									<ListItemText>
+										<Typography variant='subtitle1'>{commentObject.username}</Typography>
+										<Typography variant='caption'>{commentObject.comment}</Typography>
+									</ListItemText>
 								</ListItem>
 								<Divider />
 							</section>
@@ -152,7 +153,7 @@ class LocationInfoPopUp extends Component {
 					})
 				) : (
 					<ListItem button onClick={this.handleDialogOpen}>
-						<ListItemText secondary='Leave a comment?' />
+						<ListItemText primary='Leave a comment?' />
 					</ListItem>
 				)}
 			</List>
@@ -214,7 +215,7 @@ class LocationInfoPopUp extends Component {
 									{this.props.user.saved_locations.includes(
 										this.props.selectedMarker.id
 									) ? (
-										<BookmarkIcon color="primary" />
+										<BookmarkIcon color="secondary" />
 									) : (
 										<BookmarkBorderIcon color="primary" />
 									)}

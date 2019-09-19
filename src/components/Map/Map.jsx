@@ -13,8 +13,6 @@ class Map extends Component {
 			lng: this.state.map.getCenter().lng()
 		};
 		this.props.dispatch({ type: 'SET_CENTER', payload: newCenter });
-		this.props.dispatch({ type: 'FETCH_MARKERS' })
-		console.log(this.props.markers.markerList.length)
 	};
 
 	render() {
@@ -23,7 +21,10 @@ class Map extends Component {
 				key={index}
 				marker={marker}
 				index={index}
-				position={{ lat: Number(marker.lat), lng: Number(marker.lng) || Number(marker.lon) }}
+				position={{
+					lat: Number(marker.lat),
+					lng: Number(marker.lng) || Number(marker.lon)
+				}}
 			/>
 		));
 

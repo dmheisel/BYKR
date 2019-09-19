@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import TypeMenu from '../TypeMenu/TypeMenu';
-import FilterMenu from '../FilterMenu/FilterMenu';
+import CheckBoxMenu from '../CheckBoxMenu/CheckBoxMenu';
 import { withStyles } from '@material-ui/core/styles';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
@@ -25,25 +25,28 @@ const styles = theme => ({
 class BottomBar extends Component {
 	state = {
 		typeMenuAnchorEl: null,
-		filterMenuAnchorEl: null
+		filterMenuAnchorEl: null,
+		nearestMenuAnchorEl: null
 	};
 
 	//sets anchor element for info window to the current marker's location
-	handleOpen = event => {
-		this.setState({ typeMenuAnchorEl: event.currentTarget });
-	};
-	handleFilterOpen = event => {
-		this.setState({ filterMenuAnchorEl: event.currentTarget });
+	handleOpenFor = (event, name) => {
+		this.setState({ [name]: event.currentTarget });
 	};
 
 	//removes anchor element for info window -- this removes it from view
-	handleClose = () => {
-		this.setState({ typeMenuAnchorEl: null });
-	};
-	handleFilterClose = () => {
-		this.setState({ filterMenuAnchorEl: null });
+	handleCloseFor = (event, name) => {
+		this.setState({ [name]: null });
 	};
 
+	applyFilters = filters => {
+		console.log(
+			'Sending filters to apply on following type ids: ',
+			this.state.filters
+		);
+		this.props.dispatch({ type: 'FETCH_MARKERS', payload: filters });
+		this.handleCloseFor(null, 'filterMenuAnchorEl');
+	};
 	//used for selecting an item type in the menu to add to the map
 	handleSelect = event => {
 		this.props.selectType(event.target.value);
@@ -56,7 +59,7 @@ class BottomBar extends Component {
 			<BottomNavigation showLabels className={classes.root}>
 				<BottomNavigationAction
 					label='Filters'
-					onClick={this.handleFilterOpen}
+					onClick={event => this.handleOpenFor(event, 'filterMenuAnchorEl')}
 					icon={<MapIcon className={classes.icon} />}
 				/>
 				<BottomNavigationAction
@@ -70,28 +73,44 @@ class BottomBar extends Component {
 						)
 					}
 					onClick={
-						this.props.addMode ? this.props.toggleAddMode : this.handleOpen
+						this.props.addMode
+							? this.props.toggleAddMode
+							: event => this.handleOpenFor(event, 'typeMenuAnchorEl')
 					}
 				/>
 				<BottomNavigationAction
 					label='Find Closest...'
 					icon={<NearMeIcon className={classes.icon} />}
+					onClick={event => this.handleOpenFor(event, 'nearestMenuAnchorEl')}
 				/>
 				<TypeMenu
 					//type menu for selecting what type of location someone is adding to the map
 					id='typeMenu'
 					anchorEl={this.state.typeMenuAnchorEl}
 					open={Boolean(this.state.typeMenuAnchorEl)}
-					handleClose={this.handleClose}
+					handleClose={event => this.handleCloseFor(event, 'typeMenuAnchorEl')}
 					handleSelect={this.handleSelect}
 				/>
-				<FilterMenu
+				<CheckBoxMenu
 					//filter menu for selecting what locations are showing on the map
 					id='filterMenu'
 					anchorEl={this.state.filterMenuAnchorEl}
 					open={Boolean(this.state.filterMenuAnchorEl)}
-					handleClose={this.handleFilterClose}
-					handleSelect={this.handleSelect}
+					handleApply={this.applyFilters}
+					handleClose={event =>
+						this.handleCloseFor(event, 'filterMenuAnchorEl')
+					}
+					preSelected={[1, 2]}
+				/>
+				<CheckBoxMenu
+					id='nearestMenu'
+					anchorEl={this.state.nearestMenuAnchorEl}
+					open={Boolean(this.state.nearestMenuAnchorEl)}
+					handleApply={this.findNearest}
+					handleClose={event =>
+						this.handleCloseFor(event, 'nearestMenuAnchorEl')
+					}
+					preSelected={[]}
 				/>
 			</BottomNavigation>
 		);

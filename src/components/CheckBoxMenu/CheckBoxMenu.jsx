@@ -5,38 +5,34 @@ import {
 	MenuItem,
 	Checkbox,
 	ListItemText,
-	ListItemIcon,
+	ListItemIcon
 } from '@material-ui/core';
 
 class FilterMenu extends Component {
 	state = {
-		filters: [1, 2]
+		selected: []
 	};
 
-	applyFilters = () => {
-		console.log(
-			'Sending filters to apply on following type ids: ',
-			this.state.filters
-		);
-		this.props.dispatch({ type: 'FETCH_MARKERS', payload: this.state.filters})
-		this.props.handleClose()
-	};
+  componentDidMount() {
+    this.setState({selected: this.props.preSelected})
+  }
 
-	//adds item to list of filters to apply to map or removes it if already is applied
-	toggleFilter = id => {
-		if (this.state.filters.includes(id)) {
-			this.setState({ filters: this.state.filters.filter(x => x !== id) });
+
+	//adds item to list of selected to apply to map or removes it if already is applied
+	toggleChecked = id => {
+		if (this.state.selected.includes(id)) {
+			this.setState({ selected: this.state.selected.filter(x => x !== id) });
 		} else {
-			this.setState({ filters: [...this.state.filters, id] });
+			this.setState({ selected: [...this.state.selected, id] });
 		}
 	};
 
 	render() {
 		const menuOptions = this.props.markerTypes.map(type => (
 			<MenuItem key={type.id} value={type.id} disableRipple>
-				<ListItemIcon onClick={() => this.toggleFilter(type.id)}>
+				<ListItemIcon onClick={() => this.toggleChecked(type.id)}>
 					<Checkbox
-						checked={this.state.filters.includes(type.id)}
+						checked={this.state.selected.includes(type.id)}
 						edge='start'
 					/>
 				</ListItemIcon>
@@ -52,7 +48,7 @@ class FilterMenu extends Component {
 				open={this.props.open}
 				onClose={this.props.handleClose}>
 				{menuOptions}
-				<MenuItem onClick={this.applyFilters}>Apply</MenuItem>
+        <MenuItem onClick={() => { this.props.handleApply(this.state.selected)}}>Apply</MenuItem>
 				<MenuItem onClick={this.props.handleClose}>Cancel</MenuItem>
 			</Menu>
 		);
