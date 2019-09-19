@@ -16,18 +16,22 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
 	root: {
-		flexGrow: 1,
-		backgroundColor: theme.palette.background.main
+		flexGrow: 1
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
 		position: 'absolute'
 	},
+	header: {
+		backgroundColor: theme.palette.primary.dark,
+	},
+
 	title: {
 		margin: 'auto'
 	},
 	lists: {
-		height: '85vh'
+		height: '85vh',
+		backgroundColor: theme.palette.background.paper
 	}
 });
 class MyLocationsPage extends Component {
@@ -70,7 +74,7 @@ class MyLocationsPage extends Component {
 		const { classes } = this.props;
 		return (
 			<div className={classes.root}>
-				<AppBar position='static'>
+				<AppBar position='static' className={classes.header}>
 					<Toolbar>
 						<IconButton
 							edge='start'
@@ -98,8 +102,7 @@ class MyLocationsPage extends Component {
 				<SwipeableViews
 					axis={this.props.theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 					index={this.state.tabValue}
-					className={classes.lists}
-				>
+					className={classes.lists}>
 					<div dir={this.props.theme.direction}>
 						{this.getListHtml('mySaved', 0)}
 					</div>

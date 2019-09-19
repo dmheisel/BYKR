@@ -17,7 +17,7 @@ const styles = theme => ({
 		width: '90%',
 		display: 'flex',
 		justifyContent: 'space-between',
-		backgroundColor: theme.palette.background.primary.main
+		backgroundColor: theme.palette.background.paper
 	},
 	icon: {
 		width: theme.spacing(7),

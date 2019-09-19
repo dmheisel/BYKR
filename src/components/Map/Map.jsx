@@ -40,7 +40,7 @@ class Map extends Component {
 					lng: this.props.mapCenter.lng || Number(this.props.user.lng)
 				}}
 				onLoad={map => {
-					map.setMapTypeId('hybrid');
+					map.setMapTypeId('roadmap');
 					this.setState({
 						map: map
 					});

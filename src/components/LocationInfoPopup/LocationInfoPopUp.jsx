@@ -7,6 +7,7 @@ import {
 	ListItem,
 	ListItemText,
 	ListItemAvatar,
+	Snackbar,
 	Divider,
 	Avatar,
 	Typography,
@@ -18,6 +19,7 @@ import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import CommentIcon from '@material-ui/icons/Comment';
+import CloseIcon from '@material-ui/icons/Close';
 import Rating from '@material-ui/lab/Rating';
 import { withStyles } from '@material-ui/core/styles';
 import InputDialog from '../InputDialog/InputDialog';
@@ -37,7 +39,7 @@ const styles = theme => ({
 		height: '50%',
 		overflow: 'auto',
 		width: '100%',
-		backgroundColor: theme.palette.background.primary.main
+		backgroundColor: theme.palette.primary.main
 	},
 	listRoot: {
 		width: '100%'
@@ -48,9 +50,18 @@ const styles = theme => ({
 class LocationInfoPopUp extends Component {
 	state = {
 		anchorEl: null,
-		dialogOpen: false
+		dialogOpen: false,
+		openSnackbar: false,
+		snackbarMessage: ''
 	};
 
+	handleSnackbarOpen = (message) => {
+		this.setState({ openSnackbar: true, snackbarMessage: message });
+	};
+
+	handleSnackbarClose = (event, reason) => {
+		this.setState({ openSnackbar: false });
+	};
 	handleOpen = event => {
 		this.props.user.id === this.props.selectedMarker.created_by_user_id &&
 			this.setState({ anchorEl: event.currentTarget });
@@ -79,14 +90,22 @@ class LocationInfoPopUp extends Component {
 	};
 	handleSaveClick = () => {
 		this.props.user.saved_locations.includes(this.props.selectedMarker.id)
-			? this.props.dispatch({
-					type: 'UNSAVE_MARKER',
-					payload: this.props.selectedMarker.id
-			  })
-			: this.props.dispatch({
-					type: 'SAVE_MARKER',
-					payload: this.props.selectedMarker.id
-			  });
+			? this.removeBookmark()
+			: this.bookmarkSite();
+	};
+	removeBookmark = () => {
+		this.handleSnackbarOpen('Bookmark Removed!');
+		this.props.dispatch({
+			type: 'UNSAVE_MARKER',
+			payload: this.props.selectedMarker.id
+		});
+	};
+	bookmarkSite = () => {
+		this.handleSnackbarOpen('Site Bookmarked!');
+		this.props.dispatch({
+			type: 'SAVE_MARKER',
+			payload: this.props.selectedMarker.id
+		});
 	};
 
 	updateRating = (event, newValue) => {
@@ -117,8 +136,8 @@ class LocationInfoPopUp extends Component {
 				{this.props.selectedMarker.comments.length > 0 ? (
 					this.props.selectedMarker.comments.map((commentObject, index) => {
 						return (
-							<>
-								<ListItem key={commentObject.id} alignItems='flex-start'>
+							<section key={index}>
+								<ListItem alignItems='flex-start'>
 									<ListItemAvatar>
 										<AccountCircleTwoToneIcon />
 									</ListItemAvatar>
@@ -128,7 +147,7 @@ class LocationInfoPopUp extends Component {
 									/>
 								</ListItem>
 								<Divider />
-							</>
+							</section>
 						);
 					})
 				) : (
@@ -195,9 +214,9 @@ class LocationInfoPopUp extends Component {
 									{this.props.user.saved_locations.includes(
 										this.props.selectedMarker.id
 									) ? (
-										<BookmarkIcon />
+										<BookmarkIcon color="primary" />
 									) : (
-										<BookmarkBorderIcon />
+										<BookmarkBorderIcon color="primary" />
 									)}
 								</IconButton>
 							</Grid>
@@ -207,13 +226,14 @@ class LocationInfoPopUp extends Component {
 									name='addNewRating'
 									value={Number(this.props.selectedMarker.userRating)}
 									onChange={this.updateRating}
+									color="primary"
 								/>
 							</Grid>
 							<Grid align='center' item xs={2}>
 								<IconButton
 									aria-label={'add comment'}
 									onClick={this.handleDialogOpen}>
-									<CommentIcon />
+									<CommentIcon color="primary"/>
 								</IconButton>
 							</Grid>
 						</Grid>
@@ -242,6 +262,29 @@ class LocationInfoPopUp extends Component {
 					open={Boolean(this.state.anchorEl)}
 					handleClose={this.handleClose}
 					handleSelect={this.handleSelect}
+				/>
+				<Snackbar
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'left'
+					}}
+					open={this.state.openSnackbar}
+					autoHideDuration={5000}
+					onClose={this.handleSnackbarClose}
+					ContentProps={{
+						'aria-describedby': 'message-id'
+					}}
+					message={<span id='message-id'>{this.state.snackbarMessage}</span>}
+					action={[
+						<IconButton
+							key='close'
+							aria-label='close'
+							color='inherit'
+							className={classes.close}
+							onClick={this.handleSnackbarClose}>
+							<CloseIcon />
+						</IconButton>
+					]}
 				/>
 			</>
 		);

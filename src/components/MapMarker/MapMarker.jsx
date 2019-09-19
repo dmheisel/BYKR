@@ -3,7 +3,7 @@ import { Marker } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 import LocalParking from '../Views/LocalParking.png';
 import BuildIcon from '../Views/BuildIcon.png';
-import LocationLargePopUp from '../LocationLargePopup/LocationLargePopUp';
+import LocationInfoPopUp from '../LocationInfoPopup/LocationInfoPopUp'
 
 class MapMarker extends Component {
 
@@ -50,7 +50,7 @@ class MapMarker extends Component {
 			>
 				{/* conditionally render infowindow only if this marker id is in redux as displayed */}
 				{this.props.marker.id === this.props.selectedMarker.id &&
-					(<LocationLargePopUp
+					(<LocationInfoPopUp
 						closeWindow={this.closeWindow}
 						position={this.props.position}
 						deleteMarker={this.deleteMarker}

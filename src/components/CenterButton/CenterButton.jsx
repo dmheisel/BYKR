@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, IconButton } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import GpsFixedIcon from '@material-ui/icons/GpsFixed';
 import { withStyles } from '@material-ui/core/styles';
 

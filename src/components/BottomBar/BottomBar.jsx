@@ -6,6 +6,7 @@ import FilterMenu from '../FilterMenu/FilterMenu';
 import { withStyles } from '@material-ui/core/styles';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
+import CancelIcon from '@material-ui/icons/Cancel';
 import MapIcon from '@material-ui/icons/Map';
 import NearMeIcon from '@material-ui/icons/NearMe';
 
@@ -13,7 +14,11 @@ const styles = theme => ({
 	root: {
 		width: '100%',
 		height: '10vh',
-		backgroundColor: theme.palette.background.primary.main
+		backgroundColor: theme.palette.background,
+		color: theme.palette.primary.light
+	},
+	icon: {
+		color: theme.palette.primary.dark
 	}
 });
 
@@ -52,34 +57,25 @@ class BottomBar extends Component {
 				<BottomNavigationAction
 					label='Filters'
 					onClick={this.handleFilterOpen}
-					icon={<MapIcon />}
+					icon={<MapIcon className={classes.icon} />}
 				/>
 				<BottomNavigationAction
 					// conditinoally render "cancel add" or "add site" based on if currently in add mode
 					label={this.props.addMode ? 'Cancel Add' : 'Add Site'}
-					icon={<AddLocationIcon />}
+					icon={
+						this.props.addMode ? (
+							<CancelIcon className={classes.icon} />
+						) : (
+							<AddLocationIcon className={classes.icon} />
+						)
+					}
 					onClick={
 						this.props.addMode ? this.props.toggleAddMode : this.handleOpen
 					}
 				/>
 				<BottomNavigationAction
-							label='Find Closest...'
-							icon={<NearMeIcon />}
-					// onClick={() =>
-					// 	//dispatch sets center of map back to user's default location.
-					// 	this.props.user.use_device_location
-					// 		? this.props.dispatch({
-					// 				type: 'FETCH_CENTER',
-					// 				payload: { id: this.props.user.id }
-					// 		  })
-					// 		: this.props.dispatch({
-					// 				type: 'SET_CENTER',
-					// 				payload: {
-					// 					lat: Number(this.props.user.lat),
-					// 					lng: Number(this.props.user.lng)
-					// 				}
-					// 		  })
-					// }
+					label='Find Closest...'
+					icon={<NearMeIcon className={classes.icon} />}
 				/>
 				<TypeMenu
 					//type menu for selecting what type of location someone is adding to the map

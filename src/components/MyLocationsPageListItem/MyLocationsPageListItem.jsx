@@ -26,6 +26,15 @@ const styles = theme => ({
 		width: 'auto',
 		margin: theme.spacing(0),
 		padding: theme.spacing(1)
+	},
+	gotoIcon: {
+		color: theme.palette.primary.dark
+	},
+	deleteIcon: {
+		color: theme.palette.secondary.dark
+	},
+	close: {
+		padding: theme.spacing(0.5)
 	}
 });
 
@@ -86,13 +95,13 @@ class MyLocationsPageList extends Component {
 						<IconButton
 							className={classes.iconButton}
 							onClick={this.toggleConfirmationDialog}>
-							<DeleteSweepOutlinedIcon />
+							<DeleteSweepOutlinedIcon className={classes.deleteIcon} />
 						</IconButton>
 					)}
 					<IconButton
 						className={classes.iconButton}
 						onClick={this.handlePinClick}>
-						<RoomOutlinedIcon />
+						<RoomOutlinedIcon className={classes.gotoIcon} />
 					</IconButton>
 
 					<ListItemIcon>

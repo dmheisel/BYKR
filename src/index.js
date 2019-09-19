@@ -13,20 +13,8 @@ import 'typeface-roboto';
 
 const theme = createMuiTheme({
 	palette: {
-		primary: {
-			main: '#00c8f8'
-		},
-		secondary: {
-			main: '#e61610'
-		},
-		background: {
-			primary: {
-				main: '#c8e6c9'
-			},
-			secondary: {
-				main: '#00c8f8'
-			}
-		}
+		primary: { main: '#4b604f' },
+		secondary: { main: '#00a8bf' }
 	},
 	status: {
 		danger: '#e61610'

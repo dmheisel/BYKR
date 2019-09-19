@@ -21,11 +21,11 @@ const styles = theme => ({
 	root: {
 		width: '70vw',
 		height: '100%',
-		backgroundColor: theme.palette.background.primary.main
+		backgroundColor: theme.palette.background.paper
 	},
 	menuHeader: {
 		height: '20vh',
-		backgroundColor: theme.palette.background.secondary.main
+		backgroundColor: theme.palette.background.default
 	},
 	tabs: {
 		borderRight: `1px solid ${theme.palette.divider}`
