@@ -71,7 +71,7 @@ class SideBar extends Component {
 							button
 							onClick={() => this.props.history.push('/myLocations/0')}>
 							<ListItemText
-								primary={<Button className={classes.button}>Saved</Button>}
+								primary={<Button className={classes.button}>See Bookmarked</Button>}
 							/>
 						</ListItem>
 						<Divider />
@@ -80,7 +80,7 @@ class SideBar extends Component {
 							onClick={() => this.props.history.push('/myLocations/1')}>
 							<ListItemText
 								primary={
-									<Button className={classes.button}>My Locations</Button>
+									<Button className={classes.button}>See Created</Button>
 								}
 							/>
 						</ListItem>

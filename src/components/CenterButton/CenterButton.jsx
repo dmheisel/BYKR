@@ -10,7 +10,7 @@ const styles = theme => ({
 		height: '40px',
 		width: '40px',
 		minWidth: '40px',
-		bottom: '87px',
+		bottom: '96px',
 		right: '60px',
 		marginBottom: '10px',
 		zIndex: '1',

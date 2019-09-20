@@ -18,7 +18,7 @@ function* fetchMarkers(action) {
 				});
 			console.log(filterString);
 			url += filterString;
-			if (action.payload.filter(el => el.type_name === 'BikeShare Dock')) {
+			if (action.payload.some(el => el.is_third_party)) {
 				console.log('making third party api request to niceRide API')
 				yield put({ type: 'FETCH_API_MARKERS'})
 			} else {

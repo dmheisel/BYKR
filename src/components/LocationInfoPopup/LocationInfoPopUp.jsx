@@ -128,6 +128,19 @@ class LocationInfoPopUp extends Component {
 				return null;
 		}
 	};
+
+	getName = () => {
+		switch (this.props.selectedMarker.location_type_id) {
+			case 1:
+				return 'Bike Rack';
+			case 2:
+				return 'Fix Post';
+			case 3:
+				return 'Docking Station';
+			default:
+				return 'Error'
+		}
+	}
 	render() {
 		const { classes } = this.props;
 
@@ -182,8 +195,8 @@ class LocationInfoPopUp extends Component {
 									{this.getAvatarIcon()}
 								</Avatar>
 							</Grid>
-							<Grid item xs={4} align='center'>
-								<Typography variant='subtitle1'>Filler Text</Typography>
+							<Grid item xs={4}>
+								<Typography variant='subtitle1'>{this.getName()}</Typography>
 								<Typography variant='caption' noWrap={true}>
 									{this.props.selectedMarker.address}
 								</Typography>

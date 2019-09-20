@@ -62,7 +62,7 @@ class SettingsList extends Component {
 						this.setState({ settingsOpen: !this.state.settingsOpen })
 					}>
 					<ListItemText
-						primary={<Button className={classes.button}>Settings</Button>}
+						primary={<Button className={classes.button}>Location Settings</Button>}
 					/>
 					{this.state.settingsOpen ? <ExpandLess /> : <ExpandMore />}
 				</ListItem>
