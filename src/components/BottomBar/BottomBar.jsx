@@ -46,7 +46,7 @@ class BottomBar extends Component {
 
 	findNearest = type => {
 		console.log('searching for nearest location of following type id: ', type);
-		this.props.dispatch({type: 'FIND_NEAREST_MARKER', payload: type})
+		this.props.dispatch({ type: 'FIND_NEAREST_MARKER', payload: type });
 		this.handleCloseFor(null, 'nearestMenuAnchorEl');
 	};
 	//used for selecting an item type in the menu to add to the map

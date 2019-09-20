@@ -15,8 +15,12 @@ const styles = theme => ({
 	button: {
 		margin: theme.spacing(1)
 	},
+	deleteButton: {
+		margin: theme.spacing(1),
+	},
 	rightIcon: {
-		marginLeft: theme.spacing(1)
+		marginLeft: theme.spacing(1),
+		color: theme.status.danger
 	}
 });
 
@@ -34,15 +38,15 @@ class ConfirmationDialog extends Component {
 				<DialogActions>
 					<Button
 						variant='contained'
-						color='primary'
 						className={classes.button}
+						color="secondary"
 						onClick={this.props.toggleConfirmationDialog}>
 						Cancel
 					</Button>
 					<Button
 						variant='contained'
-						color='secondary'
-						className={classes.button}
+						// color='primary'
+						className={classes.deletebutton}
 						onClick={() => {
 							this.props.toggleConfirmationDialog();
 							this.props.handleDeleteClick();

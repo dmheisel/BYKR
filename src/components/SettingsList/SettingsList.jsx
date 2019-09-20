@@ -19,12 +19,14 @@ import InputDialog from '../InputDialog/InputDialog';
 
 const styles = theme => ({
 	button: {
-		margin: theme.spacing(0)
+		margin: theme.spacing(0),
+		color: theme.palette.primary.contrastText
 	},
 	nested: {
 		margin: theme.spacing(0),
 		paddingLeft: theme.spacing(4),
-		paddingRight: theme.spacing(0)
+		paddingRight: theme.spacing(0),
+		color: theme.palette.primary.contrastText
 	}
 });
 

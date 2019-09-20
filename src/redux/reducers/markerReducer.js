@@ -18,6 +18,8 @@ const apiMarkerList = (state = [], action) => {
 			return action.payload;
 		case 'CLEAR_MARKERS':
 			return [];
+		case 'CLEAR_API_MARKERS':
+			return [];
 		default:
 			return state;
 	}

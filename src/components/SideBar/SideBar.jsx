@@ -21,17 +21,19 @@ const styles = theme => ({
 	root: {
 		width: '70vw',
 		height: '100%',
-		backgroundColor: theme.palette.background.paper
+		backgroundColor: theme.palette.primary.dark,
+		color: theme.palette.primary.contrastText
 	},
 	menuHeader: {
 		height: '20vh',
-		backgroundColor: theme.palette.background.default
+		backgroundColor: theme.palette.secondary.main
 	},
 	tabs: {
 		borderRight: `1px solid ${theme.palette.divider}`
 	},
 	button: {
-		margin: theme.spacing(0)
+		margin: theme.spacing(0),
+		color: theme.palette.primary.contrastText
 	}
 });
 
@@ -59,7 +61,10 @@ class SideBar extends Component {
 						</ListItem>
 					</List>
 					<List>
-						<SettingsList toggleDrawer={this.props.toggleDrawer} drawerOpen={this.props.drawerOpen}/>
+						<SettingsList
+							toggleDrawer={this.props.toggleDrawer}
+							drawerOpen={this.props.drawerOpen}
+						/>
 						<Divider />
 
 						<ListItem

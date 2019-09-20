@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { InputBase, IconButton } from '@material-ui/core';
+import { InputBase, IconButton, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Menu from '@material-ui/icons/Menu';
 
@@ -27,7 +27,8 @@ const styles = theme => ({
 		display: 'inline-flex',
 		alignSelf: 'center',
 		justifyContent: 'center',
-		backgroundColor: theme.palette.primary.light
+		// backgroundColor: theme.palette.primary.dark,
+		// color: theme.palette.secondary.main
 	},
 	inputRoot: {
 		color: 'inherit',
@@ -52,10 +53,10 @@ class SearchBar extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div className={classes.search}>
+			<Paper className={classes.search} elevation={12}>
 				<div className={classes.icon}>
 					<IconButton onClick={this.props.toggleDrawer}>
-						<Menu />
+						<Menu color="primary"/>
 					</IconButton>
 				</div>
 					<InputBase
@@ -72,10 +73,10 @@ class SearchBar extends Component {
 					/>
 				<div className={classes.icon}>
 					<IconButton onClick={this.searchLocation}>
-						<SearchIcon />
+						<SearchIcon color="primary"/>
 					</IconButton>
 				</div>
-			</div>
+			</Paper>
 		);
 	}
 }

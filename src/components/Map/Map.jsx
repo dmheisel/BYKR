@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { GoogleMap, BicyclingLayer, Marker } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 import MapMarker from '../MapMarker/MapMarker';
-import BlueCircle from '../Views/bluecircle.png'
+import BlueCircle from '../Views/bluecircle.png';
+import BikeDock from '../Views/bike-dock.jpg';
 
 class Map extends Component {
 	state = {
@@ -29,6 +30,15 @@ class Map extends Component {
 				}}
 			/>
 		));
+		const apiMarkersHtml =
+			this.props.markers.apiMarkerList &&
+			this.props.markers.apiMarkerList.map((marker, index) => (
+				<Marker
+					key={index}
+					position={{ lat: marker.lat, lng: marker.lon }}
+					// icon={BikeDock}
+				/>
+			));
 
 		return (
 			<GoogleMap
@@ -60,6 +70,7 @@ class Map extends Component {
 				onDragEnd={this.updateCenter}>
 				<BicyclingLayer />
 				{markersHtml}
+				{apiMarkersHtml}
 				<Marker
 					position={{
 						lat: Number(this.props.user.lat),
