@@ -56,7 +56,7 @@ class LocationInfoPopUp extends Component {
 		snackbarMessage: ''
 	};
 
-	handleSnackbarOpen = (message) => {
+	handleSnackbarOpen = message => {
 		this.setState({ openSnackbar: true, snackbarMessage: message });
 	};
 
@@ -138,9 +138,9 @@ class LocationInfoPopUp extends Component {
 			case 3:
 				return 'Docking Station';
 			default:
-				return 'Error'
+				return 'Error';
 		}
-	}
+	};
 	render() {
 		const { classes } = this.props;
 
@@ -151,13 +151,17 @@ class LocationInfoPopUp extends Component {
 					this.props.selectedMarker.comments.map((commentObject, index) => {
 						return (
 							<section key={index}>
-								<ListItem >
+								<ListItem>
 									<ListItemAvatar>
 										<AccountCircleTwoToneIcon />
 									</ListItemAvatar>
 									<ListItemText>
-										<Typography variant='subtitle1'>{commentObject.username}</Typography>
-										<Typography variant='caption'>{commentObject.comment}</Typography>
+										<Typography variant='subtitle1'>
+											{commentObject.username}
+										</Typography>
+										<Typography variant='caption'>
+											{commentObject.comment}
+										</Typography>
 									</ListItemText>
 								</ListItem>
 								<Divider />
@@ -228,9 +232,9 @@ class LocationInfoPopUp extends Component {
 									{this.props.user.saved_locations.includes(
 										this.props.selectedMarker.id
 									) ? (
-										<BookmarkIcon color="secondary" />
+										<BookmarkIcon color='secondary' />
 									) : (
-										<BookmarkBorderIcon color="secondary" />
+										<BookmarkBorderIcon color='secondary' />
 									)}
 								</IconButton>
 							</Grid>
@@ -240,19 +244,42 @@ class LocationInfoPopUp extends Component {
 									name='addNewRating'
 									value={Number(this.props.selectedMarker.userRating)}
 									onChange={this.updateRating}
-									color="primary"
+									color='primary'
 								/>
 							</Grid>
 							<Grid align='center' item xs={2}>
 								<IconButton
 									aria-label={'add comment'}
 									onClick={this.handleDialogOpen}>
-									<CommentIcon color="secondary"/>
+									<CommentIcon color='secondary' />
 								</IconButton>
 							</Grid>
 						</Grid>
 					</Grid>
 				</InfoWindow>
+				<Snackbar
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center'
+					}}
+					open={this.state.openSnackbar}
+					autoHideDuration={5000}
+					onClose={this.handleSnackbarClose}
+					ContentProps={{
+						'aria-describedby': 'message-id'
+					}}
+					message={<span id='message-id'>{this.state.snackbarMessage}</span>}
+					action={[
+						<IconButton
+							key='close'
+							aria-label='close'
+							color='inherit'
+							className={classes.close}
+							onClick={this.handleSnackbarClose}>
+							<CloseIcon />
+						</IconButton>
+					]}
+				/>
 				<InputDialog
 					handleClose={this.handleDialogClose}
 					handleOpen={this.handleDialogOpen}
@@ -276,29 +303,6 @@ class LocationInfoPopUp extends Component {
 					open={Boolean(this.state.anchorEl)}
 					handleClose={this.handleClose}
 					handleSelect={this.handleSelect}
-				/>
-				<Snackbar
-					anchorOrigin={{
-						vertical: 'bottom',
-						horizontal: 'left'
-					}}
-					open={this.state.openSnackbar}
-					autoHideDuration={5000}
-					onClose={this.handleSnackbarClose}
-					ContentProps={{
-						'aria-describedby': 'message-id'
-					}}
-					message={<span id='message-id'>{this.state.snackbarMessage}</span>}
-					action={[
-						<IconButton
-							key='close'
-							aria-label='close'
-							color='inherit'
-							className={classes.close}
-							onClick={this.handleSnackbarClose}>
-							<CloseIcon />
-						</IconButton>
-					]}
 				/>
 			</>
 		);

@@ -23,7 +23,7 @@ const styles = theme => ({
 		position: 'absolute'
 	},
 	header: {
-		backgroundColor: theme.palette.primary.dark,
+		backgroundColor: theme.palette.primary.dark
 	},
 
 	title: {
@@ -95,8 +95,8 @@ class MyLocationsPage extends Component {
 						onChange={this.handleChange}
 						variant='fullWidth'
 						aria-label='simple tabs example'>
-						<Tab label='Saved Locations' />
-						<Tab label='Created Locations' />
+						<Tab label='Bookmarks' />
+						<Tab label='Created' />
 					</Tabs>
 				</AppBar>
 				<SwipeableViews
@@ -104,10 +104,11 @@ class MyLocationsPage extends Component {
 					index={this.state.tabValue}
 					className={classes.lists}>
 					<div dir={this.props.theme.direction}>
-						{this.getListHtml('mySaved', 0)}
+						{this.props.myLocations.mySaved && this.getListHtml('mySaved', 0)}
 					</div>
 					<div dir={this.props.theme.direction}>
-						{this.getListHtml('myCreated', 1)}
+						{this.props.myLocations.myCreated &&
+							this.getListHtml('myCreated', 1)}
 					</div>
 				</SwipeableViews>
 			</div>

@@ -60,7 +60,7 @@ class LoginPage extends Component {
 			<Container className={classes.root}>
 				<Container className={classes.formContainer}>
 					<form onSubmit={this.login}>
-						<h1>BYKR Login</h1>
+						<h1>BYKR</h1>
 						<TextField
 							className={classes.textField}
 							label='Username'
