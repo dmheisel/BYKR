@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import { GoogleMap, BicyclingLayer } from '@react-google-maps/api';
+import { GoogleMap, BicyclingLayer, Marker } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 import MapMarker from '../MapMarker/MapMarker';
+import BlueCircle from '../Views/bluecircle.png'
 
 class Map extends Component {
 	state = {
 		map: {}
 	};
 
-	componentDidMount = () => {
-		if (this.props.user.use_device_location) {
-			this.props.dispatch({type: 'FETCH_CENTER', payload: {id: this.props.user.id}})
-		}
-	}
 	updateCenter = () => {
 		let newCenter = {
 			lat: this.state.map.getCenter().lat(),
@@ -64,6 +60,13 @@ class Map extends Component {
 				onDragEnd={this.updateCenter}>
 				<BicyclingLayer />
 				{markersHtml}
+				<Marker
+					position={{
+						lat: Number(this.props.user.lat),
+						lng: Number(this.props.user.lng)
+					}}
+					icon={BlueCircle}
+				/>
 				{/* not sure if conditional rendering is needed here. */}
 			</GoogleMap>
 		);
