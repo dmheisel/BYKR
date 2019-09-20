@@ -10,13 +10,16 @@ import {
 	Typography,
 	Tabs,
 	Tab,
-	List
+	List,
+	Drawer
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
+		width: '100%',
+		height: '100%'
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
@@ -36,7 +39,7 @@ const styles = theme => ({
 });
 class MyLocationsPage extends Component {
 	state = {
-		tabValue: Number(this.props.match.params.listIndex)
+		tabValue: this.props.listView
 	};
 
 	componentDidMount() {
@@ -46,7 +49,7 @@ class MyLocationsPage extends Component {
 	}
 
 	handleChange = (e, val) => {
-		this.setState({ tabValue: val });
+		this.props.dispatch({ type: 'SET_VIEW', payload: val });
 	};
 	//function to get the list to be displayed on the mylocations page based on which tab is clicked
 	getListHtml = (type, index) => {
@@ -54,13 +57,14 @@ class MyLocationsPage extends Component {
 			<List
 				// dense
 				index={index}
-				hidden={this.state.tabValue !== index}
+				hidden={this.props.listView !== index}
 				role='tabpanel'>
 				{this.props.myLocations[type].map(marker => {
 					return (
 						<MyLocationsPageListItem
 							key={marker.location_id}
 							markerTypes={this.props.markerTypes}
+							toggleDrawer={this.props.toggleDrawer}
 							marker={marker}
 							type={type}
 						/>
@@ -73,7 +77,11 @@ class MyLocationsPage extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div className={classes.root}>
+			<Drawer
+				anchor='right'
+				open={this.props.drawerOpen}
+				onClose={this.props.toggleDrawer}
+				className={classes.root}>
 				<AppBar position='static' className={classes.header}>
 					<Toolbar>
 						<IconButton
@@ -81,7 +89,7 @@ class MyLocationsPage extends Component {
 							className={classes.menuButton}
 							color='inherit'
 							aria-label='menu'
-							onClick={() => this.props.history.push('/home')}>
+							onClick={this.props.toggleDrawer}>
 							<ArrowBackIcon />
 						</IconButton>
 						<Typography variant='h6' className={classes.title}>
@@ -91,7 +99,7 @@ class MyLocationsPage extends Component {
 				</AppBar>
 				<AppBar position='static'>
 					<Tabs
-						value={this.state.tabValue}
+						value={this.props.listView}
 						onChange={this.handleChange}
 						variant='fullWidth'
 						aria-label='simple tabs example'>
@@ -101,7 +109,7 @@ class MyLocationsPage extends Component {
 				</AppBar>
 				<SwipeableViews
 					axis={this.props.theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-					index={this.state.tabValue}
+					index={this.props.listView}
 					className={classes.lists}>
 					<div dir={this.props.theme.direction}>
 						{this.props.myLocations.mySaved && this.getListHtml('mySaved', 0)}
@@ -111,13 +119,14 @@ class MyLocationsPage extends Component {
 							this.getListHtml('myCreated', 1)}
 					</div>
 				</SwipeableViews>
-			</div>
+			</Drawer>
 		);
 	}
 }
 const mapStateToProps = reduxStore => ({
 	myLocations: reduxStore.myLocations,
-	markerTypes: reduxStore.markers.markerTypes
+	markerTypes: reduxStore.markers.markerTypes,
+	listView: reduxStore.listView
 });
 export default connect(mapStateToProps)(
 	withStyles(styles)(withTheme(MyLocationsPage))

@@ -8,7 +8,7 @@ import {
 	ListItemIcon,
 	ListItemAvatar,
 	ListItemText,
-	IconButton
+	IconButton,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
@@ -46,6 +46,7 @@ class MyLocationsPageList extends Component {
 	};
 
 	handlePinClick = () => {
+		this.props.toggleDrawer();
 		this.props.dispatch({
 			type: 'SET_CENTER',
 			payload: {
@@ -53,7 +54,7 @@ class MyLocationsPageList extends Component {
 				lng: Number(this.props.marker.lng)
 			}
 		});
-		this.props.history.push(`/home`);
+		;
 	};
 
 	handleDeleteClick = () => {

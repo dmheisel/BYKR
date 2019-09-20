@@ -69,15 +69,25 @@ class SideBar extends Component {
 
 						<ListItem
 							button
-							onClick={() => this.props.history.push('/myLocations/0')}>
+							onClick={e => {
+								this.props.dispatch({ type: 'SET_VIEW', payload: 0 });
+								this.props.toggleDrawer();
+								this.props.toggleLocationsDrawer(e, 'topDrawer');
+							}}>
 							<ListItemText
-								primary={<Button className={classes.button}>Your Bookmarks</Button>}
+								primary={
+									<Button className={classes.button}>Your Bookmarks</Button>
+								}
 							/>
 						</ListItem>
 						<Divider />
 						<ListItem
 							button
-							onClick={() => this.props.history.push('/myLocations/1')}>
+							onClick={e => {
+								this.props.dispatch({ type: 'SET_VIEW', payload: 1 });
+								this.props.toggleDrawer();
+								this.props.toggleLocationsDrawer(e, 'topDrawer');
+							}}>
 							<ListItemText
 								primary={
 									<Button className={classes.button}>Your Created</Button>

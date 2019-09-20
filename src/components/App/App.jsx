@@ -31,7 +31,6 @@ class App extends Component {
             If the user is not logged in, the ProtectedRoute will show the 'Login' or 'Register' page.
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
 					<ProtectedRoute path='/home/:lat?/:lng?' component={MapPage} />
-					<ProtectedRoute path='/mylocations/:listIndex' component={MyLocationsPage} />
 							{/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
 							{/* If none of the other routes matched, we will show a 404. */}

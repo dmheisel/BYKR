@@ -7,13 +7,13 @@ import BikeDock from '../Views/bike-dock.jpg';
 
 class Map extends Component {
 	state = {
-		map: {}
+		map: this.props.map || {}
 	};
 
 	updateCenter = () => {
 		let newCenter = {
-			lat: this.state.map.getCenter().lat(),
-			lng: this.state.map.getCenter().lng()
+			lat: this.props.map.getCenter().lat(),
+			lng: this.props.map.getCenter().lng()
 		};
 		this.props.dispatch({ type: 'SET_CENTER', payload: newCenter });
 	};
@@ -49,14 +49,12 @@ class Map extends Component {
 				}}
 				zoom={18}
 				center={{
-					lat: this.props.mapCenter.lat || Number(this.props.user.lat),
-					lng: this.props.mapCenter.lng || Number(this.props.user.lng)
+					lat: Number(this.props.user.lat) ,
+					lng: Number(this.props.user.lng)
 				}}
 				onLoad={map => {
-					map.setMapTypeId('roadmap');
-					this.setState({
-						map: map
-					});
+					// map.setCenter({lat: Number(this.props.user.lat), lng: Number(this.props.user.lng)})
+					this.props.dispatch({ type: 'SET_MAP', payload: map });
 				}}
 				options={{
 					scaleControl: true,
@@ -85,6 +83,7 @@ class Map extends Component {
 }
 const mapStateToProps = reduxStore => ({
 	user: reduxStore.user,
+	map: reduxStore.map,
 	markers: reduxStore.markers,
 	mapCenter: reduxStore.mapCenter
 });
