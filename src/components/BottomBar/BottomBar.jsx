@@ -14,11 +14,10 @@ const styles = theme => ({
 	root: {
 		width: '100%',
 		height: '10vh',
-		backgroundColor: theme.palette.background,
-		color: theme.palette.primary.light
+		backgroundColor: theme.palette.background.paper
 	},
 	icon: {
-		color: theme.palette.primary.dark
+		color: theme.palette.secondary.dark
 	}
 });
 
@@ -53,7 +52,7 @@ class BottomBar extends Component {
 	//used for selecting an item type in the menu to add to the map
 	handleSelect = event => {
 		this.props.selectType(event.target.value);
-		this.handleClose();
+		this.handleCloseFor(event, 'typeMenuAnchorEl');
 	};
 
 	render() {
@@ -81,11 +80,11 @@ class BottomBar extends Component {
 							: event => this.handleOpenFor(event, 'typeMenuAnchorEl')
 					}
 				/>
-				<BottomNavigationAction
+				{/* <BottomNavigationAction
 					label='Find Closest...'
 					icon={<NearMeIcon className={classes.icon} />}
 					onClick={event => this.handleOpenFor(event, 'nearestMenuAnchorEl')}
-				/>
+				/> */}
 				<TypeMenu
 					//type menu for selecting what type of location someone is adding to the map
 					id='typeMenu'

@@ -7,6 +7,12 @@ class Map extends Component {
 	state = {
 		map: {}
 	};
+
+	componentDidMount = () => {
+		if (this.props.user.use_device_location) {
+			this.props.dispatch({type: 'FETCH_CENTER', payload: {id: this.props.user.id}})
+		}
+	}
 	updateCenter = () => {
 		let newCenter = {
 			lat: this.state.map.getCenter().lat(),

@@ -12,7 +12,7 @@ function* updateCenter(action) {
 
 const getUserLocation = () =>
 	new Promise((resolve, reject) => {
-		navigator.geolocation.getCurrentPosition(
+		navigator.geolocation.watchPosition(
 			loc => resolve(loc),
 			err => reject(err),
 			{ enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
