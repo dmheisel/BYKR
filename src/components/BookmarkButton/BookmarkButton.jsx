@@ -28,15 +28,18 @@ class BookmarkButton extends Component {
 	};
 	handleDialogClose = () => {
 		this.setState({ dialogOpen: false });
+		this.bookmarkSite('')
 	};
 	handleDialogOpen = () => {
 		this.setState({ dialogOpen: true });
 	};
 
 	render() {
-		const inSaved = this.props.user.saved_locations.some(
-			loc => loc.location_id === this.props.markerId
-		);
+		const inSaved =
+			this.props.user.saved_locations &&
+			this.props.user.saved_locations.some(
+				loc => loc.location_id === this.props.markerId
+			);
 		return (
 			<div>
 				<IconButton
@@ -53,8 +56,9 @@ class BookmarkButton extends Component {
 					handleOpen={this.handleDialogOpen}
 					onConfirm={note => this.bookmarkSite(note)}
 					dialogOpen={this.state.dialogOpen}
-					dialogTitle='Add a note to remember your bookmark!'
-					dialogTextLabel='Add a Note'
+					notMandatory={true}
+					dialogTitle='Add a note to remember your bookmark?'
+					dialogTextLabel='Add your note'
 				/>
 			</div>
 		);

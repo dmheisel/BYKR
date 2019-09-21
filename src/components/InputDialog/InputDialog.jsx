@@ -54,7 +54,7 @@ class CommentDialogue extends Component {
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={this.handleCancel} color='secondary'>
-						Cancel
+						{this.props.notMandatory ? 'No Thanks' : 'Cancel'}
 					</Button>
 					<Button onClick={this.handleConfirm} color='primary'>
 						Confirm
