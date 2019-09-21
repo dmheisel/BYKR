@@ -49,7 +49,7 @@ class Map extends Component {
 				}}
 				zoom={18}
 				center={{
-					// mapCenter will exist when map has been moved, otherwise default to user location
+					// mapCenter will exist when map has been moved, otherwise default to user
 					lat: this.props.mapCenter.lat || Number(this.props.user.lat) ,
 					lng: this.props.mapCenter.lng || Number(this.props.user.lng)
 				}}
