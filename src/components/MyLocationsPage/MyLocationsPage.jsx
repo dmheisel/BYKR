@@ -33,7 +33,7 @@ const styles = theme => ({
 		margin: 'auto'
 	},
 	lists: {
-		height: '85vh',
+		height: '100vh',
 		backgroundColor: theme.palette.background.paper
 	}
 });
@@ -78,7 +78,7 @@ class MyLocationsPage extends Component {
 		const { classes } = this.props;
 		return (
 			<Drawer
-				anchor='right'
+				anchor='bottom'
 				open={this.props.drawerOpen}
 				onClose={this.props.toggleDrawer}
 				className={classes.root}>
