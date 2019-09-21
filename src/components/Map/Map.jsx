@@ -3,7 +3,6 @@ import { GoogleMap, BicyclingLayer, Marker } from '@react-google-maps/api';
 import { connect } from 'react-redux';
 import MapMarker from '../MapMarker/MapMarker';
 import BlueCircle from '../Views/bluecircle.png';
-import BikeDock from '../Views/bike-dock.jpg';
 
 class Map extends Component {
 	state = {

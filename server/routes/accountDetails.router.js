@@ -11,26 +11,20 @@ router.get('/:id', (req, res) => {
 	console.log('in accountDetails get for ', req.params.id);
 	const id = req.params.id;
 	const sqlText = `
-	select lat, lng, use_device_location, array_agg(users_locations_saved.location_id) as saved_locations
+	select lat, lng, use_device_location
 	from
 		user_settings
-	left join
-		users_locations_saved
-	on
-		user_settings.user_id = users_locations_saved.user_id
 	where
-		user_settings.user_id = $1
-	group by
-		user_settings.id;`;
+		user_settings.user_id = $1;`;
 
 	pool
 		.query(sqlText, [id])
 		.then(result => {
-			console.log('successful retrieval of user lat and lng');
+			console.log('successful retrieval of user details');
 			res.send(result.rows[0]);
 		})
 		.catch(error => {
-			console.log('error on retrieval of user lat and lng: ', error);
+			console.log('error on retrieval of user details: ', error);
 			res.sendStatus(500);
 		});
 });
@@ -116,16 +110,17 @@ router.post('/', (req, res) => {
 router.post(`/save/:id`, rejectUnauthenticated, (req, res) => {
 	const locationId = req.params.id;
 	const userId = req.user.id;
+	const userNote = req.body.note
 
 	const sqlText = `
 			INSERT
 				INTO users_locations_saved
-					(user_id, location_id)
+					(user_id, location_id, user_note)
 				VALUES
-					($1, $2);`;
+					($1, $2, $3);`;
 
 	pool
-		.query(sqlText, [userId, locationId])
+		.query(sqlText, [userId, locationId, userNote])
 		.then(result => {
 			console.log('location saved!');
 			res.sendStatus(201);

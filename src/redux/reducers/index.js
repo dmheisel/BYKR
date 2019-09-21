@@ -6,7 +6,6 @@ import markers from './markerReducer'
 import map from './mapReducer'
 import mapCenter from './mapCenterReducer'
 import selectedMarker from './selectedMarkerReducer'
-import myLocations from './myLocationReducer'
 import listView from './viewedListReducer'
 
 // rootReducer is the primary reducer -- it bundles up all of the other reducers
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
   map, // will contain an object representing the current google map
   mapCenter, // will have an object {lat: num, lng: num} for center coordinates
   selectedMarker, //object containing details of currently selected marker
-  myLocations, // contains mySaved and myCreated
   listView
 });
 
