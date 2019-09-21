@@ -23,9 +23,9 @@ router.get(`/saved`, rejectUnauthenticated, (req, res) => {
 	where
 		sav.user_id = $1
 	group by
-		sav.user_id, sav.user_note, loc.id
+		sav.user_id, sav.id, sav.user_note, loc.id
 	order by
-		loc.id desc;`;
+		sav.id desc;`;
 
 	pool
 		.query(sqlText, [userId])

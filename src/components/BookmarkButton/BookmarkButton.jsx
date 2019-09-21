@@ -28,7 +28,6 @@ class BookmarkButton extends Component {
 	};
 	handleDialogClose = () => {
 		this.setState({ dialogOpen: false });
-		this.bookmarkSite('')
 	};
 	handleDialogOpen = () => {
 		this.setState({ dialogOpen: true });
