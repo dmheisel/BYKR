@@ -9,7 +9,7 @@ const router = express.Router();
 router.get(`/saved`, rejectUnauthenticated, (req, res) => {
 	let userId = req.user.id;
 	let sqlText = `
-		select sav.user_id, loc.id as location_id, lat, lng, loc.address, loc.locality, loc.location_type_id, round(avg(rating),1) as avg_rating
+		select sav.user_id, loc.id as location_id, lat, lng, loc.address, loc.locality, loc.location_type_id, round(avg(rating),1) as avg_rating, sav.user_note
 	from
 		locations as loc
 	left join
@@ -23,7 +23,7 @@ router.get(`/saved`, rejectUnauthenticated, (req, res) => {
 	where
 		sav.user_id = $1
 	group by
-		sav.user_id, loc.id
+		sav.user_id, sav.user_note, loc.id
 	order by
 		loc.id desc;`;
 
@@ -34,7 +34,7 @@ router.get(`/saved`, rejectUnauthenticated, (req, res) => {
 			res.send(result.rows);
 		})
 		.catch(error => {
-			console.log('error on GET user saved locations');
+			console.log('error on GET user saved locations:', error);
 			res.sendStatus(500);
 		});
 });

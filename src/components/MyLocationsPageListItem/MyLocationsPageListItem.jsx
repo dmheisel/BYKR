@@ -9,6 +9,9 @@ import {
 	ListItemAvatar,
 	ListItemText,
 	IconButton,
+	Grid,
+	Typography,
+	Divider
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
@@ -54,7 +57,6 @@ class MyLocationsPageList extends Component {
 				lng: Number(this.props.marker.lng)
 			}
 		});
-		;
 	};
 
 	handleDeleteClick = () => {
@@ -91,63 +93,78 @@ class MyLocationsPageList extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<ListItem
-					disableGutters={true}
-					divider={true}
-					className={classes.listItem}>
-					<ListItemAvatar edge='start'>
-						{Number(this.props.marker.location_type_id) === 1 ? (
-							<LocalParkingIcon />
-						) : (
-							<BuildIcon />
-						)}
-					</ListItemAvatar>
-					<ListItemText
-						primary={
-							this.props.markerTypes[this.props.marker.location_type_id - 1]
-								.type_name
-						}
-						secondary={
-							this.props.marker.locality
-								? this.props.marker.address + ', ' + this.props.marker.locality
-								: this.props.marker.address
-						}
-					/>
-					{this.props.type === 'myCreated' ? (
-						<IconButton
-							className={classes.iconButton}
-							onClick={this.toggleConfirmationDialog}>
-							<DeleteSweepOutlinedIcon className={classes.deleteIcon} />
-						</IconButton>
-					) : (
-						<IconButton
-							aria-label={'save to favorites'}
-							onClick={this.handleSaveClick}>
-							{this.props.user.saved_locations.includes(
-								this.props.marker.location_id
-							) ? (
-								<BookmarkIcon color='secondary' />
+				<Grid container direction='column'>
+					<Grid item xs={12}>
+						<ListItem
+							disableGutters={true}
+							divider={false}
+							className={classes.listItem}>
+							<ListItemAvatar edge='start'>
+								{Number(this.props.marker.location_type_id) === 1 ? (
+									<LocalParkingIcon />
+								) : (
+									<BuildIcon />
+								)}
+							</ListItemAvatar>
+							<ListItemText
+								primary={
+									this.props.markerTypes[this.props.marker.location_type_id - 1]
+										.type_name
+								}
+								secondary={
+									this.props.marker.locality
+										? this.props.marker.address +
+										  ', ' +
+										  this.props.marker.locality
+										: this.props.marker.address
+								}
+							/>
+							{this.props.type === 'myCreated' ? (
+								<IconButton
+									className={classes.iconButton}
+									onClick={this.toggleConfirmationDialog}>
+									<DeleteSweepOutlinedIcon className={classes.deleteIcon} />
+								</IconButton>
 							) : (
-								<BookmarkBorderIcon color='secondary' />
+								<IconButton
+									aria-label={'save to favorites'}
+									onClick={this.handleSaveClick}>
+									{this.props.user.saved_locations.includes(
+										this.props.marker.location_id
+									) ? (
+										<BookmarkIcon color='secondary' />
+									) : (
+										<BookmarkBorderIcon color='secondary' />
+									)}
+								</IconButton>
 							)}
-						</IconButton>
+
+							<IconButton
+								className={classes.iconButton}
+								onClick={this.handlePinClick}>
+								<RoomOutlinedIcon className={classes.gotoIcon} />
+							</IconButton>
+
+							<ListItemIcon>
+								<Rating
+									value={Number(this.props.marker.avg_rating)}
+									readOnly
+									size='small'
+									edge='end'
+								/>
+							</ListItemIcon>
+						</ListItem>
+					</Grid>
+					{this.props.marker.user_note && (
+						<Grid container item xs={12} justify='flex-end'>
+							<Typography variant='caption'>
+								note: {this.props.marker.user_note}
+							</Typography>
+						</Grid>
 					)}
+					<Divider />
+				</Grid>
 
-					<IconButton
-						className={classes.iconButton}
-						onClick={this.handlePinClick}>
-						<RoomOutlinedIcon className={classes.gotoIcon} />
-					</IconButton>
-
-					<ListItemIcon>
-						<Rating
-							value={Number(this.props.marker.avg_rating)}
-							readOnly
-							size='small'
-							edge='end'
-						/>
-					</ListItemIcon>
-				</ListItem>
 				<ConfirmationDialog
 					open={this.state.openDialog}
 					handleDeleteClick={this.handleDeleteClick}

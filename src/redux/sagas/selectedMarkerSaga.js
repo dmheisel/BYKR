@@ -16,8 +16,8 @@ function* fetchMarkerDetails(action) {
 //posts marker to save into database
 function* saveMarker(action) {
 	try {
-		yield axios.post(`/api/account/save/${action.payload}`);
-		yield put({ type: 'FETCH_USER' });
+		yield axios.post(`/api/account/save/${action.payload.id}`, action.payload);
+		yield put({ type: 'FETCH_USER_FAVORITES' });
 	} catch (error) {
 		console.log(
 			`error on adding saved location to user's saved locations: `,
@@ -29,7 +29,7 @@ function* saveMarker(action) {
 function* unSaveMarker(action) {
 	try {
 		yield axios.delete(`/api/account/unsave/${action.payload}`);
-		yield put({ type: 'FETCH_USER' });
+		// yield put({ type: 'FETCH_USER' });
 		yield put({ type: 'FETCH_USER_FAVORITES' })
 	} catch (error) {
 		console.log(

@@ -59,7 +59,7 @@ class MyLocationsPage extends Component {
 				index={index}
 				hidden={this.props.listView !== index}
 				role='tabpanel'>
-				{this.props.myLocations[type].map(marker => {
+				{this.props.user[type].map(marker => {
 					return (
 						<MyLocationsPageListItem
 							key={marker.location_id}
@@ -112,11 +112,11 @@ class MyLocationsPage extends Component {
 					index={this.props.listView}
 					className={classes.lists}>
 					<div dir={this.props.theme.direction}>
-						{this.props.myLocations.mySaved && this.getListHtml('mySaved', 0)}
+						{this.props.user.saved_locations && this.getListHtml('saved_locations', 0)}
 					</div>
 					<div dir={this.props.theme.direction}>
-						{this.props.myLocations.myCreated &&
-							this.getListHtml('myCreated', 1)}
+						{this.props.user.created_locations &&
+							this.getListHtml('created_locations', 1)}
 					</div>
 				</SwipeableViews>
 			</Drawer>
@@ -124,7 +124,7 @@ class MyLocationsPage extends Component {
 	}
 }
 const mapStateToProps = reduxStore => ({
-	myLocations: reduxStore.myLocations,
+	user: reduxStore.user,
 	markerTypes: reduxStore.markers.markerTypes,
 	listView: reduxStore.listView
 });

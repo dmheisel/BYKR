@@ -7,7 +7,6 @@ import {
 	ListItem,
 	ListItemText,
 	ListItemAvatar,
-	Snackbar,
 	Divider,
 	Avatar,
 	Typography,
@@ -16,14 +15,14 @@ import {
 import LocalParkingIcon from '@material-ui/icons/LocalParking';
 import BuildIcon from '@material-ui/icons/Build';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
+
 import CommentIcon from '@material-ui/icons/Comment';
-import CloseIcon from '@material-ui/icons/Close';
 import Rating from '@material-ui/lab/Rating';
 import { withStyles } from '@material-ui/core/styles';
 import InputDialog from '../InputDialog/InputDialog';
 import TypeMenu from '../TypeMenu/TypeMenu';
+import BookmarkButton from '../BookmarkButton/BookmarkButton';
+import MessageSnackbar from '../MessageSnackbar/MessageSnackbar';
 
 const styles = theme => ({
 	root: {
@@ -55,7 +54,6 @@ class LocationInfoPopUp extends Component {
 		openSnackbar: false,
 		snackbarMessage: ''
 	};
-
 	handleSnackbarOpen = message => {
 		this.setState({ openSnackbar: true, snackbarMessage: message });
 	};
@@ -63,6 +61,7 @@ class LocationInfoPopUp extends Component {
 	handleSnackbarClose = (event, reason) => {
 		this.setState({ openSnackbar: false });
 	};
+
 	handleOpen = event => {
 		this.props.user.id === this.props.selectedMarker.created_by_user_id &&
 			this.setState({ anchorEl: event.currentTarget });
@@ -88,25 +87,6 @@ class LocationInfoPopUp extends Component {
 	};
 	handleDialogOpen = () => {
 		this.setState({ dialogOpen: true });
-	};
-	handleSaveClick = () => {
-		this.props.user.saved_locations.includes(this.props.selectedMarker.id)
-			? this.removeBookmark()
-			: this.bookmarkSite();
-	};
-	removeBookmark = () => {
-		this.handleSnackbarOpen('Bookmark Removed!');
-		this.props.dispatch({
-			type: 'UNSAVE_MARKER',
-			payload: this.props.selectedMarker.id
-		});
-	};
-	bookmarkSite = () => {
-		this.handleSnackbarOpen('Site Bookmarked!');
-		this.props.dispatch({
-			type: 'SAVE_MARKER',
-			payload: this.props.selectedMarker.id
-		});
 	};
 
 	updateRating = (event, newValue) => {
@@ -175,7 +155,6 @@ class LocationInfoPopUp extends Component {
 				)}
 			</List>
 		);
-		// const locationTypeName = this.props.markerTypes && this.props.selectedMarker && this.props.markerTypes.find(item => item.id == this.props.selectedMarker.location_type_id).type_name;
 		return (
 			<>
 				<InfoWindow
@@ -226,17 +205,10 @@ class LocationInfoPopUp extends Component {
 							align='center'
 							className={classes.footer}>
 							<Grid align='center' item xs={2}>
-								<IconButton
-									aria-label={'save to favorites'}
-									onClick={this.handleSaveClick}>
-									{this.props.user.saved_locations.includes(
-										this.props.selectedMarker.id
-									) ? (
-										<BookmarkIcon color='secondary' />
-									) : (
-										<BookmarkBorderIcon color='secondary' />
-									)}
-								</IconButton>
+								<BookmarkButton
+									markerId={this.props.selectedMarker.id}
+									handleSnackbarOpen={this.handleSnackbarOpen}
+								/>
 							</Grid>
 							<Grid item xs={6} align='center'>
 								<Typography component='legend'>Add Rating!</Typography>
@@ -257,28 +229,10 @@ class LocationInfoPopUp extends Component {
 						</Grid>
 					</Grid>
 				</InfoWindow>
-				<Snackbar
-					anchorOrigin={{
-						vertical: 'bottom',
-						horizontal: 'center'
-					}}
+				<MessageSnackbar
 					open={this.state.openSnackbar}
-					autoHideDuration={5000}
+					message={this.state.snackbarMessage}
 					onClose={this.handleSnackbarClose}
-					ContentProps={{
-						'aria-describedby': 'message-id'
-					}}
-					message={<span id='message-id'>{this.state.snackbarMessage}</span>}
-					action={[
-						<IconButton
-							key='close'
-							aria-label='close'
-							color='inherit'
-							className={classes.close}
-							onClick={this.handleSnackbarClose}>
-							<CloseIcon />
-						</IconButton>
-					]}
 				/>
 				<InputDialog
 					handleClose={this.handleDialogClose}
