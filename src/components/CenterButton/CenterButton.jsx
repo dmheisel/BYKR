@@ -27,18 +27,21 @@ class CenterButton extends Component {
 				className={classes.centerButton}
 				onClick={() =>
 					//dispatch sets center of map back to user's default location.
-					this.props.user.use_device_location
-						? this.props.dispatch({
+					//runs new fetch of gps center if setting is enabled.
+					{
+						this.props.user.use_device_location &&
+							this.props.dispatch({
 								type: 'FETCH_CENTER',
 								payload: { id: this.props.user.id }
-						  })
-						: this.props.dispatch({
-								type: 'SET_CENTER',
-								payload: {
-									lat: Number(this.props.user.lat),
-									lng: Number(this.props.user.lng)
-								}
-						  })
+							});
+						this.props.dispatch({
+							type: 'CLEAR_CENTER',
+							payload: {
+								lat: Number(this.props.user.lat),
+								lng: Number(this.props.user.lng)
+							}
+						});
+					}
 				}>
 				<GpsFixedIcon />
 			</Button>

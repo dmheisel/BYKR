@@ -49,8 +49,9 @@ class Map extends Component {
 				}}
 				zoom={18}
 				center={{
-					lat: Number(this.props.user.lat) ,
-					lng: Number(this.props.user.lng)
+					// mapCenter will exist when map has been moved, otherwise default to user location
+					lat: this.props.mapCenter.lat || Number(this.props.user.lat) ,
+					lng: this.props.mapCenter.lng || Number(this.props.user.lng)
 				}}
 				onLoad={map => {
 					// map.setCenter({lat: Number(this.props.user.lat), lng: Number(this.props.user.lng)})
