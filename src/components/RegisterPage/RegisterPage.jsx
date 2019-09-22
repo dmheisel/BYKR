@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { TextField, Button, Container } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Background from '../Views/Bike-Rack.png';
+import Logo from '../Views/BYKR_LOGO.png';
+
 
 const styles = theme => ({
 	root: {
-		backgroundImage: `url(${Background})`,
+		backgroundImage: `url(${Logo})`,
 		backgroundRepeat: 'no-repeat',
-		backgroundSize: 'cover',
-		backgroundPosition: 'top',
+		backgroundPosition: '50% 15%',
 		height: '100vh',
 		width: '100vw',
 		display: 'flex'
@@ -17,12 +18,20 @@ const styles = theme => ({
 	formContainer: {
 		width: '70%',
 		height: '300px',
-		marginTop: '80%',
-		backgroundColor: 'white'
+		marginTop: '85%',
+		borderRadius: '25px',
+		backgroundColor: theme.palette.primary.light,
+		color: theme.palette.primary.contrastText
 	},
 	textField: {
 		marginLeft: theme.spacing(1),
-		marginRight: theme.spacing(1)
+		marginRight: theme.spacing(1),
+		color: theme.palette.primary.contrastText
+	},
+	button: {
+		color: theme.palette.primary.contrastText,
+		margin: theme.spacing(1),
+		padding: theme.spacing(1)
 	}
 });
 class RegisterPage extends Component {
@@ -63,6 +72,8 @@ class RegisterPage extends Component {
 					<form onSubmit={this.registerUser}>
 						<h1>Register</h1>
 						<TextField
+							InputLabelProps={{ className: classes.textField }}
+							InputProps={{ className: classes.textField }}
 							className={classes.textField}
 							label='Username'
 							variant='filled'
@@ -70,6 +81,8 @@ class RegisterPage extends Component {
 							onChange={this.handleInputChangeFor('username')}
 						/>
 						<TextField
+							InputLabelProps={{ className: classes.textField }}
+							InputProps={{ className: classes.textField }}
 							className={classes.textField}
 							type='password'
 							label='Password'
@@ -78,14 +91,17 @@ class RegisterPage extends Component {
 							onChange={this.handleInputChangeFor('password')}
 						/>
 						<TextField
+							InputLabelProps={{ className: classes.textField }}
+							InputProps={{ className: classes.textField }}
 							className={classes.textField}
 							label="Your City"
 							variant="filled"
 							value={this.state.location}
 							onChange={this.handleInputChangeFor('location')}
 							/>
-						<Button type='submit'>Register</Button>
+						<Button className={classes.button} type='submit'>Register</Button>
 						<Button
+							className={classes.button}
 							onClick={() => {
 								this.props.dispatch({ type: 'SET_TO_LOGIN_MODE' });
 							}}>
