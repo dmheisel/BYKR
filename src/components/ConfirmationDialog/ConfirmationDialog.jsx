@@ -29,10 +29,10 @@ class ConfirmationDialog extends Component {
 		const { classes } = this.props;
 		return (
 			<Dialog open={this.props.open}>
-				<DialogTitle>Delete Marker?</DialogTitle>
+				<DialogTitle>{this.props.title}</DialogTitle>
 				<DialogContent>
 					<Typography variant='body2'>
-						Are you sure you want to delete this marker? This cannot be undone.
+						Are you sure? This cannot be undone.
 					</Typography>
 				</DialogContent>
 				<DialogActions>
@@ -46,11 +46,8 @@ class ConfirmationDialog extends Component {
 					<Button
 						variant='contained'
 						className={classes.deletebutton}
-						onClick={() => {
-							this.props.toggleConfirmationDialog();
-							this.props.handleDeleteClick();
-						}}>
-						Delete
+						onClick={this.props.handleConfirmClick}>
+						{this.props.buttonText}
 						<DeleteIcon className={classes.rightIcon} />
 					</Button>
 				</DialogActions>

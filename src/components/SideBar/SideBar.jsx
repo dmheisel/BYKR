@@ -10,7 +10,10 @@ import {
 	ListItem,
 	ListItemAvatar,
 	ListItemText,
-	Button
+	Button,
+	Grid,
+	Avatar,
+	Typography
 } from '@material-ui/core';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import { withStyles } from '@material-ui/core/styles';
@@ -21,12 +24,12 @@ const styles = theme => ({
 	root: {
 		width: '70vw',
 		height: '100%',
-		backgroundColor: theme.palette.primary.dark,
+		backgroundColor: theme.palette.primary.light,
 		color: theme.palette.primary.contrastText
 	},
 	menuHeader: {
 		height: '20vh',
-		backgroundColor: theme.palette.secondary.main
+		backgroundColor: theme.palette.secondary.light
 	},
 	tabs: {
 		borderRight: `1px solid ${theme.palette.divider}`
@@ -44,12 +47,41 @@ class SideBar extends Component {
 		return (
 			<Drawer open={this.props.drawerOpen} onClose={this.props.toggleDrawer}>
 				<div className={classes.root}>
-					<List className={classes.menuHeader}>
+					<Grid
+						container
+						direction='column'
+						justify='space-between'
+						className={classes.menuHeader}>
+						<Grid container direction='row'>
+							<Grid item xs={3}>
+								<Avatar>
+									<AccountCircleTwoToneIcon />
+								</Avatar>
+							</Grid>
+							<Grid item xs={8}>
+								<Typography variant='h4'>{this.props.user.username}</Typography>
+							</Grid>
+						</Grid>
+						<Grid container justify='flex-end'>
+							<Grid item xs={3}>
+								<Button
+									size='small'
+									className={classes.button}
+									onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>
+									Log Out
+								</Button>
+							</Grid>
+						</Grid>
+					</Grid>
+					{/* <List className={classes.menuHeader}>
 						<ListItem>
 							<ListItemAvatar>
 								<AccountCircleTwoToneIcon />
 							</ListItemAvatar>
-							<ListItemText>{this.props.user.username}</ListItemText>
+							<ListItemText
+								primary={this.props.user.username}
+								primaryTypographyProps={{variant: 'h4', align: 'right'}}
+							/>
 						</ListItem>
 						<ListItem>
 							<Button
@@ -59,7 +91,7 @@ class SideBar extends Component {
 								Log Out
 							</Button>
 						</ListItem>
-					</List>
+					</List> */}
 					<List>
 						<SettingsList
 							toggleDrawer={this.props.toggleDrawer}

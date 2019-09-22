@@ -59,6 +59,10 @@ class MyLocationsPageList extends Component {
 		});
 	};
 
+	handleConfirmFor = (event, type) => {
+		type === 'delete' ? this.handleDeleteClick() : this.handleSaveClick();
+	};
+
 	handleDeleteClick = () => {
 		this.props.dispatch({
 			type: 'DELETE_MARKER',
@@ -71,12 +75,13 @@ class MyLocationsPageList extends Component {
 	};
 
 	handleSaveClick = () => {
+		console.log(this.props.marker);
 		this.props.user.saved_locations.includes(this.props.marker.location_id)
-			? this.removeBookmark()
+			? this.toggleConfirmationDialog()
 			: this.bookmarkSite();
 	};
 
-	removeBookmark = () => {
+	handleRemoveBookmarkClick = () => {
 		this.props.dispatch({
 			type: 'UNSAVE_MARKER',
 			payload: this.props.marker.location_id
@@ -128,9 +133,9 @@ class MyLocationsPageList extends Component {
 							) : (
 								<IconButton
 									aria-label={'save to favorites'}
-									onClick={this.handleSaveClick}>
-									{this.props.user.saved_locations.includes(
-										this.props.marker.location_id
+									onClick={this.toggleConfirmationDialog}>
+									{this.props.user.saved_locations.some(
+										el => el.location_id === this.props.marker.location_id
 									) ? (
 										<BookmarkIcon color='secondary' />
 									) : (
@@ -164,11 +169,22 @@ class MyLocationsPageList extends Component {
 					)}
 					<Divider />
 				</Grid>
-
 				<ConfirmationDialog
 					open={this.state.openDialog}
-					handleDeleteClick={this.handleDeleteClick}
+					handleConfirmClick={
+						this.props.type === 'created_locations'
+							? this.handleDeleteClick
+							: this.handleRemoveBookmarkClick
+					}
 					toggleConfirmationDialog={this.toggleConfirmationDialog}
+					title={
+						this.props.type === 'created_locations'
+							? 'Confirm Delete'
+							: 'Confirm Remove Bookmark'
+					}
+					buttonText={
+						this.props.type === 'created_locations' ? 'Delete' : 'Remove'
+					}
 				/>
 			</div>
 		);
