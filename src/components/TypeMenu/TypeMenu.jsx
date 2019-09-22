@@ -4,17 +4,27 @@ import { Menu, MenuItem } from '@material-ui/core';
 
 class TypeMenu extends Component {
 	render() {
-		const menuOptions = this.props.markerTypes.map(
-			type =>
-				!type.is_third_party && (
+		//sets menu options -- third party types are not allowed for create menu
+		const menuOptions = this.props.thirdPartyAllowed
+			? this.props.markerTypes.map(type => (
 					<MenuItem
 						key={type.id}
 						value={type.id}
 						onClick={this.props.handleSelect}>
 						{type.type_name}
 					</MenuItem>
-				)
-		);
+			  ))
+			: this.props.markerTypes.map(
+					type =>
+						!type.is_third_party && (
+							<MenuItem
+								key={type.id}
+								value={type.id}
+								onClick={this.props.handleSelect}>
+								{type.type_name}
+							</MenuItem>
+						)
+			  );
 		return (
 			<Menu
 				id='simple-menu'

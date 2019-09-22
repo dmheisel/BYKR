@@ -44,9 +44,11 @@ class BottomBar extends Component {
 		this.handleCloseFor(null, 'filterMenuAnchorEl');
 	};
 
-	findNearest = type => {
-		console.log('searching for nearest location of following type id: ', type);
-		this.props.dispatch({ type: 'FIND_NEAREST_MARKER', payload: type });
+	findNearest = event => {
+		console.log('searching for nearest location of following type id: ', event.target.value);
+		// type.lat = this.props.user.lat;
+		// type.lng = this.props.user.lng;
+		this.props.dispatch({ type: 'FIND_NEAREST_MARKER', payload: event.target.value });
 		this.handleCloseFor(null, 'nearestMenuAnchorEl');
 	};
 	//used for selecting an item type in the menu to add to the map
@@ -80,11 +82,11 @@ class BottomBar extends Component {
 							: event => this.handleOpenFor(event, 'typeMenuAnchorEl')
 					}
 				/>
-				{/* <BottomNavigationAction
+				<BottomNavigationAction
 					label='Find Closest...'
 					icon={<NearMeIcon className={classes.icon} />}
 					onClick={event => this.handleOpenFor(event, 'nearestMenuAnchorEl')}
-				/> */}
+				/>
 				<TypeMenu
 					//type menu for selecting what type of location someone is adding to the map
 					id='typeMenu'
@@ -104,16 +106,16 @@ class BottomBar extends Component {
 					}
 					preSelected={[1, 2]}
 				/>
-				<CheckBoxMenu
+				<TypeMenu
 					id='nearestMenu'
 					anchorEl={this.state.nearestMenuAnchorEl}
 					open={Boolean(this.state.nearestMenuAnchorEl)}
-					handleApply={this.findNearest}
+					thirdPartyAllowed={true}
+					handleSelect={this.findNearest}
+					thirdPartyAllowed={true}
 					handleClose={event =>
 						this.handleCloseFor(event, 'nearestMenuAnchorEl')
 					}
-					radio={true}
-					preSelected={1}
 				/>
 			</BottomNavigation>
 		);

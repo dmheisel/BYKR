@@ -16,8 +16,6 @@ const apiMarkerList = (state = [], action) => {
 	switch (action.type) {
 		case 'SET_API_MARKERS':
 			return action.payload;
-		case 'CLEAR_MARKERS':
-			return [];
 		case 'CLEAR_API_MARKERS':
 			return [];
 		default:

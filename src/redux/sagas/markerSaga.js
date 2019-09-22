@@ -19,16 +19,22 @@ function* fetchMarkers(action) {
 			console.log(filterString);
 			url += filterString;
 			if (action.payload.some(el => el.is_third_party)) {
-				console.log('making third party api request to niceRide API')
-				yield put({ type: 'FETCH_API_MARKERS'})
+				console.log('making third party api request to niceRide API');
+				yield put({ type: 'FETCH_API_MARKERS' });
 			} else {
-				yield put({type: 'CLEAR_API_MARKERS'})
+				yield put({ type: 'CLEAR_API_MARKERS' });
+			}
+			if (action.payload.some(el => !el.is_third_party)) {
+				let response = yield axios.get(url);
+				yield put({ type: 'SET_MARKER_LIST', payload: response.data });
+			} else {
+				yield put({type: 'CLEAR_MARKERS'})
 			}
 		} else {
-			yield put({type: 'CLEAR_API_MARKERS'})
+			yield put({ type: 'CLEAR_API_MARKERS' });
+			let response = yield axios.get(url);
+			yield put({ type: 'SET_MARKER_LIST', payload: response.data });
 		}
-		const response = yield axios.get(url);
-		yield put({ type: 'SET_MARKER_LIST', payload: response.data });
 	} catch (error) {
 		console.log(
 			'error on fetching locations and setting to redux state: ',
