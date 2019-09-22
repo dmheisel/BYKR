@@ -9,13 +9,13 @@ const styles = theme => ({
 		backgroundImage: `url(${Logo})`,
 		backgroundRepeat: 'no-repeat',
 		backgroundPosition: '50% 15%',
-		height: '100vh',
-		width: '100vw',
+		// height: '100vh',
+		// width: '100vw',
 		display: 'flex'
 	},
 	formContainer: {
 		width: '70%',
-		maxHeight: '300px',
+		height: '300px',
 		marginTop: '85%',
 		borderRadius: '25px',
 		backgroundColor: theme.palette.primary.light,
@@ -67,9 +67,9 @@ class LoginPage extends Component {
 			<Container className={classes.root}>
 				<Container className={classes.formContainer}>
 					<form onSubmit={this.login}>
-						<h1>BYKR</h1>
+						<h1>Login</h1>
 						<TextField
-							InputLabelProps={{ className: classes.textField }}
+							// InputLabelProps={{ className: classes.textField }}
 							InputProps={{ className: classes.textField }}
 							className={classes.textField}
 							label='Username'
@@ -78,7 +78,7 @@ class LoginPage extends Component {
 							onChange={this.handleInputChangeFor('username')}
 						/>
 						<TextField
-							InputLabelProps={{ className: classes.textField }}
+							// InputLabelProps={{ className: classes.textField }}
 							InputProps={{ className: classes.textField }}
 							className={classes.textField}
 							type='password'
@@ -88,7 +88,7 @@ class LoginPage extends Component {
 							onChange={this.handleInputChangeFor('password')}
 						/>
 						<Button className={classes.button} type='submit'>
-							Log In
+							Login
 						</Button>
 						<Button
 							type='button'
