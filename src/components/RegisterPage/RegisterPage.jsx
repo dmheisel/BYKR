@@ -11,8 +11,6 @@ const styles = theme => ({
 		backgroundImage: `url(${Logo})`,
 		backgroundRepeat: 'no-repeat',
 		backgroundPosition: '50% 15%',
-		height: '100vh',
-		width: '100vw',
 		display: 'flex'
 	},
 	formContainer: {
