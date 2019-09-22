@@ -39,6 +39,7 @@ router.get(`/saved`, rejectUnauthenticated, (req, res) => {
 		});
 });
 
+//route to get all locations a user has created
 router.get('/created', rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
   const sqlText = `

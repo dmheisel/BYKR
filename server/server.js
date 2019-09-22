@@ -15,6 +15,7 @@ const locationsRouter = require('./routes/locations.router')
 const ratingRouter = require('./routes/rating.router')
 const commentRouter = require('./routes/comment.router')
 const myLocationsRouter = require('./routes/myLocations.router')
+const nearestRouter = require('./routes/nearest.router')
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -35,6 +36,7 @@ app.use('/api/locations', locationsRouter)
 app.use('/api/rating', ratingRouter)
 app.use('/api/comment', commentRouter)
 app.use('/api/myLocations', myLocationsRouter)
+app.use('/api/nearest', nearestRouter)
 
 // Serve static files
 app.use(express.static('build'));

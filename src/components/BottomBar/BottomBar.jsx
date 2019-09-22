@@ -45,11 +45,12 @@ class BottomBar extends Component {
 	};
 
 	findNearest = event => {
-		let type = this.props.markerTypes.find(el => el.id === event.target.value)
-		console.log(type)
-		// type.lat = this.props.user.lat;
-		// type.lng = this.props.user.lng;
-		this.props.dispatch({ type: 'FIND_NEAREST_MARKER', payload: event.target.value });
+		//set payload to the marker type information based on value of menu item clicked on
+		let payload = this.props.markerTypes.find(el => el.id === event.target.value)
+		//adds lat and lng to payload for query to server to find closest
+		payload.user = this.props.user
+		payload.coords = `${this.props.user.lat},${this.props.user.lng}`
+		this.props.dispatch({ type: 'FIND_NEAREST_MARKER', payload: payload });
 		this.handleCloseFor(null, 'nearestMenuAnchorEl');
 	};
 	//used for selecting an item type in the menu to add to the map
