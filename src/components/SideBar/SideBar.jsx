@@ -31,6 +31,10 @@ const styles = theme => ({
 		height: '20vh',
 		backgroundColor: theme.palette.secondary.light
 	},
+	nameTag: {
+		margin: theme.spacing(1),
+		padding: theme.spacing(1)
+	},
 	tabs: {
 		borderRight: `1px solid ${theme.palette.divider}`
 	},
@@ -52,7 +56,7 @@ class SideBar extends Component {
 						direction='column'
 						justify='space-between'
 						className={classes.menuHeader}>
-						<Grid container direction='row'>
+						<Grid className={classes.nameTag} container direction='row'>
 							<Grid item xs={3}>
 								<Avatar>
 									<AccountCircleTwoToneIcon />
