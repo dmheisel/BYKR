@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import MapMarker from '../MapMarker/MapMarker';
 import BlueCircle from '../Views/bluecircle.png';
 import BikeDock from '../Views/Bike-Rack.png'
+import mapStyles from './mapStyles'
 
 class Map extends Component {
 	state = {
@@ -61,7 +62,8 @@ class Map extends Component {
 					scaleControl: true,
 					mapTypeControl: false,
 					fullscreenControl: false,
-					zoomControl: true
+					zoomControl: true,
+					styles: mapStyles
 				}}
 				onClick={event => {
 					this.props.addLocation(event);

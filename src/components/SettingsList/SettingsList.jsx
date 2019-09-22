@@ -69,8 +69,9 @@ class SettingsList extends Component {
 					{this.state.settingsOpen ? <ExpandLess /> : <ExpandMore />}
 				</ListItem>
 				<Collapse in={this.state.settingsOpen} timeout='auto' unmountOnExit>
-					<List component='div' alignItems="flex-start" disablePadding>
+					<List component='div' disablePadding>
 						<ListItem
+							alignItems='flex-start'
 							className={classes.nested}
 							button
 							onClick={() => {
@@ -78,7 +79,7 @@ class SettingsList extends Component {
 								!this.props.user.use_device_location &&
 									this.props.toggleDrawer();
 							}}>
-							<ListItemIcon >
+							<ListItemIcon>
 								<Checkbox
 									edge='start'
 									checked={this.props.user.use_device_location}
@@ -88,6 +89,7 @@ class SettingsList extends Component {
 							<ListItemText primary='Use Device Location?' />
 						</ListItem>
 						<ListItem
+							alignItems='flex-start'
 							button
 							disabled={this.props.user.use_device_location}
 							className={classes.nested}
