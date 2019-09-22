@@ -77,25 +77,6 @@ class SideBar extends Component {
 							</Grid>
 						</Grid>
 					</Grid>
-					{/* <List className={classes.menuHeader}>
-						<ListItem>
-							<ListItemAvatar>
-								<AccountCircleTwoToneIcon />
-							</ListItemAvatar>
-							<ListItemText
-								primary={this.props.user.username}
-								primaryTypographyProps={{variant: 'h4', align: 'right'}}
-							/>
-						</ListItem>
-						<ListItem>
-							<Button
-								size='small'
-								className={classes.button}
-								onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>
-								Log Out
-							</Button>
-						</ListItem>
-					</List> */}
 					<List>
 						<SettingsList
 							toggleDrawer={this.props.toggleDrawer}

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 //material-ui imports
 import {
 	List,
-	Divider,
 	ListItem,
 	ListItemIcon,
 	ListItemText,
@@ -16,6 +15,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
 import InputDialog from '../InputDialog/InputDialog';
+import { ThemeProvider } from '@material-ui/styles';
 
 const styles = theme => ({
 	button: {
@@ -62,12 +62,14 @@ class SettingsList extends Component {
 						this.setState({ settingsOpen: !this.state.settingsOpen })
 					}>
 					<ListItemText
-						primary={<Button className={classes.button}>Location Settings</Button>}
+						primary={
+							<Button className={classes.button}>Location Settings</Button>
+						}
 					/>
 					{this.state.settingsOpen ? <ExpandLess /> : <ExpandMore />}
 				</ListItem>
 				<Collapse in={this.state.settingsOpen} timeout='auto' unmountOnExit>
-					<List component='div' disablePadding>
+					<List component='div' alignItems="flex-start" disablePadding>
 						<ListItem
 							className={classes.nested}
 							button
@@ -76,7 +78,7 @@ class SettingsList extends Component {
 								!this.props.user.use_device_location &&
 									this.props.toggleDrawer();
 							}}>
-							<ListItemIcon>
+							<ListItemIcon >
 								<Checkbox
 									edge='start'
 									checked={this.props.user.use_device_location}
@@ -90,7 +92,7 @@ class SettingsList extends Component {
 							disabled={this.props.user.use_device_location}
 							className={classes.nested}
 							onClick={this.handleDialogOpen}>
-							<ListItemIcon>
+							<ListItemIcon edge='start'>
 								<EditLocationOutlinedIcon />
 							</ListItemIcon>
 							<ListItemText primary='Change Default Location' />
