@@ -45,7 +45,8 @@ class BottomBar extends Component {
 	};
 
 	findNearest = event => {
-		console.log('searching for nearest location of following type id: ', event.target.value);
+		let type = this.props.markerTypes.find(el => el.id === event.target.value)
+		console.log(type)
 		// type.lat = this.props.user.lat;
 		// type.lng = this.props.user.lng;
 		this.props.dispatch({ type: 'FIND_NEAREST_MARKER', payload: event.target.value });
@@ -112,7 +113,6 @@ class BottomBar extends Component {
 					open={Boolean(this.state.nearestMenuAnchorEl)}
 					thirdPartyAllowed={true}
 					handleSelect={this.findNearest}
-					thirdPartyAllowed={true}
 					handleClose={event =>
 						this.handleCloseFor(event, 'nearestMenuAnchorEl')
 					}

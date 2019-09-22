@@ -119,7 +119,7 @@ class MyLocationsPageList extends Component {
 										: this.props.marker.address
 								}
 							/>
-							{this.props.type === 'myCreated' ? (
+							{this.props.type === 'created_locations' ? (
 								<IconButton
 									className={classes.iconButton}
 									onClick={this.toggleConfirmationDialog}>

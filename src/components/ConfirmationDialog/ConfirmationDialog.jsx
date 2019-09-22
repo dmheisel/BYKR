@@ -45,7 +45,6 @@ class ConfirmationDialog extends Component {
 					</Button>
 					<Button
 						variant='contained'
-						// color='primary'
 						className={classes.deletebutton}
 						onClick={() => {
 							this.props.toggleConfirmationDialog();

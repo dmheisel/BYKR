@@ -8,7 +8,6 @@ import {
 import { connect } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import MapPage from '../MapPage/MapPage'
-import MyLocationsPage from '../MyLocationsPage/MyLocationsPage'
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 class App extends Component {
