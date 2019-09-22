@@ -87,13 +87,7 @@ class MyLocationsPageList extends Component {
 			payload: this.props.marker.location_id
 		});
 	};
-	bookmarkSite = () => {
-		this.props.dispatch({
-			type: 'SAVE_MARKER',
-			payload: this.props.marker.location_id
-		});
-	};
-
+	
 	render() {
 		const { classes } = this.props;
 		return (
