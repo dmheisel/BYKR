@@ -9,6 +9,7 @@ const styles = theme => ({
 		backgroundImage: `url(${Logo})`,
 		backgroundRepeat: 'no-repeat',
 		backgroundPosition: '50% 15%',
+		backgroundColor: 'white',
 		display: 'flex'
 	},
 	formContainer: {
@@ -62,6 +63,7 @@ class LoginPage extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
+			<div className={classes.background}>
 			<Container className={classes.root}>
 				<Container className={classes.formContainer}>
 					<form onSubmit={this.login}>
@@ -103,7 +105,8 @@ class LoginPage extends Component {
 						)}
 					</form>
 				</Container>
-			</Container>
+				</Container>
+				</div>
 		);
 	}
 }

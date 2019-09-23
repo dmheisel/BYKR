@@ -9,6 +9,7 @@ const styles = theme => ({
 		backgroundImage: `url(${Logo})`,
 		backgroundRepeat: 'no-repeat',
 		backgroundPosition: '50% 15%',
+		backgroundColor: 'white',
 		display: 'flex'
 	},
 	formContainer: {
