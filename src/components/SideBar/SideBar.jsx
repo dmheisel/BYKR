@@ -8,7 +8,6 @@ import {
 	List,
 	Divider,
 	ListItem,
-	ListItemAvatar,
 	ListItemText,
 	Button,
 	Grid,

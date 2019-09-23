@@ -15,7 +15,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
 import InputDialog from '../InputDialog/InputDialog';
-import { ThemeProvider } from '@material-ui/styles';
 
 const styles = theme => ({
 	button: {

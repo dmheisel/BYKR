@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TextField, Button, Container } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import Background from '../Views/Bike-Rack.png';
 import Logo from '../Views/BYKR_LOGO.png';
-
 
 const styles = theme => ({
 	root: {
