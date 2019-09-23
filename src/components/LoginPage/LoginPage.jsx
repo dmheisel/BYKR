@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TextField, Button, Container } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import Logo from '../Views/BYKR_LOGO.png'
+import Logo from '../Views/BYKR_LOGO.jpeg'
 
 const styles = theme => ({
 	root: {
@@ -14,9 +14,9 @@ const styles = theme => ({
 	formContainer: {
 		width: '70%',
 		height: '300px',
-		marginTop: '85%',
+		marginTop: '95%',
 		borderRadius: '25px',
-		backgroundColor: theme.palette.primary.light,
+		backgroundColor: theme.palette.secondary.light,
 		color: theme.palette.primary.contrastText
 	},
 	textField: {
