@@ -7,7 +7,7 @@ const router = express.Router();
 
 //get route to get account details such as lat, lng, default location, device permission, saved locations
 //for one user out of database
-router.get('/:id', (req, res) => {
+router.get('/:id', rejectUnauthenticated, (req, res) => {
 	console.log('in accountDetails get for ', req.params.id);
 	const id = req.params.id;
 	const sqlText = `

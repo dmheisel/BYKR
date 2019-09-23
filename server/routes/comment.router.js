@@ -6,7 +6,7 @@ const {
 const router = express.Router();
 
 //route to fetch all comments for current location
-router.get(`/:id`, (req, res) => {
+router.get(`/:id`, rejectUnauthenticated, (req, res) => {
 	const locationId = req.params.id;
 	const sqlText = `
     select users_locations_comments.id, username, location_id, comment
@@ -18,7 +18,7 @@ router.get(`/:id`, (req, res) => {
   	where
 		  location_id = $1
     order by users_locations_comments.id desc;`;
-  
+
 	pool
 		.query(sqlText, [locationId])
 		.then(result => {

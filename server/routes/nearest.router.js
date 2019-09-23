@@ -1,10 +1,13 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const {
+	rejectUnauthenticated
+} = require('../modules/authentication-middleware');
 
 //route to get closest location from user's location
 //expects two queries - filter for location type and user's current location as lat,lng
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
   const filter = req.query.filter;
   const currentLoc = req.query.currentLoc.split(',');
   const sqlText = `
@@ -13,7 +16,7 @@ router.get('/', (req, res) => {
       where location_type_id = $3
     order by distance
     limit 1;`;
-  
+
   pool
     .query(sqlText, [currentLoc[0], currentLoc[1], filter])
     .then(result => {

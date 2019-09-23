@@ -34,7 +34,6 @@ router.get('/', (req, res) => {
 			ON locations.location_type_id = location_types.id;`;
 	}
 
-	console.log('sql text is: ', sqlText, 'values are: ', values);
 	pool
 		.query(sqlText, values)
 		.then(result => {
