@@ -43,7 +43,6 @@ class MyLocationsPage extends Component {
 	};
 
 	componentDidMount() {
-		this.props.dispatch({ type: 'FETCH_MARKER_TYPES' });
 		this.props.dispatch({ type: 'FETCH_USER_FAVORITES' });
 		this.props.dispatch({ type: 'FETCH_USER_CREATED' });
 	}

@@ -1,7 +1,7 @@
 const userReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SET_USER':
-      return action.payload;
+      return {...state, ...action.payload};
     case 'SET_USER_FAVORITES':
       return { ...state, saved_locations: action.payload }
     case 'SET_USER_CREATED':
