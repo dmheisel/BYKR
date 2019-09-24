@@ -35,6 +35,7 @@
     "server": "nodemon --watch server server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "testServer": "jest server/tests/*.test.js --forceExit",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
