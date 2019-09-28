@@ -30,7 +30,7 @@ Link to software that is required before you attempt to start the app (e.g. node
 
 ## Screen Shot
 
-![register page](readme-screenshots/RegisterPage.png =250x)
+![register page](readme-screenshots/RegisterPage.png){width=50%}
 ![main map page](readme-screenshots/MainMap.png)
 ![SideBar](readme-screenshots/AccountSideBar.png)
 ![Your Locations page](readme-screenshots/LocationsPage.png)
