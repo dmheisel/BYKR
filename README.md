@@ -29,6 +29,7 @@ Link to software that is required before you attempt to start the app (e.g. node
    `npm run client`
 
 ## Screen Shot
+<img src="readme-screenshots/RegisterPage.png" width="150" />
 
 ![register page](readme-screenshots/RegisterPage.png){width=50%}
 ![main map page](readme-screenshots/MainMap.png)
