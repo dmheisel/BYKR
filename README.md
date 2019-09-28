@@ -13,7 +13,7 @@ React, Redux, Redux-Sagas, PostgreSQL, NodeJS, Material-UI, Google Maps API, @re
 Link to software that is required before you attempt to start the app (e.g. node, mongo).
 
 - [Node.js](https://nodejs.org/en/)
-- Google Maps API key - you'll need to create a billing account and get a key with access to maps and geocoding
+- [Google Maps API](https://developers.google.com/maps/documentation) key - you'll need to create a billing account and get a key with access to maps and geocoding
 
 ### Installing
 
@@ -24,10 +24,9 @@ Link to software that is required before you attempt to start the app (e.g. node
 3. Create a .env file with your own server_session_secret and react_app_api_key for the google maps api.
 
 4. Run the following commands:
-`npm install`
-`npm run server`
-`npm run client`
-
+   `npm install`
+   `npm run server`
+   `npm run client`
 
 ## Screen Shot
 
@@ -35,7 +34,7 @@ Include one or two screen shots of your project here (optional). Remove if unuse
 
 ## Documentation
 
-Original Scope Document: https://docs.google.com/document/d/1EnITs38FqMzLMWod7-p37NZTVav1kF1KsTYefyoshWw/edit?usp=sharing
+[Original Scope Document](https://docs.google.com/document/d/1EnITs38FqMzLMWod7-p37NZTVav1kF1KsTYefyoshWw/edit?usp=sharing)
 
 ### Next Steps
 
@@ -45,16 +44,11 @@ Features that you would like to add at some point in the future.
 - [ ] New Location types - mechanics, etc
 - [ ] Ability to search for other pre-existing locations such as bike shops or coffee shops or breweries
 
-
-
 ## Authors
 
-* David Heisel
-
+- David Heisel
 
 ## Acknowledgments
 
-* Thanks to Prime Digital Academy for providing me with the tools and knowledge to build this!
-* Thanks to the North American Bike Share Association for the General BikeShare Feed Specification - read their documention on github at https://github.com/NABSA/gbfs
-
-
+- Thanks to Prime Digital Academy for providing me with the tools and knowledge to build this!
+- Thanks to the [North American Bike Share Association](https://nabsa.net/opendata/) for the General BikeShare Feed Specification - read their documention on their [Github](https://github.com/NABSA/gbfs)
