@@ -22,6 +22,12 @@ describe('testing the user path', () => {
 		let userResponse = await agent.get('/api/user');
 		expect(userResponse.statusCode).toBe(200);
 		//testServer returns the response with a .body for the content of the response
-		expect(userResponse.body.username).toBe('david');
+		expect(userResponse.body.username).toMatch('david');
 	});
+
+	test('testing GET route -- request without ID should return 404', async () => {
+		let response = await testServer(app).get('/api/comment');
+		expect(response.statusCode).toBe(404);
+	});
+
 });

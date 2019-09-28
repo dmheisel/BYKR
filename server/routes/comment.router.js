@@ -6,7 +6,9 @@ const {
 const router = express.Router();
 
 //route to fetch all comments for current location
-router.get(`/:id`, rejectUnauthenticated, (req, res) => {
+router.get(`/:id`, (req, res) => {
+	//needs a location id to come in as a parameter
+	//user does not need to be loggedin to see comments left for a location
 	const locationId = req.params.id;
 	const sqlText = `
     select users_locations_comments.id, username, location_id, comment
@@ -33,6 +35,8 @@ router.get(`/:id`, rejectUnauthenticated, (req, res) => {
 
 //route to POST new comment into database table
 router.post('/:id', rejectUnauthenticated, (req, res) => {
+	//needs location id as param on route, needs object {comment: 'text'} for data
+	//needs user to be logged in to be able to add comment.
 	console.log(req.user, req.params, req.body);
 	const locationId = req.params.id;
 	const userId = req.user.id;
@@ -56,6 +60,5 @@ router.post('/:id', rejectUnauthenticated, (req, res) => {
 		});
 });
 
-//route to DELETE comment from database table
 
 module.exports = router;
