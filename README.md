@@ -30,9 +30,14 @@ Link to software that is required before you attempt to start the app (e.g. node
 
 ## Screen Shot
 <img src="readme-screenshots/RegisterPage.png" width="50%"/>
+Register Page for creating account asks for a default location
 <img src="readme-screenshots/MainMap.png" width="50%"/>
+Main Map page upon logging in
 <img src="readme-screenshots/AccountSideBar.png" width="50%"/>
+Side bar opens on clicking the hamburger menu.  Location settings allows user to use their device location
+They will need to grant the page location permissions
 <img src="readme-screenshots/LocationsPage.png" width="50%"/>
+Locations page opens on clicking "Your Bookmarks" or "Your Created" and shows all the locations under those categories.
 
 ## Documentation
 
