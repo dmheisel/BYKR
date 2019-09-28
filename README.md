@@ -29,10 +29,10 @@ Link to software that is required before you attempt to start the app (e.g. node
    `npm run client`
 
 ## Screen Shot
-<img src="readme-screenshots/RegisterPage.png" width="20%"/>
-<img src="readme-screenshots/MainMap.png" width="20%"/>
-<img src="readme-screenshots/AccountSideBar.png" width="20%"/>
-<img src="readme-screenshots/LocationsPage.png" width="20%"/>
+<img src="readme-screenshots/RegisterPage.png" width="50%"/>
+<img src="readme-screenshots/MainMap.png" width="50%"/>
+<img src="readme-screenshots/AccountSideBar.png" width="50%"/>
+<img src="readme-screenshots/LocationsPage.png" width="50%"/>
 
 ## Documentation
 
