@@ -1,6 +1,6 @@
 # BYKR
 
-2-week Spring, solo project
+2-week sprint, solo project
 
 A mobile-first web-app designed to provide cyclists with tools for crowd-sourcing locations and quality ratings of bike racks, fixing posts, or other resources around town -- as well as finding nearby NiceRide biking docks.
 
