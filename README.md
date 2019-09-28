@@ -30,7 +30,10 @@ Link to software that is required before you attempt to start the app (e.g. node
 
 ## Screen Shot
 
-Include one or two screen shots of your project here (optional). Remove if unused.
+![register page](readme-screenshots/RegisterPage.png)
+![main map page](readme-screenshots/MainMap.png)
+![SideBar](readme-screenshots/AccountSideBar.png)
+![Your Locations page](readme-screenshots/LocationsPage.png)
 
 ## Documentation
 
