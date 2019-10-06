@@ -8,32 +8,29 @@ const router = express.Router();
 // get route to get all locations from database locations table
 router.get('/', (req, res) => {
 	const filters = req.query.filters;
-	let values = [];
-	let sqlText = '';
+	const values = [];
+	//initial sql text for query.  programmatically adds filters if they are in router path
+	let sqlText = `SELECT locations.id, lat, lng, location_types.type_name
+		FROM locations
+		JOIN location_types
+		ON locations.location_type_id = location_types.id `;
 	//adds filters to get request if req.query.filters exists
 	if (filters) {
-		sqlText += `SELECT locations.id, lat, lng, location_types.type_name
-			FROM locations
-			JOIN location_types
-			ON locations.location_type_id = location_types.id
-			WHERE location_type_id = `;
+		sqlText += `WHERE location_type_id = `;
 		const filterArray = filters.split(',');
 		filterArray.forEach((filterId, index) => {
+			//if more than one, inserts the OR before the next queriess to add
 			if (index > 0) {
 				sqlText += ' OR location_type_id = ';
 			}
+			//adds the $# to the query for each item in the list. - used for sanitization
 			sqlText += `$${index + 1}`;
+			//add each of the filters to the values array used in query
 			values.push(filterId);
 		});
-		sqlText += ';';
-	} else {
-		sqlText += `
-	SELECT locations.id, lat, lng, location_types.type_name
-		FROM locations
-		JOIN location_types
-			ON locations.location_type_id = location_types.id;`;
 	}
-
+	//closes sql query text with semicolon -- maybe not necessary?
+	sqlText += `;`;
 	pool
 		.query(sqlText, values)
 		.then(result => {
