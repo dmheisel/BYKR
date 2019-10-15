@@ -9,7 +9,7 @@ import rootSaga from './redux/sagas'; // imports ./redux/sagas/index.js
 import App from './components/App/App.jsx';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import 'typeface-roboto';
+// import 'typeface-roboto';
 
 const theme = createMuiTheme({
 	palette: {
