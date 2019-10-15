@@ -4,7 +4,7 @@ const router = express.Router();
 
 const api_key = process.env.REACT_APP_API_KEY;
 
-//server router to get coords from google API
+//server router to get coords from a street address sent to geocode API
 router.get('/coords/:location', (req, res) => {
 	const location = req.params.location;
 	//location is sent over as params on get request and used in request to geocode api
@@ -25,7 +25,7 @@ router.get('/coords/:location', (req, res) => {
 			res.sendStatus(500);
 		});
 });
-
+//route to get current address from coords sent to geocode api.
 router.get('/address/:location', (req, res) => {
 	const location = req.params.location;
 	const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&key=${api_key}`;
